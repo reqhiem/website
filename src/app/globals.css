@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --color-ink: #0b0f14;
+  --color-paper: #f6f4ef;
+  --color-muted: #9aa0a8;
+  --color-accent: #ff5a36;
+  --color-surface: #141a21;
+  --color-surface-muted: #1b222b;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    background: var(--color-paper);
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 90, 54, 0.12), transparent 55%),
+      radial-gradient(circle at 80% 0%, rgba(18, 32, 66, 0.12), transparent 45%),
+      linear-gradient(120deg, rgba(11, 15, 20, 0.02), rgba(11, 15, 20, 0));
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .dark body::before {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 90, 54, 0.25), transparent 55%),
+      radial-gradient(circle at 80% 0%, rgba(83, 110, 255, 0.2), transparent 45%),
+      linear-gradient(120deg, rgba(255, 255, 255, 0.03), rgba(11, 15, 20, 0));
+  }
+
+  .dark body {
+    background: #0b0f14;
+    color: #f6f4ef;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-6;
+  }
+
+  .surface {
+    @apply rounded-2xl border border-black/10 bg-white/80 backdrop-blur;
+  }
+
+  .dark .surface {
+    @apply border-white/10 bg-white/5;
+  }
+}

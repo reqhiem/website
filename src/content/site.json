@@ -1,0 +1,376 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-02-07",
+  "site": {
+    "title": "Joel Perca — AI & Software Engineer",
+    "tagline_es": "Ingeniería de software + investigación aplicada en IA para construir sistemas escalables con impacto real.",
+    "tagline_en": "Software engineering + applied AI research to build scalable, real-world systems.",
+    "domain": "reqhiem.dev",
+    "default_language": "en",
+    "languages": ["es", "en"],
+    "routes": [
+      { "path": "/", "label_es": "Inicio", "label_en": "Home" },
+      { "path": "/about", "label_es": "Sobre mí", "label_en": "About" },
+      { "path": "/experience", "label_es": "Experiencia", "label_en": "Experience" },
+      { "path": "/research", "label_es": "Investigación", "label_en": "Research" },
+      { "path": "/projects", "label_es": "Proyectos", "label_en": "Projects" },
+      { "path": "/contact", "label_es": "Contacto", "label_en": "Contact" }
+    ],
+    "seo": {
+      "description_es": "AI & Software Engineer. Investigación en video urbano, Agentic RAG, visual analytics, y sistemas empresariales (CRM/ERP) con automatización.",
+      "description_en": "AI & Software Engineer. Research in urban video understanding, agentic RAG, visual analytics, and enterprise systems (CRM/ERP) with automation.",
+      "keywords": [
+        "AI Engineer",
+        "ML Research",
+        "Agentic RAG",
+        "Computer Vision",
+        "Urban Computing",
+        "Data Visualization",
+        "Django",
+        "Django REST Framework",
+        "React",
+        "TypeScript",
+        "Docker",
+        "Kubernetes",
+        "Automation",
+        "RPA"
+      ],
+      "social": {
+        "linkedin": "https://www.linkedin.com/in/joelperca/",
+        "personal_site": "reqhiem.dev"
+      }
+    },
+    "ui": {
+      "style": {
+        "look_and_feel": "minimal, académico + industrial, tech",
+        "density": "medium",
+        "rounded": "lg",
+        "shadows": "soft",
+        "dark_mode": true
+      },
+      "cta_primary": {
+        "label_es": "Ver proyectos",
+        "label_en": "View projects",
+        "href": "/projects"
+      },
+      "cta_secondary": {
+        "label_es": "Descargar CV",
+        "label_en": "Download resume",
+        "href": "/assets/resume"
+      }
+    }
+  },
+  "person": {
+    "name": "Joel Perca",
+    "headline_es": "AI & Software Engineer",
+    "headline_en": "AI / Software Engineer",
+    "location": {
+      "city": "Rio de Janeiro",
+      "region": "RJ",
+      "country": "Brazil"
+    },
+    "emails": [
+      { "value": "joelperca.vc@gmail.com", "primary": true },
+      { "value": "joel.perca@hotmail.com", "primary": false }
+    ],
+    "phones": [{ "value": "+51 986 461 041", "primary": true }],
+    "links": [
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/joelperca/" },
+      { "label": "Website", "url": "https://reqhiem.dev/" },
+      { "label": "GitHub", "url": "https://github.com/reqhiem" }
+    ],
+    "summary_es": "Ingeniero de Software e Investigador de AI/ML con 4+ años de experiencia. Enfocado en sistemas escalables (microservicios, Docker/Kubernetes) e investigación aplicada (video urbano, visual analytics, Agentic RAG). Experiencia implementando CRM/ERP y automatizaciones (WhatsApp, generación de certificados) con impacto medible.",
+    "summary_en": "Software Engineer with experience in scalable web systems and applied AI/ML. Strong in Django/DRF, React/TypeScript, DevOps (Docker/Kubernetes) and automation. Research interests include urban video understanding, visual analytics, and agentic retrieval systems.",
+    "positioning": {
+      "primary_roles": [
+        "AI Engineer / Applied ML",
+        "Software Engineer (Backend/Full Stack)",
+        "Research Engineer (CV + Retrieval + Visual Analytics)"
+      ],
+      "domains": [
+        "Urban Computing / Urban Video",
+        "Enterprise Automation (CRM/ERP, RPA)",
+        "Data Visualization / Visual Analytics"
+      ],
+      "differentiators": [
+        "Puente fuerte entre investigación (papers/sistemas) y delivery de producto (CRM/ERP, automatizaciones).",
+        "Experiencia con stacks modernos + despliegue (Docker/K8s, CI/CD).",
+        "Liderazgo técnico y ownership end-to-end (arquitectura, implementación, UI, despliegue)."
+      ],
+      "proof_points": [
+        {
+          "metric": "90%",
+          "claim_es": "Reducción del tiempo en procesos operativos clave mediante automatización con Python.",
+          "claim_en": "Reduced time spent on key operational processes by 90% through Python automation."
+        },
+        {
+          "metric": "Multi-system",
+          "claim_es": "Integración de CRM/ERP, LMS y canales de mensajería para flujos de trabajo end-to-end.",
+          "claim_en": "Integrated CRM/ERP, LMS, and messaging channels into end-to-end workflows."
+        },
+        {
+          "metric": "Scalable",
+          "claim_es": "Arquitecturas con microservicios y CI/CD para despliegues confiables y escalables.",
+          "claim_en": "Microservices and CI/CD architecture for reliable, scalable deployments."
+        }
+      ]
+    }
+  },
+  "education": [
+    {
+      "degree_es": "PhD. en Matemática Aplicada y Ciencia de Datos (Admitido)",
+      "degree_en": "PhD in Applied Mathematics and Data Science (Admitted)",
+      "institution": "Fundação Getulio Vargas (FGV), EMAp",
+      "location": "Brasil",
+      "start": "2026-03",
+      "end": null,
+      "status": "planned/ongoing"
+    },
+    {
+      "degree_es": "MSc. en Matemática Aplicada y Ciencia de Datos",
+      "degree_en": "MSc in Applied Mathematics and Data Science",
+      "institution": "Fundação Getulio Vargas (FGV), EMAp",
+      "location": "Brasil",
+      "start": "2025-03",
+      "end": "2026-03",
+      "highlights": [
+        "Culminación del programa en un año; aceptado al PhD.",
+        "Cursos: Machine Learning, Deep Learning (PyTorch/HuggingFace), Reinforcement Learning."
+      ]
+    },
+    {
+      "degree_es": "Bachiller en Ciencias de la Computación",
+      "degree_en": "BSc in Computer Science",
+      "institution": "Universidad Nacional de San Agustín (UNSA)",
+      "location": "Perú",
+      "start": "2019-03",
+      "end": "2023-12",
+      "highlights": [
+        "2do lugar de promoción.",
+        "Cursos: IA, Tópicos Avanzados de IA, Cloud Computing."
+      ]
+    }
+  ],
+  "research": {
+    "interests": [
+      "Computer Vision",
+      "Urban Video Understanding",
+      "Agentic RAG",
+      "Visual Analytics",
+      "Spatiotemporal Data Exploration"
+    ],
+    "projects": [
+      {
+        "title": "UrbanClipAtlas: A Visual Analytics Framework for Event and Scene Retrieval in Urban Videos",
+        "role_es": "Líder de proyecto de investigación",
+        "role_en": "Research project lead",
+        "stack": ["Python", "LangChain", "Databricks", "Reranking (Cohere/Jina)", "Svelte", "Docker", "WebSockets", "Computer Vision"],
+        "description_es": "Framework basado en Agentic RAG para entendimiento y retrieval de escenas/eventos en videos urbanos con interfaz de chat y visual grounding.",
+        "description_en": "Agentic RAG-based framework for urban video understanding and event/scene retrieval with chat UI and visual grounding.",
+        "links": [],
+        "status": "active"
+      },
+      {
+        "title": "STRive: An association rule-based system for the exploration of spatiotemporal categorical data",
+        "role_es": "Colaborador en desarrollo de plataforma",
+        "role_en": "Contributor (platform development)",
+        "stack": ["D3.js", "TypeScript", "Python", "scikit-learn"],
+        "description_es": "Sistema para exploración de datos categóricos espacio-temporales basado en reglas de asociación; contribución en plataforma de visualización.",
+        "description_en": "Association-rule-based system for exploring spatiotemporal categorical data; contributed to visualization platform implementation.",
+        "links": [],
+        "status": "published/ongoing"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "company": "Grupo CEU Perú",
+      "title_es": "Líder Técnico",
+      "title_en": "Tech Lead",
+      "location": "Lima, PE",
+      "start": "2024-10",
+      "end": "2025-03",
+      "summary_es": "Encargado del área de transformación digital: implementación de proyectos, soporte y evolución de CRM/ERP, automatizaciones y arquitectura basada en microservicios.",
+      "highlights": [
+        "Liderazgo técnico en automatizaciones (chatbot conversacional para atención vía WhatsApp).",
+        "Gestión/control de infraestructura y arquitectura (Website, LMS, CRM, ERP, automatizaciones)."
+      ],
+      "tags": ["Leadership", "Automation", "Microservices", "CRM/ERP"]
+    },
+    {
+      "company": "Grupo CEU Perú",
+      "title_es": "Ingeniero de Software",
+      "title_en": "Software Engineer",
+      "location": "Lima, PE",
+      "start": "2023-12",
+      "end": "2024-10",
+      "summary_es": "Automatización de procesos e integración de sistemas; implementación de ERP/CRM con Django REST Framework y React.",
+      "highlights": [
+        "Implementación de ERP/CRM: Django REST Framework, React, Docker Compose.",
+        "Limpieza/procesamiento de datos históricos para segmentación de prospectos."
+      ],
+      "tags": ["Django", "DRF", "React", "Docker"]
+    },
+    {
+      "company": "NTT Data Europe & Latam",
+      "title_es": "Centers Junior — RPA Developer",
+      "title_en": "RPA Developer",
+      "location": "Trujillo/Arequipa, PE",
+      "start": "2024-01",
+      "end": "2024-12",
+      "summary_es": "Automatización de procesos con Microsoft Power Platform y SAP iRPA; apoyo en apps con Power Apps/Dataverse y flujos con Power Automate.",
+      "highlights": [
+        "Automatización de procesos de negocio (No/Low Code).",
+        "Soporte y capacitación interna sobre herramientas."
+      ],
+      "tags": ["RPA", "Power Platform", "Power Automate", "Power Apps"]
+    },
+    {
+      "company": "Bitmaker",
+      "title_es": "Software Developer",
+      "title_en": "Software Developer",
+      "location": "Arequipa, PE",
+      "start": "2022-10",
+      "end": "2023-09",
+      "summary_es": "Contribución a proyecto open-source 'estela' (backend DRF + frontend React/TS); desarrollo de endpoints y code reviews; mejoras en CLI para subida de archivos.",
+      "highlights": [
+        "Implementación de APIs REST y revisiones de código.",
+        "Optimización en estela-cli para mejores subidas en redes lentas."
+      ],
+      "tags": ["Open Source", "Django", "DRF", "React", "TypeScript"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Podchy",
+      "type": "Product/Platform",
+      "one_liner_es": "Code as a Service sobre Kubernetes para ejecutar código desde una interfaz web.",
+      "one_liner_en": "Kubernetes-based Code as a Service platform to run code via web UI.",
+      "stack": ["Kubernetes", "Python", "TypeScript", "Docker", "CI/CD (GitHub Actions)", "GCP"],
+      "highlights": [
+        "Arquitectura basada en microservicios con criterios de escalamiento.",
+        "Despliegue en Google Cloud Platform con CI/CD."
+      ],
+      "links": [],
+      "featured": true
+    },
+    {
+      "name": "Lamport",
+      "type": "System",
+      "one_liner_es": "Sistema de control de asistencia (Django/React/TypeScript) para evento; liderazgo de equipo y despliegue.",
+      "one_liner_en": "Attendance system (Django/React/TypeScript) for a conference; team lead and deployment.",
+      "stack": ["Django REST Framework", "React", "TypeScript", "Docker", "GCP"],
+      "highlights": [
+        "Arquitectura basada en microservicios con criterios de escalamiento.",
+        "Despliegue en Google Cloud Platform con CI/CD."
+      ],
+      "links": [],
+      "featured": true
+    },
+    {
+      "name": "Chronious",
+      "type": "Web App",
+      "one_liner_es": "Sistema de time tracking con NestJS + MongoDB + React + TypeScript.",
+      "one_liner_en": "Time tracking web app with NestJS, MongoDB, React, and TypeScript.",
+      "stack": ["Node.js", "NestJS", "MongoDB", "React", "TypeScript"],
+      "highlights": [],
+      "links": [],
+      "featured": false
+    },
+    {
+      "name": "Estela / Estela-CLI",
+      "type": "Open Source",
+      "one_liner_es": "Plataforma para gestionar trabajos de scraping; contribuciones en backend, frontend y CLI.",
+      "one_liner_en": "Platform for managing scraping jobs; contributions across backend, frontend, and CLI.",
+      "stack": ["Django", "Django REST Framework", "React", "TypeScript", "Kubernetes", "Python"],
+      "highlights": [],
+      "links": [],
+      "featured": false
+    }
+  ],
+  "awards": [
+    {
+      "title_es": "Segundo puesto — Concurso de Programación Competitiva",
+      "title_en": "2nd place — Competitive Programming Contest",
+      "org": "Universidad Nacional de San Agustín",
+      "year": "2022"
+    },
+    {
+      "title_es": "Rendimiento Académico Sobresaliente",
+      "title_en": "Outstanding Academic Performance",
+      "org": "Universidad Nacional de San Agustín",
+      "year": "2022"
+    },
+    {
+      "title_es": "Representante estudiantil — Escuela de Ciencias de la Computación",
+      "title_en": "Student representative — Computer Science School",
+      "org": "UNSA",
+      "year": "2023"
+    }
+  ],
+  "certifications": [
+    { "name": "Microsoft Certified: Power Platform Fundamentals" },
+    { "name": "AWS Academy Graduate — AWS Academy Cloud Architecting" },
+    { "name": "Fundamentals of Accelerated Data Science" }
+  ],
+  "languages": [
+    { "name": "Español", "level": "Nativo" },
+    { "name": "Inglés", "level": "Intermedio alto / Professional working" },
+    { "name": "Portugués", "level": "Intermedio" }
+  ],
+  "skills": {
+    "core": ["Python", "TypeScript", "Django", "Django REST Framework", "React", "Docker", "Kubernetes"],
+    "backend": ["Django ORM", "PostgreSQL", "Redis", "Celery", "WebSockets", "Auth (JWT/OAuth2)"],
+    "frontend": ["React Router", "Redux", "TailwindCSS", "Ant Design", "Vite"],
+    "devops": ["CI/CD (GitHub Actions)", "Linux", "GCP", "AWS"],
+    "ai_ml": ["PyTorch", "HuggingFace", "LangChain", "LlamaIndex", "PydanticAI", "Computer Vision", "Reranking"],
+    "data_viz": ["D3.js", "Visual Analytics"]
+  },
+  "content_assets": {
+    "resume_files": [
+      { "label": "CV (ES) — AI & Software Engineer", "file_ref": "turn0file0", "language": "es" },
+      { "label": "Resume (EN) — Full Stack Developer", "file_ref": "turn0file1", "language": "en" },
+      { "label": "Resume (EN) — Software Engineer", "file_ref": "turn0file2", "language": "en" },
+      { "label": "LinkedIn Profile Export (ES)", "file_ref": "turn0file3", "language": "es" }
+    ]
+  },
+  "insights_for_copy": {
+    "hero_bullets_es": [
+      "Investigo y construyo sistemas de IA aplicados (video urbano, retrieval, visual analytics).",
+      "Entrego producto end-to-end: backend + frontend + despliegue (Docker/K8s, CI/CD).",
+      "Automatización empresarial con impacto medible (WhatsApp, CRM/ERP, RPA)."
+    ],
+    "hero_bullets_en": [
+      "I research and build applied AI systems (urban video, retrieval, visual analytics).",
+      "I deliver end-to-end products: backend + frontend + deployment (Docker/K8s, CI/CD).",
+      "Enterprise automation with measurable impact (WhatsApp, CRM/ERP, RPA)."
+    ],
+    "recommended_featured_sections": [
+      {
+        "id": "featured-research",
+        "title_es": "Investigación destacada",
+        "title_en": "Featured research",
+        "items": ["UrbanClipAtlas", "STRive"]
+      },
+      {
+        "id": "featured-projects",
+        "title_es": "Proyectos destacados",
+        "title_en": "Featured projects",
+        "items": ["Podchy", "Lamport"]
+      },
+      {
+        "id": "impact",
+        "title_es": "Impacto",
+        "title_en": "Impact",
+        "items": ["Reducción 90% en emisión de certificados", "Automatización de mensajería WhatsApp", "Arquitecturas con microservicios"]
+      }
+    ],
+    "gaps_to_fill": [
+      "URL de GitHub",
+      "Links públicos de papers/demos (UrbanClipAtlas/STRive)",
+      "Capturas/figuras de proyectos (2–4 imágenes por proyecto)",
+      "Foto profesional (opcional)",
+      "Lista de talks/posts (si existen)"
+    ]
+  }
+}
