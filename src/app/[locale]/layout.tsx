@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google"; // Keep fonts for now
+import { Analytics } from '@vercel/analytics/next';
 import "../globals.css";
 
 const geistSans = Geist({
@@ -47,6 +48,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
