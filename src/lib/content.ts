@@ -13,12 +13,12 @@ export const getAwards = () => site.awards;
 export const getCertifications = () => site.certifications;
 export const getLanguages = () => site.languages;
 export const getSkills = () => site.skills;
-export const getInsights = () => site.insights_for_copy;
+export const getInsights = () => site.insightsForCopy;
 
 export const getRoutes = (lang: Language) =>
   site.site.routes.map((route) => ({
     path: route.path,
-    label: lang === "es" ? route.label_es : route.label_en,
+    label: lang === "es" ? route.labelEs : route.labelEn,
   }));
 
 export const getExperienceSorted = () => {
@@ -114,4 +114,4 @@ export const buildCanonical = (path: string) => {
 };
 
 export const getSeoDescription = (lang: Language) =>
-  lang === "es" ? site.site.seo.description_es : site.site.seo.description_en;
+  lang === "es" ? site.site.seo.descriptionEs : site.site.seo.descriptionEn;
