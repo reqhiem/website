@@ -31,11 +31,11 @@ export function Hero({ person, site, insights, lang }: HeroProps) {
     return () => ctx.revert();
   }, []);
 
-  const tagline = lang === "es" ? site.tagline_es : site.tagline_en;
-  const headline = lang === "es" ? person.headline_es : person.headline_en;
-  const bullets = lang === "es" ? insights.hero_bullets_es : insights.hero_bullets_en;
-  const ctaPrimary = lang === "es" ? site.ui.cta_primary.label_es : site.ui.cta_primary.label_en;
-  const ctaSecondary = lang === "es" ? site.ui.cta_secondary.label_es : site.ui.cta_secondary.label_en;
+  const tagline = lang === "es" ? site.taglineEs : site.taglineEn;
+  const headline = lang === "es" ? person.headlineEs : person.headlineEn;
+  const bullets = lang === "es" ? insights.heroBulletsEs : insights.heroBulletsEn;
+  const ctaPrimary = lang === "es" ? site.ui.ctaPrimary.labelEs : site.ui.ctaPrimary.labelEn;
+  const ctaSecondary = lang === "es" ? site.ui.ctaSecondary.labelEs : site.ui.ctaSecondary.labelEn;
 
   const withLang = (href: string) => {
     if (href.startsWith("http") || href.startsWith("/assets")) return href;
@@ -48,8 +48,8 @@ export function Hero({ person, site, insights, lang }: HeroProps) {
     return href;
   };
 
-  const ctaPrimaryHref = withLang(site.ui.cta_primary.href);
-  const ctaSecondaryHref = withLang(site.ui.cta_secondary.href);
+  const ctaPrimaryHref = withLang(site.ui.ctaPrimary.href);
+  const ctaSecondaryHref = withLang(site.ui.ctaSecondary.href);
 
   // Note: Using standard <a> tag for external or potentially asset links, 
   // but if internal I should use Link. 

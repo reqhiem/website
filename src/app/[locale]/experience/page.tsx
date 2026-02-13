@@ -22,9 +22,9 @@ export default async function ExperiencePage({ params }: { params: Promise<{ loc
   const timeline = [
     ...experience.map((item) => ({
       type: "work",
-      title: `${lang === "es" ? item.title_es : item.title_en} · ${item.company}`,
+      title: `${lang === "es" ? item.titleEs : item.titleEn} · ${item.company}`,
       subtitle: item.location,
-      summary: lang === "es" ? item.summary_es : (item as any).summary_en,
+      summary: lang === "es" ? item.summaryEs : (item as any).summaryEn,
       highlights: localizeList(item.highlights, lang),
       tags: item.tags,
       start: item.start,
@@ -32,7 +32,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ loc
     })),
     ...education.map((item) => ({
       type: "education",
-      title: lang === "es" ? item.degree_es : item.degree_en,
+      title: lang === "es" ? item.degreeEs : item.degreeEn,
       subtitle: `${item.institution} · ${item.location}`,
       summary: item.status ?? "",
       highlights: item.highlights ? localizeList(item.highlights, lang) : [],

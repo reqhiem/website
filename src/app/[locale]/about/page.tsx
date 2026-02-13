@@ -23,7 +23,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const skills = getSkills();
   const certifications = getCertifications();
   const languages = getLanguages();
-  const summary = lang === "es" ? person.summary_es : person.summary_en;
+  const summary = lang === "es" ? person.summaryEs : person.summaryEn;
 
   const githubLink = person.links.find((link) => link.label.toLowerCase().includes("github"));
   const githubUsername =

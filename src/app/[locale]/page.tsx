@@ -32,21 +32,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const featuredProjects = getFeaturedProjects();
   const featuredResearch = getFeaturedResearch();
   const experience = getExperienceSorted().slice(0, 4);
-  const proofPoints = person.positioning.proof_points;
+  const proofPoints = person.positioning.proofPoints;
   
-  const impactSection = insights.recommended_featured_sections.find((item) => item.id === "impact");
-  const researchSection = insights.recommended_featured_sections.find((item) => item.id === "featured-research");
-  const projectSection = insights.recommended_featured_sections.find((item) => item.id === "featured-projects");
+  const impactSection = insights.recommendedFeaturedSections.find((item) => item.id === "impact");
+  const researchSection = insights.recommendedFeaturedSections.find((item) => item.id === "featured-research");
+  const projectSection = insights.recommendedFeaturedSections.find((item) => item.id === "featured-projects");
   
   const experienceRoute = routes.find((route) => route.path === "/experience");
   const contactRoute = routes.find((route) => route.path === "/contact");
 
-  const impactTitle = lang === "es" ? impactSection?.title_es : impactSection?.title_en;
-  const researchTitle = lang === "es" ? researchSection?.title_es : researchSection?.title_en;
-  const projectTitle = lang === "es" ? projectSection?.title_es : projectSection?.title_en;
-  const experienceTitle = lang === "es" ? experienceRoute?.label_es : experienceRoute?.label_en;
-  const contactTitle = lang === "es" ? contactRoute?.label_es : contactRoute?.label_en;
-  const tagline = lang === "es" ? site.tagline_es : site.tagline_en;
+  const impactTitle = lang === "es" ? impactSection?.titleEs : impactSection?.titleEn;
+  const researchTitle = lang === "es" ? researchSection?.titleEs : researchSection?.titleEn;
+  const projectTitle = lang === "es" ? projectSection?.titleEs : projectSection?.titleEn;
+  const experienceTitle = lang === "es" ? experienceRoute?.labelEs : experienceRoute?.labelEn;
+  const contactTitle = lang === "es" ? contactRoute?.labelEs : contactRoute?.labelEn;
+  const tagline = lang === "es" ? site.taglineEs : site.taglineEn;
 
   return (
     <>
@@ -63,7 +63,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <p className="text-3xl font-semibold text-[color:var(--color-accent)]">{point.metric}</p>
                 </div>
                 <p className="mt-3 text-sm text-black/70 dark:text-white/70">
-                  {lang === "es" ? point.claim_es : point.claim_en}
+                  {lang === "es" ? point.claimEs : point.claimEn}
                 </p>
               </Card>
             ))}
@@ -95,11 +95,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {experience.map((item, index) => (
               <TimelineItem
                 key={index}
-                title={`${lang === "es" ? item.title_es : item.title_en} · ${item.company}`}
+                title={`${lang === "es" ? item.titleEs : item.titleEn} · ${item.company}`}
                 subtitle={item.location}
                 meta={formatDateRange(item.start, item.end, lang)}
               >
-                <p>{lang === "es" ? item.summary_es : (item as any).summary_en}</p>
+                <p>{lang === "es" ? item.summaryEs : (item as any).summaryEn}</p>
                 <ul className="list-disc pl-4">
                   {localizeList(item.highlights, lang).map((highlight: string, hIndex) => (
                     <li key={hIndex}>{highlight}</li>
