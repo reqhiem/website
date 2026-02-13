@@ -77,17 +77,98 @@ export function ContactContent({ person, email, lang }: ContactContentProps) {
       <Card>
         <h3 className="text-xl font-semibold">Quick message</h3>
         <p className="mt-2 text-sm text-black/70 dark:text-white/70">
-          Prefer a short intro? This opens your email client with a pre-filled message.
+          Prefer a short intro? Send me a message directly from here.
         </p>
-        <form className="mt-6 space-y-3" action={`mailto:${email}`} method="post" encType="text/plain">
-          <input className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" type="text" name="name" placeholder="Name" aria-label="Name" />
-          <input className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" type="email" name="email" placeholder="Email" aria-label="Email" />
-          <textarea className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" name="message" rows={4} placeholder="Message" aria-label="Message"></textarea>
-          <button className="rounded-full bg-[color:var(--color-accent)] px-6 py-2 text-sm font-semibold text-white" type="submit">
-            Send message
-          </button>
-        </form>
+        <ContactForm />
       </Card>
     </div>
+  );
+}
+
+function ContactForm() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) throw new Error("Failed to send message");
+      
+      setStatus("success");
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+    }
+  }
+
+  return (
+    <form className="mt-6 space-y-3" onSubmit={handleSubmit}>
+      <input 
+        className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" 
+        type="text" 
+        name="name" 
+        placeholder="Name" 
+        aria-label="Name" 
+        required 
+        disabled={status === "loading" || status === "success"}
+      />
+      <input 
+        className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" 
+        type="email" 
+        name="email" 
+        placeholder="Email" 
+        aria-label="Email" 
+        required 
+        disabled={status === "loading" || status === "success"}
+      />
+      <textarea 
+        className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" 
+        name="message" 
+        rows={4} 
+        placeholder="Message" 
+        aria-label="Message" 
+        required
+        disabled={status === "loading" || status === "success"}
+      ></textarea>
+      
+      <div className="flex items-center gap-3">
+        <button 
+          className="rounded-full bg-[color:var(--color-accent)] px-6 py-2 text-sm font-semibold text-white disabled:opacity-50" 
+          type="submit"
+          disabled={status === "loading" || status === "success"}
+        >
+          {status === "loading" ? "Sending..." : status === "success" ? "Message Sent" : "Send message"}
+        </button>
+        
+        {status === "success" && (
+          <span className="text-sm text-green-600 dark:text-green-400">
+            Thanks for reaching out! I'll get back to you soon.
+          </span>
+        )}
+        
+        {status === "error" && (
+          <span className="text-sm text-red-600 dark:text-red-400">
+            Something went wrong. Please try again or email me directly.
+          </span>
+        )}
+      </div>
+    </form>
   );
 }
