@@ -3,22 +3,11 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google"; // Keep fonts for now
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import "../globals.css";
 import siteData from '@/content/site.json';
 import { JsonLd } from './components/json-ld';
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 // Static metadata removed in favor of generateMetadata
 
@@ -125,9 +114,7 @@ export default async function RootLayout({
       <head>
         <JsonLd data={jsonLdData} />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

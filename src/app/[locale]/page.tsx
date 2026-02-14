@@ -9,7 +9,7 @@ import {
   localizeList,
   type Language
 } from "@/lib/content";
-import { Hero } from "@/components/Hero";
+import { Hero } from "@/components/hero/Hero";
 import { Section } from "@/components/Section";
 import { Card } from "@/components/Card";
 import { Timeline } from "@/components/Timeline";
