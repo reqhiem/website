@@ -74,7 +74,7 @@ export function Hero({ person, site, insights, lang }: HeroProps) {
             className="flex flex-wrap gap-4 pt-2"
           >
             <a 
-              href="#projects" 
+              href="/projects" 
               className="group relative px-6 py-3 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] font-medium text-sm tracking-wide uppercase rounded-sm hover:bg-[color:var(--color-accent)] transition-colors flex items-center gap-2"
             >
               <Terminal className="w-4 h-4" />

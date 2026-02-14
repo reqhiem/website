@@ -2,7 +2,14 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
+import { Space_Grotesk } from "next/font/google";
 import type { Metadata } from "next";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["300", "400", "500", "600", "700"],
+});
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import "../globals.css";
@@ -114,7 +121,7 @@ export default async function RootLayout({
       <head>
         <JsonLd data={jsonLdData} />
       </head>
-      <body className="antialiased">
+      <body className={`antialiased ${spaceGrotesk.variable} ${spaceGrotesk.className}`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
