@@ -118,13 +118,13 @@
   },
   "education": [
     {
-      "degreeEs": "PhD. en Matemática Aplicada y Ciencia de Datos (Admitido)",
-      "degreeEn": "PhD in Applied Mathematics and Data Science (Admitted)",
+      "degreeEs": "PhD. en Matemática Aplicada y Ciencia de Datos",
+      "degreeEn": "PhD in Applied Mathematics and Data Science",
       "institution": "Fundação Getulio Vargas (FGV), EMAp",
       "location": "Brasil",
       "start": "2026-03",
       "end": null,
-      "status": "planned/ongoing"
+      "status": "ongoing"
     },
     {
       "degreeEs": "MSc. en Matemática Aplicada y Ciencia de Datos",
