@@ -14,9 +14,7 @@ export function Footer({ lang }: FooterProps) {
       <div className="container-page flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="uppercase tracking-[0.2em] text-xs">{person.name}</p>
-          <p className="opacity-70">
-            {lang === "es" ? "Construido con Next.js + Tailwind" : "Built with Next.js + Tailwind"} · {year}
-          </p>
+          <p className="opacity-70">{lang === "es" ? person.headlineEs : person.headlineEn} · {year}</p>
         </div>
         <div className="flex flex-wrap gap-4">
           {person.links.map((link) => (
