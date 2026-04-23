@@ -66,7 +66,7 @@ export default async function AboutPage() {
           <div className="grid gap-6 md:grid-cols-2">
             {Object.entries(skills).map(([category, items]) => (
               <Card key={category}>
-                <p className="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] dark:text-white/60">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
                   {category}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">

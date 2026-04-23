@@ -13,7 +13,7 @@ export default function NotFound() {
             Page not found
           </p>
           <Link
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-[color:var(--color-accent)] px-6 py-3 text-sm font-semibold text-white"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white"
             href="/"
           >
             <ArrowLeft size={16} />

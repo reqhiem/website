@@ -17,6 +17,7 @@ import { ResearchCard } from "@/components/ResearchCard";
 import { Activity } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 export default function HomePage() {
   const site = getSite();
@@ -110,12 +111,12 @@ export default function HomePage() {
                 {person.emails[0].value}
               </p>
             </div>
-            <a
+            <Link
               className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white"
               href="/contact"
             >
               {contactTitle}
-            </a>
+            </Link>
           </Card>
         </Section>
       </main>

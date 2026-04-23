@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { FileText, ArrowRight, Terminal } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import HeroPortrait from './HeroPortrait';
 
 const HeroBackground = dynamic(() => import('./HeroBackground'), {
@@ -29,8 +30,8 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="flex items-center gap-3"
             >
-              <div className="h-[1px] w-12 bg-[color:var(--color-accent)]/50" />
-              <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-[color:var(--color-muted)]">
+              <div className="h-[1px] w-12 bg-accent/50" />
+              <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-muted">
                 System Architecture & AI
               </span>
             </motion.div>
@@ -43,8 +44,8 @@ export function Hero() {
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.0] tracking-tight -ml-[2px]">
                 Software <br/>
                 Engineering <br/>
-                <span className="text-[color:var(--color-muted)] font-light italic">+</span> <br/>
-                <span className="text-[color:var(--color-accent)]">
+                <span className="text-muted font-light italic">+</span> <br/>
+                <span className="text-accent">
                   Applied AI
                 </span>
               </h1>
@@ -54,7 +55,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg md:text-xl text-[color:var(--color-muted)] max-w-lg leading-relaxed border-l-2 border-[color:var(--color-accent)]/20 pl-6"
+              className="text-lg md:text-xl text-muted max-w-lg leading-relaxed border-l-2 border-accent/20 pl-6"
             >
               I build scalable, real-world AI systems — merging clean engineering with cutting-edge research to bridge the gap between prototype and production.
             </motion.p>
@@ -66,18 +67,18 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-wrap gap-4 pt-2"
           >
-            <a 
-              href="/projects" 
-              className="group relative px-6 py-3 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] font-medium text-sm tracking-wide uppercase rounded-sm hover:bg-[color:var(--color-accent)] transition-colors flex items-center gap-2"
+            <Link
+              href="/projects"
+              className="group relative px-6 py-3 bg-ink text-paper font-medium text-sm tracking-wide uppercase rounded-sm hover:bg-accent transition-colors flex items-center gap-2"
             >
               <Terminal className="w-4 h-4" />
               Initialize Projects
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-            
-            <a 
-              href="/resume.pdf" 
-              className="px-6 py-3 bg-transparent border border-[color:var(--color-ink)]/20 text-[color:var(--color-ink)] font-medium text-sm tracking-wide uppercase rounded-sm hover:border-[color:var(--color-ink)] transition-colors flex items-center gap-2"
+            </Link>
+
+            <a
+              href="/resume.pdf"
+              className="px-6 py-3 bg-transparent border border-ink/20 text-ink font-medium text-sm tracking-wide uppercase rounded-sm hover:border-ink transition-colors flex items-center gap-2"
             >
               <FileText className="w-4 h-4" />
               System Log / Resume

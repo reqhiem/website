@@ -127,7 +127,7 @@ export function GithubCharts({ languagesChart, activityPoints }: GithubChartsPro
 
       <div className="mt-8">
         <h3 className="text-lg font-semibold">Activity pulse</h3>
-        <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] dark:text-white/60">
+        <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
           Last 6 months · contributions
         </p>
         <div className="relative mt-6 h-32 w-full">
@@ -149,7 +149,7 @@ export function GithubCharts({ languagesChart, activityPoints }: GithubChartsPro
                         showCount ? "opacity-100" : "opacity-0"
                       } ${
                         isLatest
-                          ? "font-semibold text-[color:var(--color-accent)]"
+                          ? "font-semibold text-accent"
                           : "text-black/60 dark:text-white/70"
                       }`}
                     >
@@ -158,15 +158,15 @@ export function GithubCharts({ languagesChart, activityPoints }: GithubChartsPro
                     <div
                       className={`w-3 rounded-full transition-colors ${
                         isHovered || isLatest
-                          ? "bg-[color:var(--color-accent)]"
-                          : "bg-[color:var(--color-accent)]/40"
+                          ? "bg-accent"
+                          : "bg-accent/40"
                       }`}
                       style={{ height: `${activityScale(point.count)}px` }}
                     />
                     <span
                       className={`text-[10px] uppercase tracking-[0.2em] ${
                         isLatest
-                          ? "text-[color:var(--color-accent)]"
+                          ? "text-accent"
                           : "text-black/50 dark:text-white/50"
                       }`}
                     >
