@@ -53,8 +53,10 @@ export default function HomePage() {
             {proofPoints.map((point, index) => (
               <Card key={index}>
                 <div className="flex items-center gap-3">
-                  <Activity size={20} className="text-[color:var(--color-accent)]" />
-                  <p className="text-3xl font-semibold text-[color:var(--color-accent)]">{point.metric}</p>
+                  <Activity size={20} className="text-accent" />
+                  <p className="text-3xl font-semibold text-accent">
+                    {point.metric}
+                  </p>
                 </div>
                 <p className="mt-3 text-sm text-black/70 dark:text-white/70">
                   {point.claim}
@@ -75,10 +77,7 @@ export default function HomePage() {
         <Section title={projectTitle} subtitle={projectTitle}>
           <div className="grid gap-6 md:grid-cols-2">
             {featuredProjects.map((project, index) => (
-              <ProjectCard
-                key={index}
-                project={project}
-              />
+              <ProjectCard key={index} project={project} />
             ))}
           </div>
         </Section>
@@ -107,7 +106,9 @@ export default function HomePage() {
           <Card className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h3 className="text-2xl font-semibold">{tagline}</h3>
-              <p className="mt-2 text-sm text-black/70 dark:text-white/70">{person.emails[0].value}</p>
+              <p className="mt-2 text-sm text-black/70 dark:text-white/70">
+                {person.emails[0].value}
+              </p>
             </div>
             <a
               className="rounded-full bg-[color:var(--color-accent)] px-6 py-3 text-sm font-semibold text-white"
