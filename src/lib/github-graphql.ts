@@ -17,19 +17,41 @@ export type GithubRepoSummary = {
 export type GithubInsightsData = {
   profile: GithubProfile;
   summary: { totalRepos: number; totalStars: number; totalForks: number };
-  topRepos: { name: string; url: string; stars: number }[];
-  recentRepos: { name: string; url: string; pushed_at: string }[];
   languagesChart: { name: string; bytes: number; percent: number }[];
   activityPoints: { month: string; count: number }[];
 };
 
 const GRAPHQL_ENDPOINT = "https://api.github.com/graphql";
 
+type GithubLanguageEdge = { size: number; node: { name: string } };
+type GithubRepoNode = {
+  name: string;
+  url: string;
+  stargazerCount?: number;
+  forkCount?: number;
+  pushedAt?: string;
+  isPrivate?: boolean;
+  languages?: { edges?: GithubLanguageEdge[] };
+};
+type GithubContributionDay = { date: string; contributionCount: number };
+type GithubContributionWeek = { contributionDays: GithubContributionDay[] };
+type GithubGraphQLResponse = {
+  data?: {
+    user?: {
+      login: string;
+      name?: string | null;
+      followers?: { totalCount: number };
+      repositories?: { totalCount: number; nodes?: GithubRepoNode[] };
+      contributionsCollection?: {
+        contributionCalendar?: { weeks?: GithubContributionWeek[] };
+      };
+    } | null;
+  };
+};
+
 const emptyInsights = (login = "reqhiem"): GithubInsightsData => ({
   profile: { login, name: login, followers: 0 },
   summary: { totalRepos: 0, totalStars: 0, totalForks: 0 },
-  topRepos: [],
-  recentRepos: [],
   languagesChart: [],
   activityPoints: [],
 });
@@ -94,11 +116,11 @@ export const fetchGithubInsights = async ({
     });
 
     if (!response.ok) return emptyInsights(username);
-    const json = await response.json();
+    const json = (await response.json()) as GithubGraphQLResponse;
     const user = json?.data?.user;
     if (!user) return emptyInsights(username);
 
-    const reposAll: GithubRepoSummary[] = (user.repositories?.nodes ?? []).map((repo: any) => ({
+    const reposAll: GithubRepoSummary[] = (user.repositories?.nodes ?? []).map((repo) => ({
       name: repo.name,
       url: repo.url,
       stars: repo.stargazerCount ?? 0,
@@ -106,7 +128,7 @@ export const fetchGithubInsights = async ({
       pushedAt: repo.pushedAt ?? "",
       isPrivate: repo.isPrivate ?? false,
       languages:
-        repo.languages?.edges?.map((edge: any) => ({
+        repo.languages?.edges?.map((edge) => ({
           name: edge.node.name,
           size: edge.size,
         })) ?? [],
@@ -117,9 +139,6 @@ export const fetchGithubInsights = async ({
       totalStars: reposAll.reduce((acc, repo) => acc + repo.stars, 0),
       totalForks: reposAll.reduce((acc, repo) => acc + repo.forks, 0),
     };
-
-    const topRepos: { name: string; url: string; stars: number }[] = [];
-    const recentRepos: { name: string; url: string; pushed_at: string }[] = [];
 
     const languageTotals: Record<string, number> = {};
     reposAll.forEach((repo) => {
@@ -144,9 +163,11 @@ export const fetchGithubInsights = async ({
       activityMap.set(key, 0);
     }
 
-    const days = user.contributionsCollection?.contributionCalendar?.weeks
-      ?.flatMap((week: any) => week.contributionDays) ?? [];
-    days.forEach((day: any) => {
+    const days: GithubContributionDay[] =
+      user.contributionsCollection?.contributionCalendar?.weeks?.flatMap(
+        (week) => week.contributionDays,
+      ) ?? [];
+    days.forEach((day) => {
       const key = day.date.slice(0, 7);
       if (activityMap.has(key)) {
         activityMap.set(key, (activityMap.get(key) ?? 0) + day.contributionCount);
@@ -164,8 +185,6 @@ export const fetchGithubInsights = async ({
         followers: user.followers?.totalCount ?? 0,
       },
       summary,
-      topRepos,
-      recentRepos,
       languagesChart,
       activityPoints,
     };

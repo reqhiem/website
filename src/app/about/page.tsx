@@ -3,8 +3,6 @@ import {
   getSkills,
   getCertifications,
   getLanguages,
-  localizeList,
-  type Language
 } from "@/lib/content";
 import { getGithubUsername } from "@/lib/github";
 import { fetchGithubInsights } from "@/lib/github-graphql";
@@ -15,15 +13,12 @@ import { GithubInsights } from "@/components/GithubInsights";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  const lang = locale as Language;
-
+export default async function AboutPage() {
   const person = getPerson();
   const skills = getSkills();
   const certifications = getCertifications();
   const languages = getLanguages();
-  const summary = lang === "es" ? person.summaryEs : person.summaryEn;
+  const summary = person.summary;
 
   const githubLink = person.links.find((link) => link.label.toLowerCase().includes("github"));
   const githubUsername =
@@ -39,17 +34,17 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
   return (
     <>
-      <Navbar lang={lang} />
+      <Navbar />
       <main className="min-h-[70vh]">
-        <Section title={lang === "es" ? "Sobre mí" : "About"} subtitle={lang === "es" ? "Perfil" : "Profile"}>
+        <Section title="About" subtitle="Profile">
           <Card>
             <p className="text-lg text-black/70 dark:text-white/70">{summary}</p>
           </Card>
         </Section>
 
-        <Section title={lang === "es" ? "Lo que hago" : "What I do"} subtitle={lang === "es" ? "Diferenciadores" : "Differentiators"}>
+        <Section title="What I do" subtitle="Differentiators">
           <div className="grid gap-6 md:grid-cols-3">
-            {localizeList(person.positioning.differentiators, lang).map((item, index) => (
+            {person.positioning.differentiators.map((item, index) => (
               <Card key={index}>
                 <p className="text-sm text-black/70 dark:text-white/70">{item}</p>
               </Card>
@@ -57,34 +52,21 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
         </Section>
 
-        <Section title={lang === "es" ? "Insights de GitHub" : "GitHub insights"} subtitle={lang === "es" ? "Señal de actividad" : "General activity signal"}>
+        <Section title="GitHub insights" subtitle="General activity signal">
           <GithubInsights
             profile={insights.profile}
             repoUrl={githubRepoUrl}
+            summary={insights.summary}
             languagesChart={insights.languagesChart}
             activityPoints={insights.activityPoints}
-            summary={insights.summary}
-            labels={{
-              repoLabel: "Profile",
-              totalReposLabel: "Total repos",
-              totalStarsLabel: "Total stars",
-              totalForksLabel: "Total forks",
-              followersLabel: "Followers",
-              languagesLabel: "Languages",
-              topLabel: "Top 6",
-              noLanguages: "Language data unavailable.",
-              noActivity: "Activity data unavailable.",
-              activityLabel: "Activity pulse",
-              activityHelper: "Last 6 months · contributions",
-            }}
           />
         </Section>
 
-        <Section title={lang === "es" ? "Habilidades" : "Skills"} subtitle={lang === "es" ? "Capacidades" : "Capabilities"}>
+        <Section title="Skills" subtitle="Capabilities">
           <div className="grid gap-6 md:grid-cols-2">
             {Object.entries(skills).map(([category, items]) => (
               <Card key={category}>
-                <p className="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] dark:text-white/60">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
                   {category}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -97,10 +79,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
         </Section>
 
-        <Section title={lang === "es" ? "Idiomas y certificaciones" : "Languages & certifications"} subtitle={lang === "es" ? "Credenciales" : "Credentials"}>
+        <Section title="Languages & certifications" subtitle="Credentials">
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
-              <h3 className="text-lg font-semibold">{lang === "es" ? "Idiomas" : "Languages"}</h3>
+              <h3 className="text-lg font-semibold">Languages</h3>
               <ul className="mt-4 space-y-2 text-sm text-black/70 dark:text-white/70">
                 {languages.map((item) => (
                   <li key={item.name}>{item.name} · {item.level}</li>
@@ -108,7 +90,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               </ul>
             </Card>
             <Card>
-              <h3 className="text-lg font-semibold">{lang === "es" ? "Certificaciones" : "Certifications"}</h3>
+              <h3 className="text-lg font-semibold">Certifications</h3>
               <ul className="mt-4 space-y-2 text-sm text-black/70 dark:text-white/70">
                 {certifications.map((item) => (
                   <li key={item.name}>{item.name}</li>
@@ -118,7 +100,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
         </Section>
       </main>
-      <Footer lang={lang} />
+      <Footer />
     </>
   );
 }

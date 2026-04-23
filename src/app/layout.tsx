@@ -1,7 +1,3 @@
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import { routing } from '../../i18n/routing';
 import { Space_Grotesk } from "next/font/google";
 import type { Metadata } from "next";
 
@@ -12,25 +8,16 @@ const spaceGrotesk = Space_Grotesk({
 });
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import "../globals.css";
+import "./globals.css";
 import siteData from '@/content/site.json';
 import { JsonLd } from './components/json-ld';
 
-// Static metadata removed in favor of generateMetadata
-
-interface RootLayoutProps {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}
-
-export async function generateMetadata({ params }: Omit<RootLayoutProps, 'children'>): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata(): Promise<Metadata> {
   const t = siteData.site;
-  const isEs = locale === 'es';
-  
+
   const title = t.title;
-  const description = isEs ? t.seo.descriptionEs : t.seo.descriptionEn;
-  const url = `https://${t.domain}/${locale === 'en' ? '' : locale}`;
+  const description = t.seo.description;
+  const url = `https://${t.domain}`;
 
   return {
     title: {
@@ -41,17 +28,12 @@ export async function generateMetadata({ params }: Omit<RootLayoutProps, 'childr
     metadataBase: new URL(`https://${t.domain}`),
     alternates: {
       canonical: url,
-      languages: {
-        'en': `https://${t.domain}`,
-        'es': `https://${t.domain}/es`,
-      },
     },
     openGraph: {
       title,
       description,
       url,
       siteName: title,
-      locale: locale,
       type: 'website',
     },
     twitter: {
@@ -73,31 +55,20 @@ export async function generateMetadata({ params }: Omit<RootLayoutProps, 'childr
   };
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-  params
-}: RootLayoutProps) {
-  const { locale } = await params;
-
-  // Ensure that the incoming `locale` is valid
-  if (!(routing.locales as readonly string[]).includes(locale)) {
-    notFound();
-  }
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
-
+}: {
+  children: React.ReactNode;
+}) {
   // Prepare structured data
   const t = siteData.site;
   const person = siteData.person;
-  const isEs = locale === 'es';
 
   const jsonLdData = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: person.name,
-    jobTitle: isEs ? person.headlineEs : person.headlineEn,
+    jobTitle: person.headline,
     url: `https://${t.domain}`,
     sameAs: person.links.map((link: { url: string }) => link.url),
     knowsAbout: [
@@ -105,7 +76,7 @@ export default async function RootLayout({
       ...siteData.skills.aiMl,
       ...siteData.skills.dataViz
     ],
-    description: isEs ? person.summaryEs : person.summaryEn,
+    description: person.summary,
     worksFor: {
         '@type': 'Organization',
         name: siteData.experience[0].company
@@ -117,14 +88,12 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang={locale}>
+    <html lang="en">
       <head>
         <JsonLd data={jsonLdData} />
       </head>
       <body className={`antialiased ${spaceGrotesk.variable} ${spaceGrotesk.className}`}>
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

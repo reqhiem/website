@@ -46,7 +46,7 @@ export function Section({ title, subtitle, children, id }: SectionProps) {
       <div className="container-page">
         {title ? (
           <div className="mb-10" data-gsap-item>
-            <p className="text-xs uppercase tracking-[0.3em] text-[color:var(--color-muted)] dark:text-white/60">
+            <p className="text-xs uppercase tracking-[0.3em] text-muted dark:text-white/60">
               {subtitle ?? ""}
             </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>

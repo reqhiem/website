@@ -2,8 +2,6 @@ import {
   getExperienceSorted,
   formatDateRange,
   getEducation,
-  localizeList,
-  type Language
 } from "@/lib/content";
 import { Section } from "@/components/Section";
 import { Timeline } from "@/components/Timeline";
@@ -12,30 +10,27 @@ import { Badge } from "@/components/Badge";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-export default async function ExperiencePage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  const lang = locale as Language;
-  
+export default function ExperiencePage() {
   const experience = getExperienceSorted();
   const education = getEducation();
 
   const timeline = [
     ...experience.map((item) => ({
       type: "work",
-      title: `${lang === "es" ? item.titleEs : item.titleEn} · ${item.company}`,
+      title: `${item.title} · ${item.company}`,
       subtitle: item.location,
-      summary: lang === "es" ? item.summaryEs : (item as any).summaryEn,
-      highlights: localizeList(item.highlights, lang),
+      summary: item.summary,
+      highlights: item.highlights,
       tags: item.tags,
       start: item.start,
       end: item.end,
     })),
     ...education.map((item) => ({
       type: "education",
-      title: lang === "es" ? item.degreeEs : item.degreeEn,
+      title: item.degree,
       subtitle: `${item.institution} · ${item.location}`,
       summary: item.status ?? "",
-      highlights: item.highlights ? localizeList(item.highlights, lang) : [],
+      highlights: item.highlights ?? [],
       tags: ["Academia"],
       start: item.start,
       end: item.end,
@@ -47,21 +42,18 @@ export default async function ExperiencePage({ params }: { params: Promise<{ loc
     return b.start.localeCompare(a.start);
   });
 
-  const pageTitle = lang === "es" ? "Experiencia" : "Experience";
-  const pageSubtitle = lang === "es" ? "Cronología" : "Timeline";
-
   return (
     <>
-      <Navbar lang={lang} />
+      <Navbar />
       <main className="min-h-[70vh]">
-        <Section title={pageTitle} subtitle={pageSubtitle}>
+        <Section title="Experience" subtitle="Timeline">
           <Timeline>
             {timeline.map((item, index) => (
               <TimelineItem
                 key={index}
                 title={item.title}
                 subtitle={item.subtitle}
-                meta={formatDateRange(item.start, item.end, lang)}
+                meta={formatDateRange(item.start, item.end)}
               >
                 {item.summary ? <p>{item.summary}</p> : null}
                 {item.highlights.length ? (
@@ -81,7 +73,7 @@ export default async function ExperiencePage({ params }: { params: Promise<{ loc
           </Timeline>
         </Section>
       </main>
-      <Footer lang={lang} />
+      <Footer />
     </>
   );
 }

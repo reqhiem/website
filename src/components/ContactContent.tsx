@@ -3,17 +3,21 @@
 import { Mail, MapPin, Linkedin, Clipboard } from "lucide-react";
 import { Card } from "./Card";
 import { useState } from "react";
+import type { SiteData } from "@/lib/content";
+
+type Person = SiteData["person"];
 
 interface ContactContentProps {
-  person: any;
+  person: Person;
   email: string;
-  lang: "es" | "en";
 }
 
-export function ContactContent({ person, email, lang }: ContactContentProps) {
+export function ContactContent({ person, email }: ContactContentProps) {
   const [copyLabel, setCopyLabel] = useState("Copy email");
-  
-  const linkedin = person.links.find((link: any) => link.label.toLowerCase().includes("linkedin"));
+
+  const linkedin = person.links.find((link) =>
+    link.label.toLowerCase().includes("linkedin"),
+  );
   
   const handleCopy = async () => {
     try {
@@ -38,19 +42,19 @@ export function ContactContent({ person, email, lang }: ContactContentProps) {
           </p>
           <div className="mt-6 space-y-4 text-sm">
             <div className="flex items-center gap-3">
-              <Mail size={18} className="text-[color:var(--color-accent)]" />
+              <Mail size={18} className="text-accent" />
               <span>{email}</span>
             </div>
             {linkedin ? (
               <div className="flex items-center gap-3">
-                <Linkedin size={18} className="text-[color:var(--color-accent)]" />
+                <Linkedin size={18} className="text-accent" />
                 <a className="underline" href={linkedin.url} target="_blank" rel="noreferrer">
                   {linkedin.url}
                 </a>
               </div>
             ) : null}
             <div className="flex items-center gap-3">
-              <MapPin size={18} className="text-[color:var(--color-accent)]" />
+              <MapPin size={18} className="text-accent" />
               <span>Available for global remote and research collaborations.</span>
             </div>
           </div>
@@ -64,7 +68,7 @@ export function ContactContent({ person, email, lang }: ContactContentProps) {
               {copyLabel}
             </button>
             <a
-              className="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-accent)] px-5 py-2 text-xs uppercase tracking-[0.2em] text-white"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-xs uppercase tracking-[0.2em] text-white"
               href={`mailto:${email}`}
             >
               <Mail size={14} />
@@ -150,7 +154,7 @@ function ContactForm() {
       
       <div className="flex items-center gap-3">
         <button 
-          className="rounded-full bg-[color:var(--color-accent)] px-6 py-2 text-sm font-semibold text-white disabled:opacity-50" 
+          className="rounded-full bg-accent px-6 py-2 text-sm font-semibold text-white disabled:opacity-50" 
           type="submit"
           disabled={status === "loading" || status === "success"}
         >
@@ -159,7 +163,7 @@ function ContactForm() {
         
         {status === "success" && (
           <span className="text-sm text-green-600 dark:text-green-400">
-            Thanks for reaching out! I'll get back to you soon.
+            Thanks for reaching out! I&apos;ll get back to you soon.
           </span>
         )}
         

@@ -3,11 +3,19 @@
 import { motion } from 'framer-motion';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
+const configurePortraitTexture = (tex: THREE.Texture | THREE.Texture[]): void => {
+  const t = Array.isArray(tex) ? tex[0] : tex;
+  if (!t) return;
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.premultiplyAlpha = true;
+  t.needsUpdate = true;
+};
+
 function PortraitPlane({ isHover }: { isHover: boolean }) {
-  const texture = useTexture('/images/frontal_portrait.webp');
+  const texture = useTexture('/images/frontal_portrait.webp', configurePortraitTexture);
   const meshRef = useRef<THREE.Mesh>(null);
   const focusRef = useRef<THREE.Group>(null);
   const scanRef = useRef<THREE.Mesh>(null);
@@ -20,12 +28,6 @@ function PortraitPlane({ isHover }: { isHover: boolean }) {
     const aspect = img.width / img.height;
     const targetHeight = 5.6;
     return { width: targetHeight * aspect, height: targetHeight };
-  }, [texture]);
-
-  useEffect(() => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.premultiplyAlpha = true;
-    texture.needsUpdate = true;
   }, [texture]);
 
   useFrame(({ mouse, clock }) => {
@@ -168,13 +170,6 @@ export default function HeroPortrait() {
               <PortraitPlane isHover={isHover} />
             </Suspense>
           </Canvas>
-
-          {/* HUD labels (kept inside the portrait bounds) */}
-          <div className="pointer-events-none absolute inset-[8%] hidden md:block text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
-            <div className="absolute left-0 top-0">subject: joel_perca</div>
-            <div className="absolute left-0 top-4">timestamp: 2026-02-14 10:24:18</div>
-            <div className="absolute right-0 bottom-0">match: 99.2%</div>
-          </div>
         </div>
       </motion.div>
     </div>

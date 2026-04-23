@@ -10,7 +10,7 @@ interface TimelineItemProps {
 export function TimelineItem({ title, subtitle, meta, children }: TimelineItemProps) {
   return (
     <div className="grid gap-4 md:grid-cols-[140px_1fr]">
-      <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] dark:text-white/60">
+      <div className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
         {meta}
       </div>
       <div>

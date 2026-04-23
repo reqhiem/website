@@ -6,32 +6,30 @@ interface ProjectCardProps {
   project: {
     name: string;
     type: string;
-    oneLinerEs?: string;
-    oneLinerEn?: string;
+    oneLiner?: string;
     featured?: boolean;
     stack: string[];
     highlights?: string[];
   };
-  lang: "es" | "en";
 }
 
-export function ProjectCard({ project, lang }: ProjectCardProps) {
-  const description = lang === "es" ? project.oneLinerEs : project.oneLinerEn;
+export function ProjectCard({ project }: ProjectCardProps) {
+  const description = project.oneLiner;
 
   return (
     <Card className="flex h-full flex-col gap-4">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)] dark:text-white/60">
+          <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
             {project.type}
           </p>
           <div className="mt-2 flex items-center gap-2">
-            <Layers size={18} className="text-[color:var(--color-accent)]" />
+            <Layers size={18} className="text-accent" />
             <h3 className="text-xl font-semibold">{project.name}</h3>
           </div>
         </div>
         {project.featured ? (
-          <span className="rounded-full bg-[color:var(--color-accent)] px-2 py-1 text-xs uppercase tracking-[0.2em] text-white">
+          <span className="rounded-full bg-accent px-2 py-1 text-xs uppercase tracking-[0.2em] text-white">
             Featured
           </span>
         ) : null}
