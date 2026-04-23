@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -113,3 +114,240 @@
   --c3: #0f6d31;
   --c4: #00c647;
 }
+
+/* Blog prose typography — tailored for technical long-form content. */
+.prose-blog {
+  color: var(--color-ink);
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 72ch;
+}
+
+.dark .prose-blog { color: var(--color-paper); }
+
+.prose-blog > * + * { margin-top: 1.25em; }
+
+.prose-blog h2,
+.prose-blog h3,
+.prose-blog h4 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  scroll-margin-top: 6rem;
+  position: relative;
+}
+
+.prose-blog h2 {
+  font-size: 1.75rem;
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.dark .prose-blog h2 { border-bottom-color: rgba(255, 255, 255, 0.08); }
+
+.prose-blog h3 {
+  font-size: 1.3rem;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.prose-blog h4 {
+  font-size: 1.1rem;
+  margin-top: 1.75em;
+  margin-bottom: 0.4em;
+}
+
+.prose-blog a.heading-anchor {
+  margin-left: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+.prose-blog a.heading-anchor::after { content: "#"; }
+.prose-blog h2:hover a.heading-anchor,
+.prose-blog h3:hover a.heading-anchor,
+.prose-blog h4:hover a.heading-anchor { opacity: 1; }
+
+.prose-blog p { margin-bottom: 1.25em; }
+
+.prose-blog a:not(.heading-anchor) {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 90, 54, 0.35);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.2s;
+}
+.prose-blog a:not(.heading-anchor):hover { text-decoration-color: var(--color-accent); }
+
+.prose-blog strong { font-weight: 600; }
+
+.prose-blog ul,
+.prose-blog ol { padding-left: 1.5rem; margin: 1.25em 0; }
+.prose-blog ul { list-style: disc; }
+.prose-blog ol { list-style: decimal; }
+.prose-blog li { margin-top: 0.4em; }
+.prose-blog li::marker { color: var(--color-accent); }
+
+.prose-blog blockquote {
+  margin: 1.75em 0;
+  padding: 0.25em 1.25em;
+  border-left: 3px solid var(--color-accent);
+  background: rgba(255, 90, 54, 0.04);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.75);
+}
+.dark .prose-blog blockquote {
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 90, 54, 0.08);
+}
+
+.prose-blog hr {
+  border: none;
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+  margin: 2.5em 0;
+}
+.dark .prose-blog hr { border-top-color: rgba(255, 255, 255, 0.15); }
+
+.prose-blog table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1.75em 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.dark .prose-blog table { border-color: rgba(255, 255, 255, 0.1); }
+
+.prose-blog thead {
+  background: rgba(0, 0, 0, 0.04);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+.dark .prose-blog thead { background: rgba(255, 255, 255, 0.04); }
+
+.prose-blog th,
+.prose-blog td {
+  padding: 0.7em 1em;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  vertical-align: top;
+}
+.dark .prose-blog th,
+.dark .prose-blog td { border-bottom-color: rgba(255, 255, 255, 0.06); }
+
+.prose-blog tbody tr:last-child td { border-bottom: none; }
+
+.prose-blog img {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin: 1.75em auto;
+}
+.dark .prose-blog img { border-color: rgba(255, 255, 255, 0.08); }
+
+/* Inline code */
+.prose-blog :not(pre) > code {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Fira Code", monospace;
+  font-size: 0.88em;
+  padding: 0.15em 0.4em;
+  border-radius: 0.35rem;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--color-accent);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+.dark .prose-blog :not(pre) > code {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Code blocks — rehype-pretty-code / shiki dual theme.
+   The plugin emits two `<code>` elements (one per theme). We switch
+   visibility based on the app's `.dark` class to keep it CSS-only. */
+.prose-blog figure[data-rehype-pretty-code-figure] { margin: 1.75em 0; }
+
+.prose-blog pre {
+  overflow-x: auto;
+  padding: 1.1rem 1.2rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.dark .prose-blog pre { border-color: rgba(255, 255, 255, 0.08); }
+
+.prose-blog pre > code {
+  display: block;
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Fira Code", monospace;
+  background: transparent !important;
+  counter-reset: line;
+}
+
+.prose-blog code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1.25rem;
+  text-align: right;
+  color: rgba(127, 127, 127, 0.5);
+}
+
+.prose-blog [data-line] { display: block; padding: 0 0.25rem; }
+.prose-blog [data-highlighted-line] {
+  background: rgba(255, 90, 54, 0.08);
+  border-left: 2px solid var(--color-accent);
+  padding-left: 0.6rem;
+  margin-left: -0.85rem;
+}
+
+.prose-blog mark[data-highlighted-chars] {
+  background: rgba(255, 90, 54, 0.15);
+  color: inherit;
+  border-radius: 0.25rem;
+  padding: 0 0.2em;
+}
+
+.prose-blog figcaption[data-rehype-pretty-code-title] {
+  display: inline-block;
+  margin-bottom: -0.4rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: none;
+  border-radius: 0.6rem 0.6rem 0 0;
+  position: relative;
+  z-index: 1;
+}
+.dark .prose-blog figcaption[data-rehype-pretty-code-title] {
+  color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.prose-blog figcaption[data-rehype-pretty-code-title] + pre { border-top-left-radius: 0; }
+
+/* Dual-theme code — rehype-pretty-code emits one <pre> with both shiki palettes
+   as inline CSS variables (--shiki-light/--shiki-dark). We switch palettes
+   via the app's .dark class. */
+.prose-blog code[data-theme*="light"],
+.prose-blog code[data-theme*="light"] span { color: var(--shiki-light); background-color: var(--shiki-light-bg); }
+.dark .prose-blog code[data-theme*="dark"],
+.dark .prose-blog code[data-theme*="dark"] span { color: var(--shiki-dark); background-color: var(--shiki-dark-bg); }
+
+.prose-blog pre[data-theme*="light"] { background-color: var(--shiki-light-bg); }
+.dark .prose-blog pre[data-theme*="dark"] { background-color: var(--shiki-dark-bg); }
+
+/* KaTeX tweaks — center display math and allow horizontal scroll on overflow. */
+.prose-blog .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5em 0;
+}
+.prose-blog .katex { font-size: 1.05em; }
