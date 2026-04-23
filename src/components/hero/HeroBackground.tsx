@@ -15,10 +15,38 @@ const seededRandom = (seed: number): number => {
   return x - Math.floor(x);
 };
 
-const Constellation = ({ count = 100, depth = false }: { count?: number; depth?: boolean }) => {
+// 16 anchor points distributed around the perimeter of a unit rectangle
+// [-1,1] × [-1,1]. Mapped to world space at runtime based on the viewport
+// so they frame the portrait column regardless of screen size.
+const PORTRAIT_ANCHOR_UNITS: Array<[number, number]> = (() => {
+  const pts: Array<[number, number]> = [];
+  const perSide = 5;
+  for (let i = 0; i < perSide; i++) {
+    const t = -1 + (i * 2) / (perSide - 1);
+    pts.push([t, 1]);
+    pts.push([t, -1]);
+  }
+  for (let i = 1; i < perSide - 1; i++) {
+    const t = -1 + (i * 2) / (perSide - 1);
+    pts.push([-1, t]);
+    pts.push([1, t]);
+  }
+  return pts;
+})();
+
+const Constellation = ({
+  count = 100,
+  depth = false,
+  portraitLinks = false,
+}: {
+  count?: number;
+  depth?: boolean;
+  portraitLinks?: boolean;
+}) => {
   const mesh = useRef<THREE.InstancedMesh>(null);
   const linesGeometryRef = useRef<THREE.BufferGeometry>(null);
-  const { viewport } = useThree();
+  const anchorLinesGeometryRef = useRef<THREE.BufferGeometry>(null);
+  const { viewport, size } = useThree();
 
   const particles = useMemo<Particle[]>(() => {
     const temp: Particle[] = [];
@@ -42,6 +70,9 @@ const Constellation = ({ count = 100, depth = false }: { count?: number; depth?:
   
   // Buffers for line positions
   const linePositions = useMemo(() => new Float32Array(count * count * 3), [count]);
+  // Allocated inside useFrame on first tick — the immutability lint rule
+  // forbids mutating `useMemo` results via indexed assignment.
+  const anchorLinePositionsRef = useRef<Float32Array | null>(null);
 
   const mouseRef = useRef({ x: 0, y: 0 }); 
 
@@ -132,6 +163,60 @@ const Constellation = ({ count = 100, depth = false }: { count?: number; depth?:
         );
         linesGeometryRef.current.attributes.position.needsUpdate = true;
     }
+
+    // Portrait-anchor links: draw lines from perimeter anchor points (world
+    // space, derived from viewport) to nearby foreground particles, so the
+    // background constellation feels like it "reaches toward" the portrait.
+    // Skipped on narrow screens where the portrait stacks above the text.
+    if (
+      portraitLinks &&
+      anchorLinesGeometryRef.current &&
+      size.width >= 768
+    ) {
+      let buf = anchorLinePositionsRef.current;
+      if (!buf) {
+        buf = new Float32Array(PORTRAIT_ANCHOR_UNITS.length * count * 3 * 2);
+        anchorLinePositionsRef.current = buf;
+      }
+
+      const cx = viewport.width * 0.22;
+      const cy = 0;
+      const hw = viewport.width * 0.18;
+      const hh = viewport.height * 0.36;
+      const maxDist = 3.2;
+      let anchorLineIdx = 0;
+
+      for (const [ux, uy] of PORTRAIT_ANCHOR_UNITS) {
+        const ax = cx + ux * hw;
+        const ay = cy + uy * hh;
+        for (const p of particles) {
+          const dx = ax - p.x;
+          const dy = ay - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < maxDist) {
+            buf[anchorLineIdx * 3] = ax;
+            buf[anchorLineIdx * 3 + 1] = ay;
+            buf[anchorLineIdx * 3 + 2] = 0;
+            buf[anchorLineIdx * 3 + 3] = p.x;
+            buf[anchorLineIdx * 3 + 4] = p.y;
+            buf[anchorLineIdx * 3 + 5] = p.z;
+            anchorLineIdx += 2;
+          }
+        }
+      }
+
+      anchorLinesGeometryRef.current.setAttribute(
+        'position',
+        new THREE.BufferAttribute(buf.slice(0, anchorLineIdx * 3), 3),
+      );
+      anchorLinesGeometryRef.current.attributes.position.needsUpdate = true;
+    } else if (portraitLinks && anchorLinesGeometryRef.current) {
+      // Mobile / narrow: clear any stale lines from a prior resize.
+      anchorLinesGeometryRef.current.setAttribute(
+        'position',
+        new THREE.BufferAttribute(new Float32Array(0), 3),
+      );
+    }
   });
 
   return (
@@ -143,13 +228,25 @@ const Constellation = ({ count = 100, depth = false }: { count?: number; depth?:
       
       <lineSegments>
         <bufferGeometry ref={linesGeometryRef} />
-        <lineBasicMaterial 
-            color="#ff5a36" 
-            transparent 
-            opacity={depth ? 0.05 : 0.15} 
-            linewidth={1} 
+        <lineBasicMaterial
+            color="#ff5a36"
+            transparent
+            opacity={depth ? 0.05 : 0.15}
+            linewidth={1}
         />
       </lineSegments>
+
+      {portraitLinks ? (
+        <lineSegments>
+          <bufferGeometry ref={anchorLinesGeometryRef} />
+          <lineBasicMaterial
+            color="#ff5a36"
+            transparent
+            opacity={0.28}
+            linewidth={1}
+          />
+        </lineSegments>
+      ) : null}
     </>
   );
 };
@@ -179,8 +276,8 @@ export default function HeroBackground() {
   return (
     <div className="absolute inset-0 -z-10 opacity-70">
       <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 2]} gl={{ alpha: true }}>
-        {/* Foreground Layer */}
-        <Constellation count={80} depth={false} />
+        {/* Foreground Layer — also draws links toward the portrait column. */}
+        <Constellation count={80} depth={false} portraitLinks />
         {/* Background Depth Layer */}
         <Constellation count={150} depth={true} />
       </Canvas>
