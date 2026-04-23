@@ -111,7 +111,7 @@ export default function HomePage() {
               </p>
             </div>
             <a
-              className="rounded-full bg-[color:var(--color-accent)] px-6 py-3 text-sm font-semibold text-white"
+              className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white"
               href="/contact"
             >
               {contactTitle}

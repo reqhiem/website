@@ -17,8 +17,6 @@ export type GithubRepoSummary = {
 export type GithubInsightsData = {
   profile: GithubProfile;
   summary: { totalRepos: number; totalStars: number; totalForks: number };
-  topRepos: { name: string; url: string; stars: number }[];
-  recentRepos: { name: string; url: string; pushed_at: string }[];
   languagesChart: { name: string; bytes: number; percent: number }[];
   activityPoints: { month: string; count: number }[];
 };
@@ -54,8 +52,6 @@ type GithubGraphQLResponse = {
 const emptyInsights = (login = "reqhiem"): GithubInsightsData => ({
   profile: { login, name: login, followers: 0 },
   summary: { totalRepos: 0, totalStars: 0, totalForks: 0 },
-  topRepos: [],
-  recentRepos: [],
   languagesChart: [],
   activityPoints: [],
 });
@@ -144,9 +140,6 @@ export const fetchGithubInsights = async ({
       totalForks: reposAll.reduce((acc, repo) => acc + repo.forks, 0),
     };
 
-    const topRepos: { name: string; url: string; stars: number }[] = [];
-    const recentRepos: { name: string; url: string; pushed_at: string }[] = [];
-
     const languageTotals: Record<string, number> = {};
     reposAll.forEach((repo) => {
       repo.languages.forEach((lang) => {
@@ -192,8 +185,6 @@ export const fetchGithubInsights = async ({
         followers: user.followers?.totalCount ?? 0,
       },
       summary,
-      topRepos,
-      recentRepos,
       languagesChart,
       activityPoints,
     };

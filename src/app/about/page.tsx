@@ -56,22 +56,9 @@ export default async function AboutPage() {
           <GithubInsights
             profile={insights.profile}
             repoUrl={githubRepoUrl}
+            summary={insights.summary}
             languagesChart={insights.languagesChart}
             activityPoints={insights.activityPoints}
-            summary={insights.summary}
-            labels={{
-              repoLabel: "Profile",
-              totalReposLabel: "Total repos",
-              totalStarsLabel: "Total stars",
-              totalForksLabel: "Total forks",
-              followersLabel: "Followers",
-              languagesLabel: "Languages",
-              topLabel: "Top 6",
-              noLanguages: "Language data unavailable.",
-              noActivity: "Activity data unavailable.",
-              activityLabel: "Activity pulse",
-              activityHelper: "Last 6 months · contributions",
-            }}
           />
         </Section>
 
