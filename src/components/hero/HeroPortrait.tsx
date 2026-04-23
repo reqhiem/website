@@ -6,8 +6,6 @@ import { useTexture } from '@react-three/drei';
 import { Suspense, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-const ACCENT = '#ff5a36';
-
 const configurePortraitTexture = (tex: THREE.Texture | THREE.Texture[]): void => {
   const t = Array.isArray(tex) ? tex[0] : tex;
   if (!t) return;
@@ -16,38 +14,6 @@ const configurePortraitTexture = (tex: THREE.Texture | THREE.Texture[]): void =>
   t.needsUpdate = true;
 };
 
-// Radial "ring glow" around the portrait edges. Flat-plane fresnel doesn't
-// produce visible rim light (all normals face +Z), so we fake it with a soft
-// ring painted onto a slightly larger plane placed just behind the portrait.
-const rimVertexShader = /* glsl */ `
-  varying vec2 vUv;
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const rimFragmentShader = /* glsl */ `
-  uniform vec3 uColor;
-  uniform float uIntensity;
-  uniform float uPulse;
-  varying vec2 vUv;
-  void main() {
-    vec2 c = vUv - 0.5;
-    float d = length(c) * 2.0;
-    // Soft ring peaking near the edge; smoothstep both inside and outside.
-    float ring = smoothstep(0.55, 0.85, d) * smoothstep(1.05, 0.85, d);
-    float alpha = ring * uIntensity * (0.85 + 0.15 * uPulse);
-    gl_FragColor = vec4(uColor, alpha);
-  }
-`;
-
-const buildRimUniforms = () => ({
-  uColor: { value: new THREE.Color(ACCENT) },
-  uIntensity: { value: 0.55 },
-  uPulse: { value: 0 },
-});
-
 function PortraitPlane({ isHover }: { isHover: boolean }) {
   const texture = useTexture('/images/frontal_portrait.webp', configurePortraitTexture);
   const meshRef = useRef<THREE.Mesh>(null);
@@ -55,9 +21,6 @@ function PortraitPlane({ isHover }: { isHover: boolean }) {
   const scanRef = useRef<THREE.Mesh>(null);
   const frameRef = useRef<THREE.LineSegments>(null);
   const cornersRef = useRef<THREE.Group>(null);
-
-  const rimMaterialRef = useRef<THREE.ShaderMaterial>(null);
-  const rimUniforms = useMemo(() => buildRimUniforms(), []);
 
   const { width, height } = useMemo(() => {
     const img = texture.image as HTMLImageElement | undefined;
@@ -86,8 +49,7 @@ function PortraitPlane({ isHover }: { isHover: boolean }) {
 
     const corners = cornersRef.current;
     if (corners) {
-      // Always-on baseline so mobile (no hover) still gets the frame language.
-      const targetOpacity = isHover ? 0.55 : 0.22;
+      const targetOpacity = isHover ? 0.45 : 0.0;
       corners.traverse((child) => {
         const material = (child as THREE.Mesh).material as THREE.MeshBasicMaterial | undefined;
         if (material) {
@@ -96,32 +58,19 @@ function PortraitPlane({ isHover }: { isHover: boolean }) {
       });
     }
 
-    const t = clock.getElapsedTime();
-
     const scan = scanRef.current;
     if (scan) {
+      const t = clock.getElapsedTime();
       const range = height * 0.55;
       scan.position.y = (t * 0.6) % (range * 2) - range;
       const scanMaterial = scan.material as THREE.MeshBasicMaterial;
-      scanMaterial.opacity = (isHover ? 0.48 : 0.32) + Math.sin(t * 3.0) * 0.05;
+      scanMaterial.opacity = (isHover ? 0.22 : 0.14) + Math.sin(t * 3.0) * 0.03;
     }
 
     const frame = frameRef.current;
     if (frame) {
       const frameMaterial = frame.material as THREE.LineBasicMaterial;
-      frameMaterial.opacity = 0.42 + Math.sin(t * 1.2) * 0.08;
-    }
-
-    // Rim light: subtle breathing plus a brighter push on hover.
-    const rim = rimMaterialRef.current;
-    if (rim) {
-      rim.uniforms.uPulse.value = 0.5 + 0.5 * Math.sin(t * 0.9);
-      const targetIntensity = isHover ? 0.85 : 0.55;
-      rim.uniforms.uIntensity.value = THREE.MathUtils.lerp(
-        rim.uniforms.uIntensity.value as number,
-        targetIntensity,
-        0.08,
-      );
+      frameMaterial.opacity = 0.25 + Math.sin(clock.getElapsedTime() * 1.2) * 0.06;
     }
   });
 
@@ -129,20 +78,6 @@ function PortraitPlane({ isHover }: { isHover: boolean }) {
 
   return (
     <group position={[0, yOffset, 0]}>
-      {/* Rim glow behind the portrait — simulates edge/fresnel lighting on a flat plane. */}
-      <mesh position={[0, 0, -0.02]}>
-        <planeGeometry args={[width * 1.18, height * 1.1]} />
-        <shaderMaterial
-          ref={rimMaterialRef}
-          attach="material"
-          uniforms={rimUniforms}
-          vertexShader={rimVertexShader}
-          fragmentShader={rimFragmentShader}
-          transparent
-          depthWrite={false}
-        />
-      </mesh>
-
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <planeGeometry args={[width, height, 24, 24]} />
         <meshStandardMaterial
@@ -159,41 +94,41 @@ function PortraitPlane({ isHover }: { isHover: boolean }) {
         {/* Recognition frame */}
         <lineSegments ref={frameRef}>
           <edgesGeometry args={[new THREE.PlaneGeometry(width * 0.96, height * 0.96)]} />
-          <lineBasicMaterial color={ACCENT} transparent opacity={0.42} linewidth={1} />
+          <lineBasicMaterial color="#ff5a36" transparent opacity={0.22} linewidth={1} />
         </lineSegments>
 
         {/* Scanning line */}
         <mesh ref={scanRef} position={[0, -height * 0.5, 0.06]}>
-          <planeGeometry args={[width * 0.92, height * 0.01]} />
-          <meshBasicMaterial color={ACCENT} transparent opacity={0.32} />
+          <planeGeometry args={[width * 0.92, height * 0.006]} />
+          <meshBasicMaterial color="#ff5a36" transparent opacity={0.16} />
         </mesh>
       </group>
 
-      {/* Corner brackets — always faintly visible so mobile (no hover) gets them too. */}
+      {/* Corner brackets on hover */}
       <group ref={cornersRef} position={[0, 0, 0.08]}>
         <mesh position={[-width * 0.48, height * 0.48, 0]}>
-          <planeGeometry args={[width * 0.18, height * 0.01]} />
-          <meshBasicMaterial color={ACCENT} transparent opacity={0.22} />
+          <planeGeometry args={[width * 0.16, height * 0.008]} />
+          <meshBasicMaterial color="#ff5a36" transparent opacity={0.0} />
         </mesh>
         <mesh position={[-width * 0.48, height * 0.48, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <planeGeometry args={[height * 0.18, width * 0.01]} />
-          <meshBasicMaterial color={ACCENT} transparent opacity={0.22} />
+          <planeGeometry args={[height * 0.16, width * 0.008]} />
+          <meshBasicMaterial color="#ff5a36" transparent opacity={0.0} />
         </mesh>
 
         <mesh position={[width * 0.48, -height * 0.48, 0]}>
-          <planeGeometry args={[width * 0.18, height * 0.01]} />
-          <meshBasicMaterial color={ACCENT} transparent opacity={0.22} />
+          <planeGeometry args={[width * 0.16, height * 0.008]} />
+          <meshBasicMaterial color="#ff5a36" transparent opacity={0.0} />
         </mesh>
         <mesh position={[width * 0.48, -height * 0.48, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <planeGeometry args={[height * 0.18, width * 0.01]} />
-          <meshBasicMaterial color={ACCENT} transparent opacity={0.22} />
+          <planeGeometry args={[height * 0.16, width * 0.008]} />
+          <meshBasicMaterial color="#ff5a36" transparent opacity={0.0} />
         </mesh>
       </group>
 
-      {/* Soft far halo for presence. */}
+      {/* Soft halo for presence without adding a visible background */}
       <mesh position={[0, -0.1, -0.4]}>
-        <planeGeometry args={[width * 1.1, height * 1.08]} />
-        <meshBasicMaterial color={ACCENT} transparent opacity={0.1} />
+        <planeGeometry args={[width * 1.02, height * 1.02]} />
+        <meshBasicMaterial color="#ff5a36" transparent opacity={0.04} />
       </mesh>
     </group>
   );
