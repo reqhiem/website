@@ -6,17 +6,15 @@ interface ProjectCardProps {
   project: {
     name: string;
     type: string;
-    oneLinerEs?: string;
-    oneLinerEn?: string;
+    oneLiner?: string;
     featured?: boolean;
     stack: string[];
     highlights?: string[];
   };
-  lang: "es" | "en";
 }
 
-export function ProjectCard({ project, lang }: ProjectCardProps) {
-  const description = lang === "es" ? project.oneLinerEs : project.oneLinerEn;
+export function ProjectCard({ project }: ProjectCardProps) {
+  const description = project.oneLiner;
 
   return (
     <Card className="flex h-full flex-col gap-4">

@@ -1,10 +1,6 @@
 import { getPerson, getSite } from "@/lib/content";
 
-interface FooterProps {
-  lang: "es" | "en";
-}
-
-export function Footer({ lang }: FooterProps) {
+export function Footer() {
   const person = getPerson();
   const site = getSite();
   const year = new Date().getFullYear();
@@ -14,15 +10,15 @@ export function Footer({ lang }: FooterProps) {
       <div className="container-page flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="uppercase tracking-[0.2em] text-xs">{person.name}</p>
-          <p className="opacity-70">{lang === "es" ? person.headlineEs : person.headlineEn} · {year}</p>
+          <p className="opacity-70">{person.headline} · {year}</p>
         </div>
         <div className="flex flex-wrap gap-4">
           {person.links.map((link) => (
-            <a 
+            <a
               key={link.label}
-              className="opacity-70 transition hover:opacity-100" 
-              href={link.url} 
-              target="_blank" 
+              className="opacity-70 transition hover:opacity-100"
+              href={link.url}
+              target="_blank"
               rel="noreferrer"
             >
               {link.label}

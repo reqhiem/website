@@ -3,17 +3,21 @@
 import { Mail, MapPin, Linkedin, Clipboard } from "lucide-react";
 import { Card } from "./Card";
 import { useState } from "react";
+import type { SiteData } from "@/lib/content";
+
+type Person = SiteData["person"];
 
 interface ContactContentProps {
-  person: any;
+  person: Person;
   email: string;
-  lang: "es" | "en";
 }
 
-export function ContactContent({ person, email, lang }: ContactContentProps) {
+export function ContactContent({ person, email }: ContactContentProps) {
   const [copyLabel, setCopyLabel] = useState("Copy email");
-  
-  const linkedin = person.links.find((link: any) => link.label.toLowerCase().includes("linkedin"));
+
+  const linkedin = person.links.find((link) =>
+    link.label.toLowerCase().includes("linkedin"),
+  );
   
   const handleCopy = async () => {
     try {
@@ -159,7 +163,7 @@ function ContactForm() {
         
         {status === "success" && (
           <span className="text-sm text-green-600 dark:text-green-400">
-            Thanks for reaching out! I'll get back to you soon.
+            Thanks for reaching out! I&apos;ll get back to you soon.
           </span>
         )}
         

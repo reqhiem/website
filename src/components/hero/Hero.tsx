@@ -5,19 +5,12 @@ import { FileText, ArrowRight, Terminal } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import HeroPortrait from './HeroPortrait';
 
-const HeroBackground = dynamic(() => import('./HeroBackground'), { 
+const HeroBackground = dynamic(() => import('./HeroBackground'), {
   ssr: false,
-  loading: () => <div className="absolute inset-0 bg-transparent" /> 
+  loading: () => <div className="absolute inset-0 bg-transparent" />
 });
 
-interface HeroProps {
-  person?: any;
-  site?: any;
-  insights?: any;
-  lang?: "es" | "en";
-}
-
-export function Hero({ person, site, insights, lang }: HeroProps) {
+export function Hero() {
   return (
     <section className="relative min-h-[90vh] w-full flex items-center overflow-hidden bg-transparent">
       <HeroBackground />

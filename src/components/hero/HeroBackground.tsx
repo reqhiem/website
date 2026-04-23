@@ -1,26 +1,38 @@
 'use client';
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useRef, useEffect, useSyncExternalStore } from 'react';
 import * as THREE from 'three';
 
 // Option B Refined: Network/Constellation + Depth
 // Adds a secondary layer of "distant" data points for volume.
 
-const Constellation = ({ count = 100, depth = false }) => {
+type Particle = { x: number; y: number; z: number; speedX: number; speedY: number };
+
+// Deterministic PRNG so particle initialization is pure (no Math.random in render).
+const seededRandom = (seed: number): number => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
+
+const Constellation = ({ count = 100, depth = false }: { count?: number; depth?: boolean }) => {
   const mesh = useRef<THREE.InstancedMesh>(null);
   const linesGeometryRef = useRef<THREE.BufferGeometry>(null);
-  const { size, viewport } = useThree();
-  
-  const particles = useMemo(() => {
-    const temp = [];
+  const { viewport } = useThree();
+
+  const particles = useMemo<Particle[]>(() => {
+    const temp: Particle[] = [];
+    const seedOffset = depth ? 10_000 : 0;
     for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * (depth ? 40 : 25); 
-      const y = (Math.random() - 0.5) * (depth ? 40 : 25);
-      const z = depth ? (Math.random() * -20) - 5 : (Math.random() - 0.5) * 5;
-      const speedX = (Math.random() - 0.5) * 0.01;
-      const speedY = (Math.random() - 0.5) * 0.01;
-      
+      const base = (i + 1) * 7 + seedOffset;
+      const x = (seededRandom(base) - 0.5) * (depth ? 40 : 25);
+      const y = (seededRandom(base + 1) - 0.5) * (depth ? 40 : 25);
+      const z = depth
+        ? seededRandom(base + 2) * -20 - 5
+        : (seededRandom(base + 2) - 0.5) * 5;
+      const speedX = (seededRandom(base + 3) - 0.5) * 0.01;
+      const speedY = (seededRandom(base + 4) - 0.5) * 0.01;
+
       temp.push({ x, y, z, speedX, speedY });
     }
     return temp;
@@ -142,13 +154,25 @@ const Constellation = ({ count = 100, depth = false }) => {
   );
 };
 
-export default function HeroBackground() {
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setIsReducedMotion(mediaQuery.matches);
-  }, []);
+const subscribeReducedMotion = (callback: () => void): (() => void) => {
+  const mq = window.matchMedia(REDUCED_MOTION_QUERY);
+  mq.addEventListener('change', callback);
+  return () => mq.removeEventListener('change', callback);
+};
+
+const getReducedMotionSnapshot = (): boolean =>
+  window.matchMedia(REDUCED_MOTION_QUERY).matches;
+
+const getReducedMotionServerSnapshot = (): boolean => false;
+
+export default function HeroBackground() {
+  const isReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
 
   if (isReducedMotion) return null;
 

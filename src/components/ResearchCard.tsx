@@ -5,19 +5,16 @@ import { Card } from "./Card";
 interface ResearchCardProps {
   project: {
     title: string;
-    descriptionEs?: string;
-    descriptionEn?: string;
-    roleEs?: string;
-    roleEn?: string;
+    description?: string;
+    role?: string;
     stack: string[];
     status: string;
   };
-  lang: "es" | "en";
 }
 
-export function ResearchCard({ project, lang }: ResearchCardProps) {
-  const description = lang === "es" ? project.descriptionEs : project.descriptionEn;
-  const role = lang === "es" ? project.roleEs : project.roleEn;
+export function ResearchCard({ project }: ResearchCardProps) {
+  const description = project.description;
+  const role = project.role;
 
   return (
     <Card className="flex h-full flex-col gap-4">
