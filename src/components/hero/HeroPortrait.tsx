@@ -170,13 +170,6 @@ export default function HeroPortrait() {
               <PortraitPlane isHover={isHover} />
             </Suspense>
           </Canvas>
-
-          {/* HUD labels (kept inside the portrait bounds) */}
-          <div className="pointer-events-none absolute inset-[8%] hidden md:block text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
-            <div className="absolute left-0 top-0">subject: joel_perca</div>
-            <div className="absolute left-0 top-4">timestamp: 2026-02-14 10:24:18</div>
-            <div className="absolute right-0 bottom-0">match: 99.2%</div>
-          </div>
         </div>
       </motion.div>
     </div>

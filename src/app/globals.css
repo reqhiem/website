@@ -88,3 +88,28 @@
   90% { opacity: 1; }
   100% { top: 100%; opacity: 0; }
 }
+
+/* Contribution snake (Platane/snk) — CSS vars driven by site theme.
+   The SVG's own :root{...} is stripped at load time and its class selectors
+   are prefixed with .snake-scope, so these values flow through via cascade. */
+.snake-scope {
+  --cb: rgba(27, 31, 35, 0.06);
+  --cs: #7c3aed;
+  --ce: #ebedf0;
+  --c0: #ebedf0;
+  --c1: #9be9a8;
+  --c2: #40c463;
+  --c3: #30a14e;
+  --c4: #216e39;
+}
+
+.dark .snake-scope {
+  --cb: rgba(255, 255, 255, 0.06);
+  --cs: #a78bfa;
+  --ce: #161b22;
+  --c0: #161b22;
+  --c1: #01311f;
+  --c2: #034525;
+  --c3: #0f6d31;
+  --c4: #00c647;
+}
