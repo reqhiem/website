@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
             <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_240px]">
               <div
-                className="prose-blog"
+                className="prose-blog min-w-0"
                 dangerouslySetInnerHTML={{ __html: post.html }}
               />
               <aside className="hidden lg:block">
