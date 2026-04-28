@@ -121,6 +121,10 @@
   font-size: 1rem;
   line-height: 1.75;
   max-width: 72ch;
+  /* Allow this grid item to shrink below its content's min-content size
+     so wide children (pre, table) can engage their own overflow-x scroll
+     instead of pushing the page wider than the viewport. */
+  min-width: 0;
 }
 
 .dark .prose-blog { color: var(--color-paper); }
@@ -216,9 +220,15 @@
   border-collapse: collapse;
   font-size: 0.9rem;
   margin: 1.75em 0;
-  overflow: hidden;
   border-radius: 0.75rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  /* Make wide markdown tables horizontally scrollable on narrow viewports
+     instead of overflowing the page. `display: block` keeps inner rows
+     using anonymous table boxes so the grid still renders correctly. */
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 .dark .prose-blog table { border-color: rgba(255, 255, 255, 0.1); }
 
