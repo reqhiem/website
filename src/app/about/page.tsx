@@ -4,14 +4,17 @@ import {
   getCertifications,
   getLanguages,
 } from "@/lib/content";
-import { getGithubUsername } from "@/lib/github";
-import { fetchGithubInsights } from "@/lib/github-graphql";
+import { fetchGithubInsights, getGithubUsername } from "@/lib/github";
 import { Section } from "@/components/Section";
 import { Card } from "@/components/Card";
 import { Badge } from "@/components/Badge";
-import { GithubInsights } from "@/components/GithubInsights";
+import { GithubInsights } from "@/components/github/GithubInsights";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+
+// 6h ISR. Must be a literal - Next requires this segment config value to be
+// statically analyzable, so it cannot import a shared constant.
+export const revalidate = 21600;
 
 export default async function AboutPage() {
   const person = getPerson();
@@ -28,9 +31,11 @@ export default async function AboutPage() {
   const githubToken = process.env.GITHUB_TOKEN as string | undefined;
   const githubRepoUrl = `https://github.com/${githubUsername}`;
 
-  // Next.js data fetching is deduped automatically for fetch requests, but here fetchGithubInsights calls fetch.
-  // It's safe to call in Server Component.
-  const insights = await fetchGithubInsights({ username: githubUsername, token: githubToken, months: 6 });
+  const insights = await fetchGithubInsights({
+    username: githubUsername,
+    token: githubToken,
+    months: 6,
+  });
 
   return (
     <>
@@ -54,11 +59,9 @@ export default async function AboutPage() {
 
         <Section title="GitHub insights" subtitle="General activity signal">
           <GithubInsights
-            profile={insights.profile}
+            username={githubUsername}
             repoUrl={githubRepoUrl}
-            summary={insights.summary}
-            languagesChart={insights.languagesChart}
-            activityPoints={insights.activityPoints}
+            insights={insights}
           />
         </Section>
 

@@ -14,7 +14,7 @@ export default function ProjectsPage() {
     <>
       <Navbar />
       <main className="min-h-[70vh]">
-        <Section title="Research" subtitle="Applied AI / systems">
+        <Section title="Publications" subtitle="Peer-reviewed">
           <div className="grid gap-6 md:grid-cols-2">
             {research.projects.map((project, index) => (
               <ResearchCard key={index} project={project} />
@@ -22,7 +22,7 @@ export default function ProjectsPage() {
           </div>
         </Section>
 
-        <Section title="Projects" subtitle="Filter">
+        <Section title="Projects" subtitle="Engineering work">
           <ProjectsContent projects={projects} types={types} />
         </Section>
       </main>

@@ -20,6 +20,7 @@ export default function ExperiencePage() {
       title: `${item.title} · ${item.company}`,
       subtitle: item.location,
       summary: item.summary,
+      thesis: null,
       highlights: item.highlights,
       tags: item.tags,
       start: item.start,
@@ -30,6 +31,7 @@ export default function ExperiencePage() {
       title: item.degree,
       subtitle: `${item.institution} · ${item.location}`,
       summary: item.status ?? "",
+      thesis: item.thesis ?? null,
       highlights: item.highlights ?? [],
       tags: ["Academia"],
       start: item.start,
@@ -56,6 +58,11 @@ export default function ExperiencePage() {
                 meta={formatDateRange(item.start, item.end)}
               >
                 {item.summary ? <p>{item.summary}</p> : null}
+                {/* The defence date is deliberately not repeated here: the
+                    meta column above already renders it via formatDateRange. */}
+                {item.thesis ? (
+                  <p className="italic">Thesis: “{item.thesis.title}”</p>
+                ) : null}
                 {item.highlights.length ? (
                   <ul className="list-disc pl-4">
                     {item.highlights.map((highlight, hIndex) => (

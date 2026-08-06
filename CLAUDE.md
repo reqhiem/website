@@ -19,7 +19,7 @@ There is no test suite configured.
 
 Required at runtime (see `.env`):
 
-- `GITHUB_TOKEN`, `GITHUB_USERNAME` — used by `src/lib/github-graphql.ts` for the GitHub insights / charts on the site.
+- `GITHUB_TOKEN`, `GITHUB_USERNAME` — used by `src/lib/github.ts` for the GitHub insights section on `/about`.
 - `BREVO_API_KEY`, `CONTACT_EMAIL` — used by the contact form handler at `src/app/api/contact/route.ts` to send emails via the Brevo transactional API.
 
 ## Architecture
@@ -37,7 +37,17 @@ Almost every page reads from one big JSON blob — person bio, routes, SEO copy,
 
 ### Pages
 
-Every page is a Server Component that pulls data from `@/lib/content` and renders composed primitives from `src/components/` (`Section`, `Card`, `Timeline`, `TimelineItem`, `ProjectCard`, `ResearchCard`, etc.). The Hero uses React Three Fiber (`@react-three/fiber`, `@react-three/drei`) under `src/components/hero/` and GSAP/Framer Motion for animation. GitHub charts (`GithubCharts`, `GithubInsights`) use `d3` and are fed by the GraphQL client in `src/lib/github-graphql.ts`.
+Every page is a Server Component that pulls data from `@/lib/content` and renders composed primitives from `src/components/` (`Section`, `Card`, `Timeline`, `TimelineItem`, `ProjectCard`, `ResearchCard`, etc.).
+
+**Hero** — `src/components/hero/` holds just `Hero.tsx` and `HeroPortrait.tsx`. Both are Server Components with **no** `"use client"` and ship zero client JS. There is no 3D and no animation library — everything is plain CSS in `src/app/globals.css`:
+
+- Static utilities: `.hero-grid` (the schematic background grid, a pure gradient — **not** animated) and `.hero-frame`.
+- Animated utilities `.hero-reveal`, `.hero-reveal-x`, `.hero-rise`, `.hero-frame`, `.hero-scan`, backed by exactly five `@keyframes`: `hero-reveal`, `hero-reveal-x`, `hero-rise`, `hero-frame-pulse`, `hero-scan`. Entrance reveals are staggered with an inline `animationDelay` in the TSX.
+- An **unlayered** `@media (prefers-reduced-motion: reduce)` block disables them (it must stay outside `@layer utilities` to win the cascade). The portrait is a plain `next/image` (`public/images/frontal_portrait.webp`) with `priority` + `fill` + `object-cover`.
+
+**GitHub section** — `src/components/github/` (`GithubInsights`, `GithubStats`, `LanguageDonut`, `ActivityPulse`, `ContributionGraph`) is server-rendered and also carries no `"use client"`. Charts are hand-written inline SVG — no charting library. Data comes from `fetchGithubInsights()` in `src/lib/github.ts` (GitHub GraphQL, cached via `next: { revalidate }`), with the contribution-snake SVG fetched by `src/lib/github-snake.ts`. `/about` sets `export const revalidate = 21600` — it must stay a literal, since Next requires that segment config to be statically analyzable.
+
+**Animation** — GSAP is used in exactly one place, `src/components/Section.tsx` (a client component that fades `[data-gsap-item]` in on scroll). It is the only animation dependency left; `three`, `@react-three/*`, `framer-motion` and `d3` are gone.
 
 ### SEO
 

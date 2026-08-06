@@ -15,7 +15,7 @@ import { buildCanonical } from "@/lib/content";
 
 const PAGE_TITLE = "Blog";
 const PAGE_DESCRIPTION =
-  "Notes on software engineering, applied AI, and the systems I build. Deep dives, tooling reviews, and research-flavored write-ups.";
+  "Notes from the intersection of research and engineering: urban video understanding, vision-language and retrieval systems, visual analytics, and the tooling that gets them shipped.";
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
