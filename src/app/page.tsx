@@ -41,7 +41,6 @@ export default function HomePage() {
   const projectTitle = projectSection?.title;
   const experienceTitle = experienceRoute?.label;
   const contactTitle = contactRoute?.label;
-  const tagline = site.tagline;
 
   return (
     <>
@@ -49,7 +48,15 @@ export default function HomePage() {
       <main className="min-h-[70vh]">
         <Hero />
 
-        <Section title={impactTitle} subtitle={impactTitle}>
+        <Section title={researchTitle} subtitle="Peer-reviewed research">
+          <div className="grid gap-6 md:grid-cols-2">
+            {featuredResearch.map((project, index) => (
+              <ResearchCard key={index} project={project} />
+            ))}
+          </div>
+        </Section>
+
+        <Section title={impactTitle} subtitle="Measured outcomes">
           <div className="grid gap-6 md:grid-cols-3">
             {proofPoints.map((point, index) => (
               <Card key={index}>
@@ -67,15 +74,7 @@ export default function HomePage() {
           </div>
         </Section>
 
-        <Section title={researchTitle} subtitle={researchTitle}>
-          <div className="grid gap-6 md:grid-cols-2">
-            {featuredResearch.map((project, index) => (
-              <ResearchCard key={index} project={project} />
-            ))}
-          </div>
-        </Section>
-
-        <Section title={projectTitle} subtitle={projectTitle}>
+        <Section title={projectTitle} subtitle="Systems I have shipped">
           <div className="grid gap-6 md:grid-cols-2">
             {featuredProjects.map((project, index) => (
               <ProjectCard key={index} project={project} />
@@ -83,7 +82,7 @@ export default function HomePage() {
           </div>
         </Section>
 
-        <Section title={experienceTitle} subtitle={experienceTitle}>
+        <Section title={experienceTitle} subtitle="Where I have worked">
           <Timeline>
             {experience.map((item, index) => (
               <TimelineItem
@@ -103,10 +102,13 @@ export default function HomePage() {
           </Timeline>
         </Section>
 
-        <Section title={contactTitle} subtitle={contactTitle}>
+        <Section title={contactTitle} subtitle="Open to collaboration">
           <Card className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="text-2xl font-semibold">{tagline}</h3>
+              <h3 className="text-2xl font-semibold">
+                Research collaborations, engineering work, or a question about
+                the papers.
+              </h3>
               <p className="mt-2 text-sm text-black/70 dark:text-white/70">
                 {person.emails[0].value}
               </p>

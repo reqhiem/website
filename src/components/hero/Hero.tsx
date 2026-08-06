@@ -1,78 +1,51 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import { FileText, ArrowRight, Terminal } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import HeroPortrait from './HeroPortrait';
-
-const HeroBackground = dynamic(() => import('./HeroBackground'), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-transparent" />
-});
 
 export function Hero() {
   return (
     <section className="relative min-h-[90vh] w-full flex items-center overflow-hidden bg-transparent">
-      <HeroBackground />
-      
-      {/* Background Grid - slightly more visible for "schematic" feel */}
-      <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-[0.08] pointer-events-none bg-center mix-blend-multiply dark:mix-blend-overlay" />
-      
+      {/* Background grid — schematic feel, drawn in CSS (no image request). */}
+      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0" />
+
       <div className="container-page relative z-10 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center h-full pt-20 md:pt-0">
-        
+
         {/* Left Column */}
         <div className="flex flex-col items-start gap-8 order-2 md:order-1">
           <div className="space-y-6">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex items-center gap-3"
-            >
+            <div className="hero-reveal-x flex items-center gap-3" style={{ animationDelay: '100ms' }}>
               <div className="h-[1px] w-12 bg-accent/50" />
               <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-muted">
-                System Architecture & AI
+                Applied AI Research — Visual Analytics
               </span>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
+            <div className="hero-reveal" style={{ animationDelay: '200ms' }}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.0] tracking-tight -ml-[2px]">
-                Software <br/>
-                Engineering <br/>
+                AI <br/>
+                Engineer <br/>
                 <span className="text-muted font-light italic">+</span> <br/>
                 <span className="text-accent">
-                  Applied AI
+                  Researcher
                 </span>
               </h1>
-            </motion.div>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg md:text-xl text-muted max-w-lg leading-relaxed border-l-2 border-accent/20 pl-6"
+            </div>
+
+            <p
+              className="hero-reveal text-lg md:text-xl text-muted max-w-lg leading-relaxed border-l-2 border-accent/20 pl-6"
+              style={{ animationDelay: '400ms' }}
             >
-              I build scalable, real-world AI systems — merging clean engineering with cutting-edge research to bridge the gap between prototype and production.
-            </motion.p>
+              I research how to make long urban video searchable — vision-language models, agentic retrieval, visual analytics. Then I ship it: Django and DRF services, React front-ends, Docker and Kubernetes.
+            </p>
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="flex flex-wrap gap-4 pt-2"
-          >
+          <div className="hero-reveal flex flex-wrap gap-4 pt-2" style={{ animationDelay: '600ms' }}>
             <Link
               href="/projects"
               className="group relative px-6 py-3 bg-ink text-paper font-medium text-sm tracking-wide uppercase rounded-sm hover:bg-accent transition-colors flex items-center gap-2"
             >
               <Terminal className="w-4 h-4" />
-              Initialize Projects
+              View Projects
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
 
@@ -81,13 +54,13 @@ export function Hero() {
               className="px-6 py-3 bg-transparent border border-ink/20 text-ink font-medium text-sm tracking-wide uppercase rounded-sm hover:border-ink transition-colors flex items-center gap-2"
             >
               <FileText className="w-4 h-4" />
-              System Log / Resume
+              Resume (PDF)
             </a>
-          </motion.div>
+          </div>
         </div>
 
         {/* Right Column */}
-        <div className="relative h-[55vh] md:h-[72vh] flex items-end justify-center md:justify-end order-1 md:order-2 perspective-1000 overflow-hidden">
+        <div className="relative h-[55vh] md:h-[72vh] flex items-end justify-center md:justify-end order-1 md:order-2 overflow-hidden">
           <HeroPortrait />
         </div>
       </div>

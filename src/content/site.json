@@ -2,8 +2,8 @@
   "version": "1.0.0",
   "generatedAt": "2026-02-07",
   "site": {
-    "title": "Joel Perca — AI & Software Engineer",
-    "tagline": "Software engineering + applied AI research to build scalable, real-world systems.",
+    "title": "Joel Perca — AI Engineer & Researcher",
+    "tagline": "I research vision-language retrieval systems and ship them as production software.",
     "domain": "reqhiem.dev",
     "routes": [
       { "path": "/", "label": "Home" },
@@ -14,14 +14,21 @@
       { "path": "/contact", "label": "Contact" }
     ],
     "seo": {
-      "description": "AI & Software Engineer. Research in urban video understanding, agentic RAG, visual analytics, and enterprise systems (CRM/ERP) with automation.",
+      "description": "AI Engineer & Researcher. PhD student at FGV EMAp working on urban video understanding, vision-language models and visual analytics. Django, React, Kubernetes.",
       "keywords": [
         "AI Engineer",
-        "ML Research",
+        "Research Engineer",
+        "Vision-Language Models",
+        "Video Understanding",
+        "Visual Analytics",
+        "Information Visualization",
+        "Retrieval-Augmented Generation",
         "Agentic RAG",
         "Computer Vision",
         "Urban Computing",
         "Data Visualization",
+        "EuroVis",
+        "ML Research",
         "Django",
         "Django REST Framework",
         "React",
@@ -35,28 +42,12 @@
         "linkedin": "https://www.linkedin.com/in/joelperca/",
         "personalSite": "reqhiem.dev"
       }
-    },
-    "ui": {
-      "style": {
-        "lookAndFeel": "minimal, académico + industrial, tech",
-        "density": "medium",
-        "rounded": "lg",
-        "shadows": "soft",
-        "darkMode": true
-      },
-      "ctaPrimary": {
-        "label": "View projects",
-        "href": "/projects"
-      },
-      "ctaSecondary": {
-        "label": "Download resume",
-        "href": "/assets/resume"
-      }
     }
   },
   "person": {
     "name": "Joel Perca",
-    "headline": "AI / Software Engineer",
+    "headline": "AI Engineer & Researcher",
+    "affiliation": "Fundação Getulio Vargas (FGV), EMAp — Visual Data Science Lab",
     "location": {
       "city": "Rio de Janeiro",
       "region": "RJ",
@@ -72,22 +63,22 @@
       { "label": "Website", "url": "https://reqhiem.dev/" },
       { "label": "GitHub", "url": "https://github.com/reqhiem" }
     ],
-    "summary": "Software Engineer with experience in scalable web systems and applied AI/ML. Strong in Django/DRF, React/TypeScript, DevOps (Docker/Kubernetes) and automation. Research interests include urban video understanding, visual analytics, and agentic retrieval systems.",
+    "summary": "AI Engineer and Researcher based in Rio de Janeiro. I am a PhD student in Applied Mathematics and Data Science at FGV EMAp, where I completed my MSc and work with the Visual Data Science Lab on urban video understanding, vision-language models, agentic retrieval and visual analytics. My first-author paper, UrbanClipAtlas, was published in Computer Graphics Forum and presented at EuroVis 2026. I also build the systems that carry this research into production: Django/DRF and React/TypeScript services running on Docker and Kubernetes.",
     "positioning": {
       "primaryRoles": [
-        "AI Engineer / Applied ML",
-        "Software Engineer (Backend/Full Stack)",
-        "Research Engineer (CV + Retrieval + Visual Analytics)"
+        "AI Engineer (Vision-Language & Retrieval Systems)",
+        "Researcher — Visual Analytics & Urban Video Understanding",
+        "Research Engineer (prototype to production)"
       ],
       "domains": [
         "Urban Computing / Urban Video",
-        "Enterprise Automation (CRM/ERP, RPA)",
-        "Data Visualization / Visual Analytics"
+        "Visual Analytics / Information Visualization",
+        "Enterprise Automation (CRM/ERP, RPA)"
       ],
       "differentiators": [
-        "Strong bridge between research (papers/systems) and product delivery (CRM/ERP, automation).",
-        "Experience with modern stacks and deployment (Docker/K8s, CI/CD).",
-        "Technical leadership and end-to-end ownership (architecture, implementation, UI, deployment)."
+        "Two peer-reviewed publications: first author of UrbanClipAtlas (Computer Graphics Forum, EuroVis 2026) and co-author of STRive (Computers & Graphics, SIBGRAPI 2025).",
+        "Research prototypes built to survive production — Django/DRF, React/TypeScript, Docker and Kubernetes, with CI/CD.",
+        "End-to-end ownership: architecture, implementation, interface and deployment, from paper figure to running service."
       ],
       "proofPoints": [
         {
@@ -109,7 +100,7 @@
     {
       "degree": "PhD in Applied Mathematics and Data Science",
       "institution": "Fundação Getulio Vargas (FGV), EMAp",
-      "location": "Brasil",
+      "location": "Brazil",
       "start": "2026-03",
       "end": null,
       "status": "ongoing"
@@ -117,18 +108,22 @@
     {
       "degree": "MSc in Applied Mathematics and Data Science",
       "institution": "Fundação Getulio Vargas (FGV), EMAp",
-      "location": "Brasil",
+      "location": "Brazil",
       "start": "2025-03",
-      "end": "2026-03",
+      "end": "2026-07",
+      "thesis": {
+        "title": "Visual Analytics for Long Urban Video Understanding",
+        "defended": "2026-07"
+      },
       "highlights": [
-        "Completed the program in one year; admitted to the PhD.",
+        "Completed the coursework in one year and was admitted to the PhD program at FGV EMAp.",
         "Courses: Machine Learning, Deep Learning (PyTorch/HuggingFace), Reinforcement Learning."
       ]
     },
     {
       "degree": "BSc in Computer Science",
       "institution": "Universidad Nacional de San Agustín (UNSA)",
-      "location": "Perú",
+      "location": "Peru",
       "start": "2019-03",
       "end": "2023-12",
       "highlights": [
@@ -139,28 +134,82 @@
   ],
   "research": {
     "interests": [
-      "Computer Vision",
       "Urban Video Understanding",
+      "Vision-Language Models",
       "Agentic RAG",
       "Visual Analytics",
+      "Computer Vision",
       "Spatiotemporal Data Exploration"
     ],
     "projects": [
       {
         "title": "UrbanClipAtlas: A Visual Analytics Framework for Event and Scene Retrieval in Urban Videos",
-        "role": "Research project lead",
-        "stack": ["Python", "LangChain", "Databricks", "Reranking (Cohere/Jina)", "Svelte", "Docker", "WebSockets", "Computer Vision"],
-        "description": "Agentic RAG-based framework for urban video understanding and event/scene retrieval with chat UI and visual grounding.",
-        "links": [],
-        "status": "active"
+        "authors": [
+          "Joel Perca",
+          "Luis Sante Taipe",
+          "Juanpablo Heredia",
+          "João Rulff",
+          "Claudio Silva",
+          "Jorge Poco"
+        ],
+        "venue": "Computer Graphics Forum, vol. 45, no. 3 (Proc. EuroVis 2026)",
+        "year": "2026",
+        "role": "First author",
+        "status": "Published",
+        "presentedAt": "Presented at EuroVis 2026 — Nottingham, UK — June 2026",
+        "doi": "10.1111/cgf.70431",
+        "description": "A visual analytics system for exploring long urban videos recorded at street intersections. It segments recordings into clips, describes them with a vision-language model and indexes them for semantic retrieval, combining retrieval-augmented generation with taxonomy-aware entity extraction and video grounding. A knowledge graph aligns the language model output with detected objects and trajectories, so every answer can be visually grounded and verified. Evaluated on the StreetAware dataset through case studies on hazardous scenarios and pedestrian crossing dynamics.",
+        "stack": [
+          "Python",
+          "Vision-Language Models",
+          "Retrieval-Augmented Generation",
+          "Knowledge Graphs",
+          "LangChain",
+          "Svelte",
+          "Docker",
+          "WebSockets"
+        ],
+        "links": [
+          { "label": "DOI", "url": "https://doi.org/10.1111/cgf.70431" },
+          { "label": "arXiv", "url": "https://arxiv.org/abs/2604.15225" },
+          { "label": "PDF", "url": "https://files.visualdslab.com/files/papers/2026-UrbanClipAtlas-CGF.pdf" },
+          { "label": "Video", "url": "https://youtu.be/RciUKBavspw" },
+          { "label": "Project page", "url": "https://visualdslab.com/papers/UrbanClipAtlas/" }
+        ]
       },
       {
         "title": "STRive: An association rule-based system for the exploration of spatiotemporal categorical data",
-        "role": "Contributor (platform development)",
-        "stack": ["D3.js", "TypeScript", "Python", "scikit-learn"],
-        "description": "Association-rule-based system for exploring spatiotemporal categorical data; contributed to visualization platform implementation.",
-        "links": [],
-        "status": "published/ongoing"
+        "authors": [
+          "Mauro Diaz",
+          "Luis Sante Taipe",
+          "Joel Perca",
+          "João Da Silva",
+          "Nivan Ferreira",
+          "Jorge Poco"
+        ],
+        "venue": "Computers & Graphics (Proc. SIBGRAPI 2025)",
+        "year": "2025",
+        "role": "Co-author (visualization platform)",
+        "status": "Published",
+        "presentedAt": null,
+        "doi": "10.1016/j.cag.2025.104410",
+        "description": "A system for mining and exploring association rules over spatiotemporal categorical data. It pairs rule generation and rule clustering with an interactive interface offering two analysis modes — one at the cluster level, one at the individual rule level — connected through coordinated views. Demonstrated through case studies on fatal vehicle accidents and urban crime.",
+        "stack": [
+          "TypeScript",
+          "D3.js",
+          "Python",
+          "scikit-learn",
+          "Association Rule Mining",
+          "Spatiotemporal Data"
+        ],
+        "links": [
+          { "label": "DOI", "url": "https://doi.org/10.1016/j.cag.2025.104410" },
+          { "label": "arXiv", "url": "https://arxiv.org/abs/2509.02732" },
+          { "label": "PDF", "url": "https://files.visualdslab.com/files/papers/2025-STRive-SIBGRAPI.pdf" },
+          { "label": "Video", "url": "https://vimeo.com/1115958546" },
+          { "label": "Code", "url": "https://github.com/visual-ds/STRive" },
+          { "label": "Project page", "url": "https://visualdslab.com/papers/STRive/" }
+        ]
       }
     ]
   },
@@ -297,22 +346,11 @@
     "aiMl": ["PyTorch", "HuggingFace", "LangChain", "LlamaIndex", "PydanticAI", "Computer Vision", "Reranking"],
     "dataViz": ["D3.js", "Visual Analytics"]
   },
-  "contentAssets": {
-    "resumeFiles": [
-      { "label": "Resume (EN) — Full Stack Developer", "fileRef": "turn0file1" },
-      { "label": "Resume (EN) — Software Engineer", "fileRef": "turn0file2" }
-    ]
-  },
   "insightsForCopy": {
-    "heroBullets": [
-      "I research and build applied AI systems (urban video, retrieval, visual analytics).",
-      "I deliver end-to-end products: backend + frontend + deployment (Docker/K8s, CI/CD).",
-      "Enterprise automation with measurable impact (WhatsApp, CRM/ERP, RPA)."
-    ],
     "recommendedFeaturedSections": [
       {
         "id": "featured-research",
-        "title": "Featured research",
+        "title": "Publications",
         "items": ["UrbanClipAtlas", "STRive"]
       },
       {
@@ -323,15 +361,12 @@
       {
         "id": "impact",
         "title": "Impact",
-        "items": ["Reducción 90% en emisión de certificados", "Automatización de mensajería WhatsApp", "Arquitecturas con microservicios"]
+        "items": [
+          "90% reduction in certificate issuance time",
+          "WhatsApp messaging automation",
+          "Microservices-based architectures"
+        ]
       }
-    ],
-    "gapsToFill": [
-      "URL de GitHub",
-      "Links públicos de papers/demos (UrbanClipAtlas/STRive)",
-      "Capturas/figuras de proyectos (2–4 imágenes por proyecto)",
-      "Foto profesional (opcional)",
-      "Lista de talks/posts (si existen)"
     ]
   }
 }
