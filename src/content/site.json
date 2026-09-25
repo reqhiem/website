@@ -54,8 +54,7 @@
       "country": "Brazil"
     },
     "emails": [
-      { "value": "joelperca.vc@gmail.com", "primary": true },
-      { "value": "joel.perca@hotmail.com", "primary": false }
+      { "value": "hello@reqhiem.dev", "primary": true }
     ],
     "phones": [{ "value": "+51 986 461 041", "primary": true }],
     "links": [
