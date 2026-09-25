@@ -38,7 +38,7 @@ export const getFeaturedResearch = () =>
 export const getPrimaryEmail = () =>
   site.person.emails.find((email) => email.primary)?.value ??
   site.person.emails[0]?.value ??
-  "hello@example.com";
+  "hello@reqhiem.dev";
 
 export const formatDateRange = (start: string, end: string | null) => {
   return `${start} — ${end ?? "Present"}`;
