@@ -15,7 +15,7 @@ export default function ProjectsPage() {
       <Navbar />
       <main className="min-h-[70vh]">
         <Section title="Publications" subtitle="Peer-reviewed">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="flex flex-col gap-6">
             {research.projects.map((project, index) => (
               <ResearchCard key={index} project={project} />
             ))}
