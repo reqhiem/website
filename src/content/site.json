@@ -28,6 +28,7 @@
         "Urban Computing",
         "Data Visualization",
         "EuroVis",
+        "SIBGRAPI",
         "ML Research",
         "Django",
         "Django REST Framework",
@@ -62,7 +63,7 @@
       { "label": "Website", "url": "https://reqhiem.dev/" },
       { "label": "GitHub", "url": "https://github.com/reqhiem" }
     ],
-    "summary": "AI Engineer and Researcher based in Rio de Janeiro. I am a PhD student in Applied Mathematics and Data Science at FGV EMAp, where I completed my MSc and work with the Visual Data Science Lab on urban video understanding, vision-language models, agentic retrieval and visual analytics. My first-author paper, UrbanClipAtlas, was published in Computer Graphics Forum and presented at EuroVis 2026. I also build the systems that carry this research into production: Django/DRF and React/TypeScript services running on Docker and Kubernetes.",
+    "summary": "AI Engineer and Researcher based in Rio de Janeiro. I am a PhD student in Applied Mathematics and Data Science at FGV EMAp, where I completed my MSc and work with the Visual Data Science Lab on urban video understanding, vision-language models, agentic retrieval and visual analytics. My first-author paper, UrbanClipAtlas, was published in Computer Graphics Forum and presented at EuroVis 2026, and I have co-authored papers at SIBGRAPI 2025 and 2026. I also build the systems that carry this research into production: Django/DRF and React/TypeScript services running on Docker and Kubernetes.",
     "positioning": {
       "primaryRoles": [
         "AI Engineer (Vision-Language & Retrieval Systems)",
@@ -75,7 +76,7 @@
         "Enterprise Automation (CRM/ERP, RPA)"
       ],
       "differentiators": [
-        "Two peer-reviewed publications: first author of UrbanClipAtlas (Computer Graphics Forum, EuroVis 2026) and co-author of STRive (Computers & Graphics, SIBGRAPI 2025).",
+        "Three peer-reviewed publications: first author of UrbanClipAtlas (Computer Graphics Forum, EuroVis 2026), co-author of STRive (Computers & Graphics, SIBGRAPI 2025) and of a SIBGRAPI 2026 paper comparing monocular and multi-view 3D pedestrian reconstruction at urban intersections.",
         "Research prototypes built to survive production — Django/DRF, React/TypeScript, Docker and Kubernetes, with CI/CD.",
         "End-to-end ownership: architecture, implementation, interface and deployment, from paper figure to running service."
       ],
@@ -174,6 +175,32 @@
           { "label": "PDF", "url": "https://files.visualdslab.com/files/papers/2026-UrbanClipAtlas-CGF.pdf" },
           { "label": "Video", "url": "https://youtu.be/RciUKBavspw" },
           { "label": "Project page", "url": "https://visualdslab.com/papers/UrbanClipAtlas/" }
+        ]
+      },
+      {
+        "title": "Comparing Monocular and Multi-View 3D Pedestrian Reconstruction Strategies for Urban Intersection Sensing",
+        "authors": [
+          "Kauan Mariani Ferreira",
+          "Matheus Fillype Ferreira de Carvalho",
+          "Joel Perca",
+          "João Rulff",
+          "Jorge Poco"
+        ],
+        "venue": "SIBGRAPI 2026 — Conference on Graphics, Patterns and Images",
+        "year": "2026",
+        "role": "Co-author",
+        "status": "Accepted · In print",
+        "presentedAt": null,
+        "doi": null,
+        "description": "A comparison of monocular and multi-view strategies for reconstructing pedestrians in 3D from cameras installed at urban intersections, framed around sensing street-level activity.",
+        "stack": [
+          "Computer Vision",
+          "3D Pedestrian Reconstruction",
+          "Monocular vs. Multi-View",
+          "Urban Sensing"
+        ],
+        "links": [
+          { "label": "Project page", "url": "https://visualdslab.com/papers/MonoVsMulti3D/" }
         ]
       },
       {
@@ -350,7 +377,7 @@
       {
         "id": "featured-research",
         "title": "Publications",
-        "items": ["UrbanClipAtlas", "STRive"]
+        "items": ["UrbanClipAtlas", "MonoVsMulti3D", "STRive"]
       },
       {
         "id": "featured-projects",

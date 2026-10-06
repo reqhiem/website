@@ -116,6 +116,25 @@ export default function RootLayout({
       url: 'https://doi.org/10.1016/j.cag.2025.104410',
       sameAs: 'https://arxiv.org/abs/2509.02732',
     },
+    {
+      '@type': 'ScholarlyArticle',
+      headline:
+        'Comparing Monocular and Multi-View 3D Pedestrian Reconstruction Strategies for Urban Intersection Sensing',
+      author: [
+        'Kauan Mariani Ferreira',
+        'Matheus Fillype Ferreira de Carvalho',
+        'Joel Perca',
+        'João Rulff',
+        'Jorge Poco',
+      ].map((name) => ({ '@type': 'Person', name })),
+      // Accepted, not yet in the proceedings: no DOI or publication date yet.
+      publication: {
+        '@type': 'PublicationEvent',
+        name: 'SIBGRAPI 2026',
+      },
+      creativeWorkStatus: 'In print',
+      url: 'https://visualdslab.com/papers/MonoVsMulti3D/',
+    },
   ];
 
   const jsonLdData = {

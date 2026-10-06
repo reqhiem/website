@@ -32,8 +32,7 @@ export const getExperienceSorted = () => {
 export const getFeaturedProjects = () =>
   site.projects.filter((project) => project.featured);
 
-export const getFeaturedResearch = () =>
-  site.research.projects.slice(0, 2);
+export const getFeaturedResearch = () => site.research.projects;
 
 export const getPrimaryEmail = () =>
   site.person.emails.find((email) => email.primary)?.value ??

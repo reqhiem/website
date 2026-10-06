@@ -49,7 +49,7 @@ export default function HomePage() {
         <Hero />
 
         <Section title={researchTitle} subtitle="Peer-reviewed research">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="flex flex-col gap-6">
             {featuredResearch.map((project, index) => (
               <ResearchCard key={index} project={project} />
             ))}
