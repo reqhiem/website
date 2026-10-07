@@ -19,7 +19,7 @@ After porting two production agents and a research pipeline across the three big
 - **LangChain + LangGraph** is the broadest ecosystem — hundreds of integrations and the best story for stateful, branching multi-agent graphs. The cost is abstraction weight and a moving API.
 - **LlamaIndex** still wins on retrieval. If your product is "talk to my documents / database / code", its index abstractions, query engines, and node post-processors save you weeks.
 - The three are not mutually exclusive: a healthy stack today is usually **PydanticAI for the agent surface, LlamaIndex for retrieval, and LangGraph only when the control flow genuinely needs a graph**.
-- For anything where you'd otherwise write a one-off LCEL chain, just call the model SDK directly. Frameworks should earn their place.
+- For anything where you'd otherwise write a one-off LCEL chain, just call the model SDK directly. Frameworks should earn their place, and even a good one is only part of the [harness around the model](/blog/ai-agent-harnesses-beyond-the-model).
 
 ## What each one actually is
 

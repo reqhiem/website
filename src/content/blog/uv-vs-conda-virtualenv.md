@@ -5,7 +5,6 @@ description: "uv vs. conda vs. virtualenv/pip: why the Rust-based uv is becoming
 date: "2026-04-23"
 category: "Tooling"
 tags: ["python", "uv", "packaging", "devtools", "mlops"]
-featured: true
 author: "Joel Perca"
 ---
 
@@ -102,7 +101,7 @@ uv add fastapi uvicorn "pydantic>=2"
 uv add --dev pytest ruff mypy
 ```
 
-This creates a `pyproject.toml`, a `uv.lock`, and a `.venv` in the project root. No `virtualenv`, no `pyenv`, no `pip`.
+This creates a `pyproject.toml`, a `uv.lock`, and a `.venv` in the project root. No `virtualenv`, no `pyenv`, no `pip`. On a team, bake this layout into a [Copier template](/blog/copier-vs-cookiecutter-template-management) so every new service starts from it and keeps receiving its updates.
 
 ### Run code inside the env, without activating it
 

@@ -5,7 +5,6 @@ description: "Copier vs. Cookiecutter for project scaffolding: why Copier's upda
 date: "2026-04-28"
 category: "Tooling"
 tags: ["python", "copier", "cookiecutter", "templates", "scaffolding", "devtools"]
-featured: true
 author: "Joel Perca"
 ---
 
@@ -152,6 +151,8 @@ _migrations:
 ## Day-to-day workflow
 
 ### Bootstrap a new service
+
+Install Copier once as a global tool (`pipx`, or `uv tool` if you are already on [uv](/blog/uv-vs-conda-virtualenv)), then generate the service:
 
 ```bash
 pipx install copier   # or: uv tool install copier

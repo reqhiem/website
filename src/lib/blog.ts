@@ -101,6 +101,23 @@ export function getFeaturedPosts(limit = 3): BlogPostMeta[] {
     .slice(0, limit);
 }
 
+// Shared tags weigh double, same category breaks ties; equal scores keep the
+// newest-first order of getAllPosts().
+export function getRelatedPosts(slug: string, limit = 3): BlogPostMeta[] {
+  const posts = getAllPosts();
+  const current = posts.find((post) => post.slug === slug);
+  if (!current) return [];
+
+  const score = (post: BlogPostMeta) =>
+    post.tags.filter((tag) => current.tags.includes(tag)).length * 2 +
+    (post.category === current.category ? 1 : 0);
+
+  return posts
+    .filter((post) => post.slug !== slug && score(post) > 0)
+    .sort((a, b) => score(b) - score(a))
+    .slice(0, limit);
+}
+
 export function getAllCategories(): string[] {
   const set = new Set(getAllPosts().map((post) => post.category));
   return Array.from(set).sort();
