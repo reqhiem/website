@@ -6,14 +6,16 @@ import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/app/components/json-ld";
+import { BlogCard } from "@/components/blog/BlogCard";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import {
   getAdjacentPosts,
   getPostBySlug,
   getPostSlugs,
+  getRelatedPosts,
 } from "@/lib/blog";
-import { buildCanonical, getPerson } from "@/lib/content";
+import { buildCanonical, getPerson, getSite } from "@/lib/content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -31,8 +33,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const url = buildCanonical(`/blog/${post.slug}`);
+  // og:image comes from ./opengraph-image.tsx.
   return {
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: post.description,
     keywords: post.tags,
     alternates: { canonical: url },
@@ -44,13 +47,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       publishedTime: post.date,
       modifiedTime: post.updated ?? post.date,
       tags: post.tags,
-      images: post.cover ? [{ url: post.cover }] : undefined,
+      siteName: getSite().title,
+      authors: [buildCanonical("/about")],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: post.cover ? [post.cover] : undefined,
     },
   };
 }
@@ -70,7 +73,9 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound();
 
   const { prev, next } = getAdjacentPosts(slug);
+  const related = getRelatedPosts(slug);
   const person = getPerson();
+  const author = { "@type": "Person", name: person.name, url: buildCanonical("/about") };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -79,15 +84,13 @@ export default async function BlogPostPage({ params }: PageProps) {
     description: post.description,
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
-    author: {
-      "@type": "Person",
-      name: person.name,
-      url: buildCanonical("/"),
-    },
+    author,
+    publisher: author,
     keywords: post.tags.join(", "),
     articleSection: post.category,
     mainEntityOfPage: { "@type": "WebPage", "@id": post.url },
-    image: post.cover ? [post.cover] : undefined,
+    url: post.url,
+    image: [buildCanonical(`/blog/${post.slug}/opengraph-image`)],
   };
 
   return (
@@ -154,6 +157,19 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </div>
               </aside>
             </div>
+
+            {related.length > 0 ? (
+              <section className="mt-16 border-t border-black/10 pt-10 dark:border-white/10">
+                <h2 className="mb-6 text-xs uppercase tracking-[0.3em] text-black/60 dark:text-white/50">
+                  Related posts
+                </h2>
+                <div className="grid gap-6 md:grid-cols-3">
+                  {related.map((relatedPost) => (
+                    <BlogCard key={relatedPost.slug} post={relatedPost} />
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             <nav className="mt-16 grid gap-4 border-t border-black/10 pt-8 md:grid-cols-2 dark:border-white/10">
               {prev ? (

@@ -1,6 +1,7 @@
 ---
 title: "EmbeddingGemma 2: one sub-1B model for text, code, images, video and audio"
-description: "Google's new open embedding model puts five input types in one 768-d space at 740M params. Where it beats the state of the art, where it doesn't, and how to run it."
+seoTitle: "EmbeddingGemma 2: multimodal embedding guide"
+description: "Google's open embedding model puts text, code, images, video and audio in one 768-d space at 740M params. Where it beats SOTA, where it doesn't, how to run it."
 date: "2026-10-06"
 category: "AI"
 tags: ["embeddings", "multimodal", "rag", "llm", "ai-engineering"]
@@ -121,7 +122,7 @@ The quality cost depends heavily on the modality:
 ## Use cases where it fits
 
 - **On-device RAG.** Quantized, the text path runs in ~191 MB of RAM on a Pixel 11 Pro by Google's numbers (~567 MB for full multimodal), and it shares a tokenizer and audio encoder with Gemma 4. A phone or laptop can embed, retrieve and generate without a network call, which matters for private notes, mail, health or legal documents.
-- **Code search for agents.** The best code score in its class, 8K context (whole files, not 512-token shards), and a dedicated `CodeRetrieval` prefix. Index a repo locally and give your coding agent semantic search over it without shipping source to an API.
+- **Code search for agents.** The best code score in its class, 8K context (whole files, not 512-token shards), and a dedicated `CodeRetrieval` prefix. Index a repo locally and give your coding agent semantic search over it without shipping source to an API. Retrieval is one of the jobs of the [agent harness](/blog/ai-agent-harnesses-beyond-the-model), and this is a cheap way to do it well.
 - **Media libraries.** Search photos, screenshots, scanned documents and short clips with plain text. Google's Edge Gallery demos ("Instant Media Search", "Video Moments Finder") do exactly this on a phone.
 - **Audio archives and meetings.** Embed recordings directly and query them with text: podcasts, call-center audio, field recordings. Because there's no ASR step, you can find a siren, applause or a dog barking as well as spoken words.
 - **Routing and classification at the edge.** Embed the candidate labels once, then classify incoming text, images or sounds by nearest neighbor. Google reports under 100 ms to score 500 options with its MediaPipe Decision task.

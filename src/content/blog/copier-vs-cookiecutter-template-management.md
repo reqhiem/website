@@ -1,10 +1,10 @@
 ---
 title: "Copier vs. Cookiecutter: why your project templates should be living, not frozen"
-description: "A hands-on comparison of Copier and Cookiecutter for project scaffolding. Why Copier's update story makes it the right default for long-lived templates, with examples, migration notes, and trade-offs."
+seoTitle: "Copier vs. Cookiecutter for project templates"
+description: "Copier vs. Cookiecutter for project scaffolding: why Copier's update story makes it the default for long-lived templates, with examples and migration notes."
 date: "2026-04-28"
 category: "Tooling"
 tags: ["python", "copier", "cookiecutter", "templates", "scaffolding", "devtools"]
-featured: true
 author: "Joel Perca"
 ---
 
@@ -151,6 +151,8 @@ _migrations:
 ## Day-to-day workflow
 
 ### Bootstrap a new service
+
+Install Copier once as a global tool (`pipx`, or `uv tool` if you are already on [uv](/blog/uv-vs-conda-virtualenv)), then generate the service:
 
 ```bash
 pipx install copier   # or: uv tool install copier

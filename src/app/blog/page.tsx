@@ -11,28 +11,13 @@ import {
   getAllTags,
   getFeaturedPosts,
 } from "@/lib/blog";
-import { buildCanonical } from "@/lib/content";
+import { pageMetadata } from "@/lib/content";
 
 const PAGE_TITLE = "Blog";
 const PAGE_DESCRIPTION =
-  "Notes from the intersection of research and engineering: urban video understanding, vision-language and retrieval systems, visual analytics, and the tooling that gets them shipped.";
+  "Notes from research and engineering: urban video understanding, vision-language and retrieval systems, visual analytics, and the tooling that ships them.";
 
-export const metadata: Metadata = {
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
-  alternates: { canonical: buildCanonical("/blog") },
-  openGraph: {
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-    url: buildCanonical("/blog"),
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: PAGE_TITLE,
-    description: PAGE_DESCRIPTION,
-  },
-};
+export const metadata: Metadata = pageMetadata("/blog", PAGE_TITLE, PAGE_DESCRIPTION);
 
 export default function BlogIndexPage() {
   const posts = getAllPosts();

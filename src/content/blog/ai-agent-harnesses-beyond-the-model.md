@@ -112,7 +112,7 @@ Even this sketch has choices a framework cannot make for you: who grants approva
 | **Agent harness** | How does this particular agent operate safely and finish work? | Context selection, execution policy, state, stopping rules, verification. |
 | **Evaluation harness** | How well did it perform across repeatable tasks? | Set up cases, run the agent, grade outcomes, compare regressions. |
 
-A framework can provide pieces of a harness, but installing a package does not supply your permission policy, repository conventions, or definition of done. Conversely, an eval harness drives an agent harness through test cases and measures what happened. Anthropic's [guide to agent evals](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) emphasizes checking outcomes and, when useful, the trajectory of tool use—not only the final prose.
+A framework ([PydanticAI, LangChain or LlamaIndex](/blog/pydanticai-vs-langchain-vs-llamaindex-agent-frameworks)) can provide pieces of a harness, but installing a package does not supply your permission policy, repository conventions, or definition of done. Conversely, an eval harness drives an agent harness through test cases and measures what happened. Anthropic's [guide to agent evals](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) emphasizes checking outcomes and, when useful, the trajectory of tool use—not only the final prose.
 
 ## What I would build first
 

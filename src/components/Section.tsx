@@ -8,9 +8,10 @@ interface SectionProps {
   subtitle?: string;
   children: ReactNode;
   id?: string;
+  as?: "h1" | "h2";
 }
 
-export function Section({ title, subtitle, children, id }: SectionProps) {
+export function Section({ title, subtitle, children, id, as: Heading = "h2" }: SectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export function Section({ title, subtitle, children, id }: SectionProps) {
             <p className="text-xs uppercase tracking-[0.3em] text-muted dark:text-white/60">
               {subtitle ?? ""}
             </p>
-            <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
+            <Heading className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{title}</Heading>
           </div>
         ) : null}
         <div data-gsap-item>

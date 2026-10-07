@@ -3,6 +3,7 @@ import {
   getSkills,
   getCertifications,
   getLanguages,
+  pageMetadata,
 } from "@/lib/content";
 import { fetchGithubInsights, getGithubUsername } from "@/lib/github";
 import { Section } from "@/components/Section";
@@ -11,6 +12,12 @@ import { Badge } from "@/components/Badge";
 import { GithubInsights } from "@/components/github/GithubInsights";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+
+export const metadata = pageMetadata(
+  "/about",
+  "About Joel Perca",
+  "About Joel Perca: AI engineer and PhD student at FGV EMAp working on urban video understanding, vision-language models and visual analytics.",
+);
 
 // 6h ISR. Must be a literal - Next requires this segment config value to be
 // statically analyzable, so it cannot import a shared constant.
@@ -41,7 +48,7 @@ export default async function AboutPage() {
     <>
       <Navbar />
       <main className="min-h-[70vh]">
-        <Section title="About" subtitle="Profile">
+        <Section title="About" subtitle="Profile" as="h1">
           <Card>
             <p className="text-lg text-black/70 dark:text-white/70">{summary}</p>
           </Card>

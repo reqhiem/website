@@ -2,6 +2,7 @@ import {
   getExperienceSorted,
   formatDateRange,
   getEducation,
+  pageMetadata,
 } from "@/lib/content";
 import { Section } from "@/components/Section";
 import { Timeline } from "@/components/Timeline";
@@ -9,6 +10,12 @@ import { TimelineItem } from "@/components/TimelineItem";
 import { Badge } from "@/components/Badge";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+
+export const metadata = pageMetadata(
+  "/experience",
+  "Experience & education",
+  "Work and education timeline of Joel Perca: AI engineering, research at FGV EMAp, and full-stack work with Django, React and Kubernetes.",
+);
 
 export default function ExperiencePage() {
   const experience = getExperienceSorted();
@@ -48,7 +55,7 @@ export default function ExperiencePage() {
     <>
       <Navbar />
       <main className="min-h-[70vh]">
-        <Section title="Experience" subtitle="Timeline">
+        <Section title="Experience" subtitle="Timeline" as="h1">
           <Timeline>
             {timeline.map((item, index) => (
               <TimelineItem

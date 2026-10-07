@@ -41,8 +41,9 @@ Every post starts with YAML frontmatter between `---` fences. Matches `BlogFront
 
 ```yaml
 ---
-title: "Post title — short enough for a card, descriptive enough for SEO"
-description: "One paragraph (≤ ~200 chars) used for the card blurb, OG description, and Twitter card."
+title: "Post title — the on-page H1, OG title and JSON-LD headline"
+seoTitle: "Short <title> for search results"  # optional; ≤ 46 chars (layout appends " | reqhiem.dev"); set it whenever `title` + 14 > 60
+description: "≤ 160 chars: Google truncates longer snippets. Also the card blurb, OG and Twitter description."
 date: "YYYY-MM-DD"           # ISO date, UTC-based; avoid timezone ambiguity
 updated: "YYYY-MM-DD"        # optional, omit if same as date
 category: "Tooling"          # one of the 4 values above
@@ -50,7 +51,7 @@ tags: ["python", "uv", "devtools"]  # 3–6 lowercase, hyphenated tags
 featured: true               # optional; at most one featured post is promoted as hero on /blog
 draft: false                 # optional; drafts show only in dev, never in production builds
 author: "Joel Perca"         # optional; defaults implicitly to the site owner
-cover: "/blog/covers/slug.png"  # optional; used for OG image
+cover: "/blog/covers/slug.png"  # optional 1200×630 PNG; without it an OG card is generated from the title
 ---
 ```
 

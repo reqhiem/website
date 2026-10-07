@@ -22,6 +22,7 @@ export type BlogCategory = "Software Engineering" | "AI" | "Research" | "Tooling
 
 export interface BlogFrontmatter {
   title: string;
+  seoTitle?: string;
   description: string;
   date: string;
   updated?: string;
@@ -96,6 +97,21 @@ export function getPostSlugs(): string[] {
 export function getFeaturedPosts(limit = 3): BlogPostMeta[] {
   return getAllPosts()
     .filter((post) => post.featured)
+    .slice(0, limit);
+}
+
+export function getRelatedPosts(slug: string, limit = 3): BlogPostMeta[] {
+  const posts = getAllPosts();
+  const current = posts.find((post) => post.slug === slug);
+  if (!current) return [];
+
+  const score = (post: BlogPostMeta) =>
+    post.tags.filter((tag) => current.tags.includes(tag)).length * 2 +
+    (post.category === current.category ? 1 : 0);
+
+  return posts
+    .filter((post) => post.slug !== slug && score(post) > 0)
+    .sort((a, b) => score(b) - score(a))
     .slice(0, limit);
 }
 
