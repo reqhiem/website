@@ -9,9 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
   const blogLastModified = posts.map((post) => post.updated ?? post.date).sort().at(-1);
 
-  // No lastModified on static routes: a build timestamp would claim every
-  // page changed on every deploy, and Google stops trusting lastmod. /blog
-  // changes when a post does.
+  // No lastModified on static routes: a build timestamp is a false lastmod.
   const staticEntries: MetadataRoute.Sitemap = routes.map((route) => {
     const path = route.path === '/' ? '' : route.path;
     return {

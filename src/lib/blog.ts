@@ -22,7 +22,6 @@ export type BlogCategory = "Software Engineering" | "AI" | "Research" | "Tooling
 
 export interface BlogFrontmatter {
   title: string;
-  /** Short `<title>` (≤ ~46 chars, the layout appends " | reqhiem.dev"); falls back to `title`. */
   seoTitle?: string;
   description: string;
   date: string;
@@ -101,8 +100,6 @@ export function getFeaturedPosts(limit = 3): BlogPostMeta[] {
     .slice(0, limit);
 }
 
-// Shared tags weigh double, same category breaks ties; equal scores keep the
-// newest-first order of getAllPosts().
 export function getRelatedPosts(slug: string, limit = 3): BlogPostMeta[] {
   const posts = getAllPosts();
   const current = posts.find((post) => post.slug === slug);

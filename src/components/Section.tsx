@@ -8,7 +8,6 @@ interface SectionProps {
   subtitle?: string;
   children: ReactNode;
   id?: string;
-  /** The page's first section renders its title as the page h1. */
   as?: "h1" | "h2";
 }
 

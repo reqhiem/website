@@ -1,4 +1,4 @@
-// Rendered by next/og (Satori): flexbox only, inline styles, no Tailwind.
+// Satori: inline styles and flexbox only, no Tailwind.
 export const OG_SIZE = { width: 1200, height: 630 };
 
 interface OgCardProps {

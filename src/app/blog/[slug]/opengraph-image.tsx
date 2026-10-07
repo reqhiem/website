@@ -23,7 +23,6 @@ export default async function OpengraphImage({
   const post = await getPostBySlug(slug);
   if (!post) return new Response("Not found", { status: 404 });
 
-  // A hand-made cover (1200×630 under public/) wins over the generated card.
   if (post.cover) {
     const png = await fs.readFile(path.join(process.cwd(), "public", post.cover));
     const src = `data:image/png;base64,${png.toString("base64")}`;

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const url = buildCanonical(`/blog/${post.slug}`);
-  // Social images come from ./opengraph-image.tsx (the cover when there is one).
+  // og:image comes from ./opengraph-image.tsx.
   return {
     title: post.seoTitle ?? post.title,
     description: post.description,

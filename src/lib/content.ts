@@ -49,10 +49,7 @@ export const buildCanonical = (path: string) => {
   return `https://${domain}${path}`;
 };
 
-// Every page must set its own canonical: without it Next inherits the root
-// layout's, and Google folds the page into the home page as a duplicate.
-// Overriding openGraph drops the inherited image, so point back at the
-// site-wide one from src/app/opengraph-image.tsx.
+// Overriding openGraph drops the inherited og:image, so re-point it.
 export const pageMetadata = (
   path: string,
   title: string,
