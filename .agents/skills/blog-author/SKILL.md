@@ -1,30 +1,6 @@
 ---
 name: blog-author
-description: Author a new blog entry for reqhiem.dev. Use when the user asks to add, write, draft, or publish a blog post / entry / article. Handles the full authoring flow — markdown file creation under src/content/blog/ with the correct frontmatter schema, LaTeX + code conventions, slug/date rules, and verification steps. Triggers on phrases like "agregar un post", "nueva entrada del blog", "draft a blog post", "write an article about X", "publicar en el blog".
-metadata:
-  priority: 6
-  pathPatterns:
-    - 'src/content/blog/**'
-    - 'src/lib/blog.ts'
-    - 'src/app/blog/**'
-    - 'src/components/blog/**'
-retrieval:
-  aliases:
-    - blog post
-    - nueva entrada
-    - add post
-    - publish article
-    - escribir entrada
-    - draft post
-  intents:
-    - add a new blog entry to the site
-    - publish a technical article
-    - write a blog post about X
-    - draft a new blog entry
-  examples:
-    - agrega una nueva entrada sobre agentic RAG
-    - quiero publicar un post sobre transformers
-    - write a blog post about TypeScript satisfies
+description: Authors new blog entries for reqhiem.dev — markdown under src/content/blog/ with the correct frontmatter schema, LaTeX + code conventions, slug/date rules, and build verification. Can also generate post media (animated GIF figures, cover/OG images) with HyperFrames when the prompt asks for a video, animation, GIF, diagram, or cover. Use whenever the user asks to add, write, draft, convert, or publish a blog post, entry, or article, even in Spanish — "agregar un post", "nueva entrada del blog", "escribir entrada", "publicar en el blog", "draft a blog post", "write an article about X", "agrega una nueva entrada sobre agentic RAG con un video".
 ---
 
 # Blog author — reqhiem.dev
@@ -44,7 +20,7 @@ Do **not** use this skill for: editing the blog UI itself (cards, filters, layou
 ## Before writing
 
 1. **Ask the user to confirm the topic, angle, and desired depth** if the brief is one line. Technical posts on reqhiem.dev are deep, opinionated, and grounded in real usage — avoid generic "intro to X" content unless the user explicitly wants it.
-2. **Site is English-only** (since commit `Remove Spanish i18n; English-only site with /es redirects`). Write posts in English even if the request came in Spanish, unless the user explicitly overrides this.
+2. **Site is English-only.** Write posts in English even if the request came in Spanish, unless the user explicitly overrides this.
 3. **Choose a category.** Must be one of:
    - `"Software Engineering"` — backend, system design, languages, APIs.
    - `"AI"` — ML/DL, agents, retrieval, LLMs, applied ML.
@@ -108,7 +84,7 @@ const greet = (name: string) => `hello, ${name}`;
 Extras supported by `rehype-pretty-code`:
 
 - `{1,3-5}` highlight lines: `` ```ts {1,3-5} ``
-- `{title="file.ts"}` filename caption.
+- `title="file.ts"` filename caption: `` ```ts title="file.ts" `` (no braces — braces are only for line ranges).
 - Inline code is **not** highlighted (we set `bypassInlineCode: true` to keep inline `` `snippets` `` styled as plain accent-colored code).
 
 ### Math / LaTeX
@@ -130,6 +106,7 @@ Use math sparingly — one or two formulas per article tends to land better than
 - GFM tables render with themed borders; use them for comparisons and benchmarks.
 - `> blockquote` renders as an accented pull-quote.
 - Images: prefer hosted URLs or files under `public/`. Use absolute paths from `/` (e.g. `/blog/covers/slug.png`). Always include alt text.
+- **Raw HTML is stripped.** `remark-rehype` runs without `allowDangerousHtml`, so `<video>`, `<iframe>`, `<figure>`, etc. silently disappear from the output. Use markdown syntax only; for motion, embed a GIF with `![alt](...)` (see [Media](#media-optional-hyperframes)).
 - Horizontal rule `---` renders as a dashed divider — good for a "Further reading" section at the end.
 
 ### Style
@@ -141,7 +118,7 @@ Use math sparingly — one or two formulas per article tends to land better than
 
 ## Reference: minimal post template
 
-```markdown
+````markdown
 ---
 title: "Post title"
 description: "One-paragraph summary for cards, OG, Twitter."
@@ -176,14 +153,20 @@ One paragraph that either generalizes or points forward.
 **Further reading**
 
 - [Canonical source](https://example.com)
-```
+````
+
+## Media (optional, HyperFrames)
+
+Only when the prompt asks for it — a video, animation, GIF, animated diagram, or a cover/OG image. Otherwise skip this section entirely; a text-only post is the default.
+
+When it applies, read `references/media.md` before starting. In short: delegate the composition to the `/hyperframes` skill, keep the project out of `src/` and `public/`, ship inline motion as a **GIF** (raw `<video>` is stripped — see above) and covers as a **1200×630 PNG**, both under `public/blog/`.
 
 ## Verification steps
 
 After creating the file:
 
-1. Run `pnpm lint` — ensures no TS regressions in the broader project.
-2. Run `pnpm build` — confirms the post gets statically prerendered. Look for `/blog/<slug>` in the route table.
+1. Run `pnpm lint` — catches ESLint regressions (it does not type-check).
+2. Run `pnpm build` — type-checks and confirms the post gets statically prerendered. Look for `/blog/<slug>` in the route table.
 3. If the user has a dev server running, open `http://localhost:<port>/blog/<slug>` and visually check: math renders, code highlights (including theme toggle), TOC scrolls, no console errors.
 4. Inspect the generated sitemap at `.next/server/app/sitemap.xml.body` — the new post URL should appear.
 
@@ -200,3 +183,4 @@ After creating the file:
 - Don't edit `src/app/sitemap.ts`, `src/content/site.json`, `src/app/blog/page.tsx`, or the navbar to "register" the post — everything is discovered at build time from the filesystem.
 - Don't write commentary in frontmatter comments or leave editor placeholders in the body.
 - Don't generate a full article without confirming the topic and depth with the user first.
+- Don't generate media the prompt didn't ask for — it costs render time and HyperFrames usage.
