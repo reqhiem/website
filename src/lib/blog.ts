@@ -22,6 +22,8 @@ export type BlogCategory = "Software Engineering" | "AI" | "Research" | "Tooling
 
 export interface BlogFrontmatter {
   title: string;
+  /** Short `<title>` (≤ ~46 chars, the layout appends " | reqhiem.dev"); falls back to `title`. */
+  seoTitle?: string;
   description: string;
   date: string;
   updated?: string;

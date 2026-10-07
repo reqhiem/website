@@ -54,6 +54,7 @@ Every page is a Server Component that pulls data from `@/lib/content` and render
 - Metadata is generated in `src/app/layout.tsx` via `generateMetadata` from `site.json` (title, description, OG, canonical).
 - `src/app/layout.tsx` also injects a `Person` JSON-LD block via `src/app/components/json-ld.tsx`, assembled from `person`, `skills`, `experience`, and `education` in `site.json`.
 - `src/app/sitemap.ts` and `src/app/robots.ts` derive URLs from `site.json`.
+- OG images are generated with `next/og`: `src/app/opengraph-image.tsx` (site-wide) and `src/app/blog/[slug]/opengraph-image.tsx` (per post, reusing the post's `cover` when it has one). Shared layout in `src/components/og/OgCard.tsx`.
 
 ### Styling
 
@@ -61,4 +62,4 @@ Tailwind CSS **v4** via the `@tailwindcss/postcss` plugin (no `tailwind.config.j
 
 ## Gotchas
 
-- When adding a new route, add it to `site.routes` in `site.json` (with `path` and `label`) **and** create the page under `src/app/<path>/page.tsx`. The Navbar and Footer read the route list from `site.json`.
+- When adding a new route, add it to `site.routes` in `site.json` (with `path` and `label`) **and** create the page under `src/app/<path>/page.tsx`. The Navbar and Footer read the route list from `site.json`. Export `metadata = pageMetadata(path, title, description)` from `@/lib/content` in the new page, or it inherits the home page's canonical and Google treats it as a duplicate of `/`; give its first `<Section>` `as="h1"`.

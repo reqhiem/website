@@ -1,6 +1,7 @@
 ---
 title: "Dagster vs. Airflow and Prefect: why asset-based orchestration wins"
-description: "A pragmatic comparison of Dagster, Airflow, Prefect, and Flyte for modern data and ML pipelines. Why the asset-based model beats task-DAGs, with code, a cost model, and migration notes."
+seoTitle: "Dagster vs. Airflow vs. Prefect: orchestration"
+description: "Dagster vs. Airflow, Prefect and Flyte for data and ML pipelines: why asset-based orchestration beats task DAGs, with code, a cost model and migration notes."
 date: "2026-04-23"
 category: "Tooling"
 tags: ["data-engineering", "dagster", "airflow", "prefect", "orchestration", "mlops"]

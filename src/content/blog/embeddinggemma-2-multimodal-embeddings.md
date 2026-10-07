@@ -1,6 +1,7 @@
 ---
 title: "EmbeddingGemma 2: one sub-1B model for text, code, images, video and audio"
-description: "Google's new open embedding model puts five input types in one 768-d space at 740M params. Where it beats the state of the art, where it doesn't, and how to run it."
+seoTitle: "EmbeddingGemma 2: multimodal embedding guide"
+description: "Google's open embedding model puts text, code, images, video and audio in one 768-d space at 740M params. Where it beats SOTA, where it doesn't, how to run it."
 date: "2026-10-06"
 category: "AI"
 tags: ["embeddings", "multimodal", "rag", "llm", "ai-engineering"]

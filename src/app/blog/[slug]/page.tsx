@@ -13,7 +13,7 @@ import {
   getPostBySlug,
   getPostSlugs,
 } from "@/lib/blog";
-import { buildCanonical, getPerson } from "@/lib/content";
+import { buildCanonical, getPerson, getSite } from "@/lib/content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -31,8 +31,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const url = buildCanonical(`/blog/${post.slug}`);
+  // Social images come from ./opengraph-image.tsx (the cover when there is one).
   return {
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: post.description,
     keywords: post.tags,
     alternates: { canonical: url },
@@ -44,13 +45,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       publishedTime: post.date,
       modifiedTime: post.updated ?? post.date,
       tags: post.tags,
-      images: post.cover ? [{ url: post.cover }] : undefined,
+      siteName: getSite().title,
+      authors: [buildCanonical("/about")],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: post.cover ? [post.cover] : undefined,
     },
   };
 }
@@ -71,6 +72,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const { prev, next } = getAdjacentPosts(slug);
   const person = getPerson();
+  const author = { "@type": "Person", name: person.name, url: buildCanonical("/about") };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -79,15 +81,13 @@ export default async function BlogPostPage({ params }: PageProps) {
     description: post.description,
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
-    author: {
-      "@type": "Person",
-      name: person.name,
-      url: buildCanonical("/"),
-    },
+    author,
+    publisher: author,
     keywords: post.tags.join(", "),
     articleSection: post.category,
     mainEntityOfPage: { "@type": "WebPage", "@id": post.url },
-    image: post.cover ? [post.cover] : undefined,
+    url: post.url,
+    image: [buildCanonical(`/blog/${post.slug}/opengraph-image`)],
   };
 
   return (

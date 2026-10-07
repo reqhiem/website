@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import site from "../content/site.json";
 
 export type SiteData = typeof site;
@@ -46,4 +47,30 @@ export const formatDateRange = (start: string, end: string | null) => {
 export const buildCanonical = (path: string) => {
   const domain = site.site.domain.replace(/\/$/, "");
   return `https://${domain}${path}`;
+};
+
+// Every page must set its own canonical: without it Next inherits the root
+// layout's, and Google folds the page into the home page as a duplicate.
+// Overriding openGraph drops the inherited image, so point back at the
+// site-wide one from src/app/opengraph-image.tsx.
+export const pageMetadata = (
+  path: string,
+  title: string,
+  description: string,
+): Metadata => {
+  const url = buildCanonical(path);
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: site.site.title,
+      type: "website",
+      images: "/opengraph-image",
+    },
+    twitter: { card: "summary_large_image", title, description, images: "/opengraph-image" },
+  };
 };

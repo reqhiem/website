@@ -1,6 +1,7 @@
 ---
 title: "PydanticAI vs. LangChain vs. LlamaIndex: picking an agent framework in 2026"
-description: "A pragmatic comparison of PydanticAI, LangChain/LangGraph and LlamaIndex for building production LLM agents. Type safety, tool calling, retrieval, observability, and where each one breaks at scale."
+seoTitle: "PydanticAI vs. LangChain vs. LlamaIndex (2026)"
+description: "PydanticAI vs. LangChain/LangGraph vs. LlamaIndex for production LLM agents: type safety, tool calling, retrieval, observability, and where each one breaks."
 date: "2026-05-26"
 category: "AI"
 tags: ["python", "llm", "agents", "pydantic-ai", "langchain", "llamaindex", "mlops"]
