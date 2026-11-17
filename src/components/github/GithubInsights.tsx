@@ -38,7 +38,7 @@ export async function GithubInsights({
         <Card>
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold">Languages</h3>
-            <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
+            <p className="text-xs text-muted">
               Top 6
             </p>
           </div>

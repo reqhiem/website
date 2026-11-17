@@ -10,10 +10,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogLastModified = posts.map((post) => post.updated ?? post.date).sort().at(-1);
 
   // No lastModified on static routes: a build timestamp is a false lastmod.
+  // Paper figures and project screenshots, for image search.
+  const projectImages = [
+    ...siteData.research.projects.map((paper) => paper.image?.src),
+    ...siteData.projects.map((project) => project.image?.src),
+  ]
+    .filter((src): src is string => Boolean(src))
+    .map((src) => `${baseUrl}${src}`);
+
   const staticEntries: MetadataRoute.Sitemap = routes.map((route) => {
     const path = route.path === '/' ? '' : route.path;
     return {
       url: `${baseUrl}${path}`,
+      ...(path === '/projects' ? { images: projectImages } : {}),
       ...(path === '/blog' && blogLastModified
         ? { lastModified: new Date(blogLastModified) }
         : {}),

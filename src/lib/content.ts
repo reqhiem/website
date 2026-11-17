@@ -40,9 +40,18 @@ export const getPrimaryEmail = () =>
   site.person.emails[0]?.value ??
   "hello@reqhiem.dev";
 
-export const formatDateRange = (start: string, end: string | null) => {
-  return `${start} — ${end ?? "Present"}`;
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// Parsed by hand: `new Date("2024-10")` is UTC and can shift a month in local time.
+const formatMonth = (value: string) => {
+  const match = /^(\d{4})(?:-(\d{2}))?$/.exec(value);
+  if (!match) return value;
+  const month = match[2] ? MONTHS[Number(match[2]) - 1] : undefined;
+  return month ? `${month} ${match[1]}` : match[1];
 };
+
+export const formatDateRange = (start: string, end: string | null) =>
+  `${formatMonth(start)} — ${end ? formatMonth(end) : "Present"}`;
 
 export const buildCanonical = (path: string) => {
   const domain = site.site.domain.replace(/\/$/, "");

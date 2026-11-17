@@ -40,7 +40,7 @@ export function ActivityPulse({ points }: ActivityPulseProps) {
 
   return (
     <>
-      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
+      <p className="mt-1 text-xs text-muted">
         Last {points.length} {points.length === 1 ? "month" : "months"} · contributions
       </p>
       <div className="relative mt-6 h-32 w-full">
@@ -76,8 +76,8 @@ export function ActivityPulse({ points }: ActivityPulseProps) {
                 />
                 <span
                   className={cn(
-                    "text-[10px] uppercase tracking-[0.2em]",
-                    isLatest ? "text-accent" : "text-black/50 dark:text-white/50",
+                    "text-[10px]",
+                    isLatest ? "text-accent" : "text-muted",
                   )}
                 >
                   {formatMonthLabel(point.month)}

@@ -34,31 +34,28 @@ Almost every page reads from one big JSON blob — person bio, routes, SEO copy,
 - `getRoutes()` produces the nav from `site.routes`.
 - `formatDateRange(start, end)` formats experience timelines (open-ended entries render as "Present").
 - `buildCanonical(path)` builds absolute URLs from `site.domain` for sitemaps / metadata.
+- `research.projects[]` entries carry `kind` (`"paper"` = peer-reviewed, `"challenge"` = IEEE VAST Challenge entry — never call these publications of record), a one-sentence `summary` (cards clamp it to 3 lines; the full `description` sits behind an "Abstract" disclosure) and an `image` (`src/width/height/alt`, files in `public/images/research/`). `research.current` feeds the home "current research" block. `projects[]` with `featured: true` get image cards (`public/images/projects/`); the rest render in a compact "Also built" list. The `Person` JSON-LD derives its `ScholarlyArticle`s from `kind: "paper"` entries.
 
 ### Pages
 
 Every page is a Server Component that pulls data from `@/lib/content` and renders composed primitives from `src/components/` (`Section`, `Card`, `Timeline`, `TimelineItem`, `ProjectCard`, `ResearchCard`, etc.).
 
-**Hero** — `src/components/hero/` holds just `Hero.tsx` and `HeroPortrait.tsx`. Both are Server Components with **no** `"use client"` and ship zero client JS. There is no 3D and no animation library — everything is plain CSS in `src/app/globals.css`:
-
-- Static utilities: `.hero-grid` (the schematic background grid, a pure gradient — **not** animated) and `.hero-frame`.
-- Animated utilities `.hero-reveal`, `.hero-reveal-x`, `.hero-rise`, `.hero-frame`, `.hero-scan`, backed by exactly five `@keyframes`: `hero-reveal`, `hero-reveal-x`, `hero-rise`, `hero-frame-pulse`, `hero-scan`. Entrance reveals are staggered with an inline `animationDelay` in the TSX.
-- An **unlayered** `@media (prefers-reduced-motion: reduce)` block disables them (it must stay outside `@layer utilities` to win the cascade). The portrait is a plain `next/image` (`public/images/frontal_portrait.webp`) with `priority` + `fill` + `object-cover`.
+**Hero** — `src/components/hero/Hero.tsx` is a Server Component with **no** `"use client"` and ships zero client JS. It leads with a real research artifact: a StreetAware frame cropped from the UrbanClipAtlas paper figure (`public/images/hero-intersection.webp`) with the paper's real query and match timestamps, detection-corner brackets and a CSS scan bar; the portrait (`public/images/frontal_portrait.webp`) is a small avatar. Text comes first in the DOM, so mobile shows the role and CTAs before the figure. Motion is plain CSS in `src/app/globals.css`: `.hero-reveal`, `.hero-reveal-x`, `.hero-rise`, `.hero-scan`, backed by four `@keyframes`, staggered with inline `animationDelay`. An **unlayered** `@media (prefers-reduced-motion: reduce)` block disables them (it must stay outside `@layer utilities` to win the cascade).
 
 **GitHub section** — `src/components/github/` (`GithubInsights`, `GithubStats`, `LanguageDonut`, `ActivityPulse`, `ContributionGraph`) is server-rendered and also carries no `"use client"`. Charts are hand-written inline SVG — no charting library. Data comes from `fetchGithubInsights()` in `src/lib/github.ts` (GitHub GraphQL, cached via `next: { revalidate }`), with the contribution-snake SVG fetched by `src/lib/github-snake.ts`. `/about` sets `export const revalidate = 21600` — it must stay a literal, since Next requires that segment config to be statically analyzable.
 
-**Animation** — GSAP is used in exactly one place, `src/components/Section.tsx` (a client component that fades `[data-gsap-item]` in on scroll). It is the only animation dependency left; `three`, `@react-three/*`, `framer-motion` and `d3` are gone.
+**Animation** — GSAP is used in exactly one place, `src/components/Section.tsx` (a client component that fades `[data-gsap-item]` in on scroll; skipped under `prefers-reduced-motion`). It is the only animation dependency left; `three`, `@react-three/*`, `framer-motion` and `d3` are gone.
 
 ### SEO
 
 - Metadata is generated in `src/app/layout.tsx` via `generateMetadata` from `site.json` (title, description, OG, canonical).
-- `src/app/layout.tsx` also injects a `Person` JSON-LD block via `src/app/components/json-ld.tsx`, assembled from `person`, `skills`, `experience`, and `education` in `site.json`.
+- `src/app/layout.tsx` also injects a `Person` JSON-LD block via `src/app/components/json-ld.tsx`, assembled from `person`, `skills`, `experience`, `education` and the `kind: "paper"` entries of `research.projects` in `site.json`.
 - `src/app/sitemap.ts` and `src/app/robots.ts` derive URLs from `site.json`.
 - OG images are generated with `next/og`: `src/app/opengraph-image.tsx` (site-wide) and `src/app/blog/[slug]/opengraph-image.tsx` (per post, reusing the post's `cover` when it has one). Shared layout in `src/components/og/OgCard.tsx`.
 
 ### Styling
 
-Tailwind CSS **v4** via the `@tailwindcss/postcss` plugin (no `tailwind.config.js` — config is CSS-first in `src/app/globals.css`). Merge class lists with `cn(...)` from `src/lib/utils.ts` (clsx + tailwind-merge). Path alias `@/*` maps to `src/*`.
+Tailwind CSS **v4** via the `@tailwindcss/postcss` plugin (no `tailwind.config.js` — config is CSS-first in `src/app/globals.css`). Fonts (next/font, variables set on `<html>` so the `@theme` tokens resolve): Archivo (`font-sans`; h1–h3 use its width axis via `font-stretch: 82%`), Source Serif 4 (`font-serif`, abstracts and blog prose), JetBrains Mono (`font-mono`, dates/venues/DOIs). Colour tokens are theme-aware (`:root` / `.dark` in globals.css): `fg`, `bg`, `muted`, `accent` (the **text-safe** rust tone — AA on both themes), `on-accent`, `data` (teal). The vivid `#ff5a36` is `signal`: frames, scan bar, marks and the primary CTA fill (`bg-signal text-ink`) — never small text. Dark mode is the `.dark` class on `<html>`, applied before paint by an inline script in `layout.tsx` from `localStorage.theme` or `prefers-color-scheme`. Merge class lists with `cn(...)` from `src/lib/utils.ts` (clsx + tailwind-merge). Path alias `@/*` maps to `src/*`.
 
 ## Gotchas
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   BookOpen,
   ExternalLink,
@@ -5,12 +6,11 @@ import {
   Github,
   Globe,
   Link2,
-  MapPin,
+  MonitorPlay,
   Play,
   type LucideIcon,
 } from "lucide-react";
 import { Badge } from "./Badge";
-import { Card } from "./Card";
 
 interface ResearchLink {
   label: string;
@@ -20,6 +20,7 @@ interface ResearchLink {
 interface ResearchCardProps {
   project: {
     title: string;
+    summary?: string;
     description?: string;
     role?: string;
     stack: string[];
@@ -27,62 +28,74 @@ interface ResearchCardProps {
     authors?: string[];
     venue?: string | null;
     year?: string | null;
-    doi?: string | null;
     presentedAt?: string | null;
     links?: ResearchLink[];
+    image?: { src: string; width: number; height: number; alt: string } | null;
   };
+  priority?: boolean;
 }
 
 const AUTHOR_NAME = "Joel Perca";
+// Artifacts a reader opens get buttons; identifiers (DOI, arXiv, page) stay quiet links.
+const PRIMARY = ["pdf", "video", "code", "demo"];
 
 function iconForLink(label: string): LucideIcon {
   const key = label.toLowerCase();
   if (key.includes("doi")) return Link2;
   if (key.includes("arxiv")) return BookOpen;
-  if (key.includes("pdf") || key.includes("paper")) return FileText;
-  if (key.includes("video") || key.includes("talk")) return Play;
-  if (key.includes("code") || key.includes("github")) return Github;
-  if (key.includes("page") || key.includes("site")) return Globe;
+  if (key.includes("pdf")) return FileText;
+  if (key.includes("video")) return Play;
+  if (key.includes("demo")) return MonitorPlay;
+  if (key.includes("code")) return Github;
+  if (key.includes("page")) return Globe;
   return ExternalLink;
 }
 
-export function ResearchCard({ project }: ResearchCardProps) {
-  const { title, description, role, status, venue, year, presentedAt } = project;
+export function ResearchCard({ project, priority = false }: ResearchCardProps) {
+  const { title, summary, description, role, status, venue, year, presentedAt, image } = project;
   const authors = project.authors ?? [];
   const links = project.links ?? [];
-  const stack = project.stack ?? [];
-  // Venue strings already carry the year ("… Proc. EuroVis 2026"), so only
-  // append it when it is not already there.
-  const eyebrow = [venue, year && venue?.includes(year) ? null : year]
-    .filter(Boolean)
-    .join(" · ");
-  const meta = [role, status].filter(Boolean).join(" · ");
+  const primary = links.filter((l) => PRIMARY.includes(l.label.toLowerCase()));
+  const secondary = links.filter((l) => !PRIMARY.includes(l.label.toLowerCase()));
+  const page = links.find((l) => l.label.toLowerCase().includes("page"))?.url ?? links[0]?.url;
+  // Venue strings usually already carry the year ("… EuroVis 2026").
+  const citation = [venue, year && venue?.includes(year) ? null : year].filter(Boolean).join(" · ");
 
   return (
-    // Full-width card: a reading column (citation + abstract) and a side rail
-    // (status, venue note, tags, links). The rail stacks below on mobile.
-    <Card className="grid gap-6 md:grid-cols-[minmax(0,1fr)_17rem] md:gap-10 lg:grid-cols-[minmax(0,1fr)_19rem] lg:p-8">
-      <div className="flex max-w-3xl flex-col gap-4">
-        <div>
-          {eyebrow ? (
-            // Not uppercase/wide-tracked: this holds a full citation string
-            // ("Computer Graphics Forum, vol. 45, no. 3 (Proc. EuroVis 2026)").
-            <p className="text-xs leading-relaxed text-muted dark:text-white/60">
-              {eyebrow}
-            </p>
-          ) : null}
-          <h3 className="mt-2 text-xl font-semibold leading-snug md:text-2xl">
-            {title}
-          </h3>
-        </div>
+    <article className="surface grid gap-6 p-5 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-8 md:p-6">
+      {image ? (
+        <a
+          href={page}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative block self-start overflow-hidden rounded-lg border border-black/10 bg-white dark:border-white/10"
+          aria-label={`${title}: project page`}
+        >
+          <Image
+            src={image.src}
+            width={image.width}
+            height={image.height}
+            alt={image.alt}
+            priority={priority}
+            sizes="(min-width: 1152px) 440px, (min-width: 768px) 40vw, 100vw"
+            className="aspect-[16/10] w-full object-contain p-2 transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+          />
+        </a>
+      ) : null}
+
+      <div className="flex min-w-0 flex-col gap-3">
+        <p className="font-mono text-xs leading-relaxed text-muted">{citation}</p>
+        <h3 className="text-xl font-semibold leading-snug md:text-2xl">{title}</h3>
 
         {authors.length ? (
-          <p className="text-xs leading-relaxed text-black/55 dark:text-white/55">
+          <p className="text-sm leading-relaxed text-muted">
             {authors.map((author, index) => (
               <span key={`${author}-${index}`}>
                 {index > 0 ? ", " : ""}
                 {author === AUTHOR_NAME ? (
-                  <strong className="font-semibold text-accent">{author}</strong>
+                  <strong className="font-semibold text-fg underline decoration-signal decoration-2 underline-offset-4">
+                    {author}
+                  </strong>
                 ) : (
                   author
                 )}
@@ -91,55 +104,64 @@ export function ResearchCard({ project }: ResearchCardProps) {
           </p>
         ) : null}
 
+        <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+          {role ? <span className="font-medium text-accent">{role}</span> : null}
+          {status ? <span>{status}</span> : null}
+          {presentedAt ? <span>{presentedAt}</span> : null}
+        </p>
+
+        {/* Fixed 3-line summary keeps every card the same rhythm; the full
+            abstract stays one click away. */}
+        {summary ? (
+          <p className="line-clamp-3 font-serif text-base leading-relaxed text-fg/85">{summary}</p>
+        ) : null}
+
         {description ? (
-          <p className="text-sm leading-relaxed text-black/70 dark:text-white/70">
-            {description}
-          </p>
-        ) : null}
-      </div>
-
-      <aside className="flex flex-col gap-4 border-t border-black/10 pt-5 md:border-l md:border-t-0 md:pl-8 md:pt-0 dark:border-white/10">
-        {meta ? (
-          <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
-            {meta}
-          </p>
+          <details className="group text-sm">
+            <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1 text-muted hover:text-fg [&::-webkit-details-marker]:hidden">
+              <span className="transition-transform group-open:rotate-90">›</span> Abstract
+            </summary>
+            <p className="mt-1 font-serif text-base leading-relaxed text-fg/85">{description}</p>
+          </details>
         ) : null}
 
-        {presentedAt ? (
-          <p className="flex items-start gap-2 text-xs text-black/60 dark:text-white/60">
-            <MapPin size={14} className="mt-0.5 shrink-0 text-accent" />
-            <span>{presentedAt}</span>
-          </p>
-        ) : null}
+        <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
+          {primary.map((link) => {
+            const Icon = iconForLink(link.label);
+            return (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-black/15 px-3 text-sm font-medium transition-colors hover:border-fg dark:border-white/20"
+              >
+                <Icon size={15} className="shrink-0" aria-hidden />
+                {link.label}
+              </a>
+            );
+          })}
+          {secondary.map((link) => (
+            <a
+              key={link.url}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center px-2 text-sm text-muted underline decoration-black/20 underline-offset-4 hover:text-fg dark:decoration-white/25"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
 
-        {stack.length ? (
-          <div className="flex flex-wrap gap-2">
-            {stack.map((item) => (
+        {project.stack.length ? (
+          <div className="flex flex-wrap gap-1.5">
+            {project.stack.map((item) => (
               <Badge key={item} label={item} />
             ))}
           </div>
         ) : null}
-
-        {links.length ? (
-          <div className="flex flex-wrap gap-2 md:mt-auto">
-            {links.map((link) => {
-              const Icon = iconForLink(link.label);
-              return (
-                <a
-                  key={link.url}
-                  href={link.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-black/10 px-3 py-1.5 text-xs font-medium text-black/70 transition-colors hover:border-accent hover:text-accent dark:border-white/15 dark:text-white/70 dark:hover:border-accent"
-                >
-                  <Icon size={13} className="shrink-0" />
-                  {link.label}
-                </a>
-              );
-            })}
-          </div>
-        ) : null}
-      </aside>
-    </Card>
+      </div>
+    </article>
   );
 }

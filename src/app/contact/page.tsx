@@ -18,7 +18,7 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main className="min-h-[70vh]">
-        <Section title="Contact" subtitle="Let’s talk" as="h1">
+        <Section title="Contact" subtitle="Reach out about research collaborations, AI engineering work, or anything you read here." as="h1">
           <ContactContent person={person} email={email} />
         </Section>
       </main>

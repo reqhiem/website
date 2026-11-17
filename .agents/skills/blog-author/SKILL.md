@@ -48,7 +48,7 @@ date: "YYYY-MM-DD"           # ISO date, UTC-based; avoid timezone ambiguity
 updated: "YYYY-MM-DD"        # optional, omit if same as date
 category: "Tooling"          # one of the 4 values above
 tags: ["python", "uv", "devtools"]  # 3–6 lowercase, hyphenated tags
-featured: true               # optional; at most one featured post is promoted as hero on /blog
+featured: true               # optional; currently ignored — /blog features the newest post
 draft: false                 # optional; drafts show only in dev, never in production builds
 author: "Joel Perca"         # optional; defaults implicitly to the site owner
 cover: "/blog/covers/slug.png"  # optional 1200×630 PNG; without it an OG card is generated from the title
@@ -59,7 +59,7 @@ Rules of thumb:
 
 - **`date`**: use today's date unless the user specifies otherwise. Formatted as UTC in the UI, so the day won't shift for viewers.
 - **`tags`**: lowercase, short, reusable. They drive the tag filter chips on `/blog`, so avoid one-off tags.
-- **`featured`**: set to `true` only if the user asks for it, and un-feature the previous hero post in the same commit.
+- **`featured`**: no effect today — /blog always features the newest post (by `date`). Leave it out unless the user asks.
 - **`draft: true`** is useful when the user wants a WIP post visible only in `pnpm dev`. Production builds skip drafts.
 
 ## Writing the body
@@ -177,7 +177,7 @@ After creating the file:
 - **Forgetting the language tag on fences**: `rehype-pretty-code` falls back to `plaintext` (configured as `defaultLang`), but syntax highlighting disappears — always specify the language.
 - **Duplicate heading text**: `github-slugger` dedupes with `-1`, `-2` suffixes; this is fine but keep headings unique for readable anchors.
 - **Adding a category that doesn't exist in `BlogCategory`**: the type is strict — pick an existing category or ask the user to extend the union (both in `src/lib/blog.ts` and in any docs/UX copy).
-- **Featured drift**: setting `featured: true` on multiple posts is harmless (only the first in sort order is promoted), but confusing. When promoting a new post, flip the previous one's flag to `false` in the same change.
+- **Featured drift**: `featured` is ignored by /blog (the newest post is featured), so don't rely on it to promote a post.
 
 ## Don't
 

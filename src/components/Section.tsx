@@ -16,7 +16,7 @@ export function Section({ title, subtitle, children, id, as: Heading = "h2" }: S
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
+    if (!section || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -47,10 +47,8 @@ export function Section({ title, subtitle, children, id, as: Heading = "h2" }: S
       <div className="container-page">
         {title ? (
           <div className="mb-10" data-gsap-item>
-            <p className="text-xs uppercase tracking-[0.3em] text-muted dark:text-white/60">
-              {subtitle ?? ""}
-            </p>
-            <Heading className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{title}</Heading>
+            <Heading className="text-3xl font-semibold md:text-5xl">{title}</Heading>
+            {subtitle ? <p className="mt-3 max-w-2xl text-muted">{subtitle}</p> : null}
           </div>
         ) : null}
         <div data-gsap-item>

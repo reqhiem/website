@@ -1,11 +1,17 @@
-import { Space_Grotesk } from "next/font/google";
+import { Archivo, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import type { Metadata } from "next";
 
-const spaceGrotesk = Space_Grotesk({
+// Archivo's width axis gives condensed headings (font-stretch in globals.css).
+const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", axes: ["wdth"] });
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-source-serif",
+  style: ["normal", "italic"],
 });
+const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
+
+// Runs before paint so a saved/OS dark preference never flashes light.
+const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}`;
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import "./globals.css";
@@ -65,77 +71,36 @@ export default function RootLayout({
   const t = siteData.site;
   const person = siteData.person;
 
-  const publications = [
-    {
-      '@type': 'ScholarlyArticle',
-      headline:
-        'UrbanClipAtlas: A Visual Analytics Framework for Event and Scene Retrieval in Urban Videos',
-      author: [
-        'Joel Perca',
-        'Luis Sante Taipe',
-        'Juanpablo Heredia',
-        'João Rulff',
-        'Claudio Silva',
-        'Jorge Poco',
-      ].map((name) => ({ '@type': 'Person', name })),
-      isPartOf: {
-        '@type': 'Periodical',
-        name: 'Computer Graphics Forum',
-      },
-      datePublished: '2026-04-06',
-      identifier: {
-        '@type': 'PropertyValue',
-        propertyID: 'DOI',
-        value: '10.1111/cgf.70431',
-      },
-      url: 'https://doi.org/10.1111/cgf.70431',
-      sameAs: 'https://arxiv.org/abs/2604.15225',
-    },
-    {
-      '@type': 'ScholarlyArticle',
-      headline:
-        'STRive: An association rule-based system for the exploration of spatiotemporal categorical data',
-      author: [
-        'Mauro Diaz',
-        'Luis Sante Taipe',
-        'Joel Perca',
-        'João Da Silva',
-        'Nivan Ferreira',
-        'Jorge Poco',
-      ].map((name) => ({ '@type': 'Person', name })),
-      isPartOf: {
-        '@type': 'Periodical',
-        name: 'Computers & Graphics',
-      },
-      datePublished: '2025',
-      identifier: {
-        '@type': 'PropertyValue',
-        propertyID: 'DOI',
-        value: '10.1016/j.cag.2025.104410',
-      },
-      url: 'https://doi.org/10.1016/j.cag.2025.104410',
-      sameAs: 'https://arxiv.org/abs/2509.02732',
-    },
-    {
-      '@type': 'ScholarlyArticle',
-      headline:
-        'Comparing Monocular and Multi-View 3D Pedestrian Reconstruction Strategies for Urban Intersection Sensing',
-      author: [
-        'Kauan Mariani Ferreira',
-        'Matheus Fillype Ferreira de Carvalho',
-        'Joel Perca',
-        'João Rulff',
-        'Jorge Poco',
-      ].map((name) => ({ '@type': 'Person', name })),
-      // Accepted, not yet in the proceedings: no DOI or publication date yet.
-      publication: {
-        '@type': 'PublicationEvent',
-        name: 'SIBGRAPI 2026',
-      },
-      creativeWorkStatus: 'In print',
-      url: 'https://visualdslab.com/papers/MonoVsMulti3D/',
-    },
-  ];
+  // Peer-reviewed papers only; challenge entries are not publications of record.
+  const publications = siteData.research.projects
+    .filter((paper) => paper.kind === 'paper')
+    .map((paper) => {
+      const arxiv = paper.links.find((link) => link.label === 'arXiv')?.url;
+      const page = paper.links.find((link) => link.label === 'Project page')?.url;
+      return {
+        '@type': 'ScholarlyArticle',
+        headline: paper.title,
+        author: paper.authors.map((name) => ({ '@type': 'Person', name })),
+        image: `https://${t.domain}${paper.image.src}`,
+        ...(paper.doi
+          ? {
+              isPartOf: { '@type': 'Periodical', name: paper.venue.split(/[,(]/)[0].trim() },
+              datePublished: paper.date,
+              identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: paper.doi },
+              url: `https://doi.org/${paper.doi}`,
+            }
+          : {
+              // Accepted, not yet in the proceedings: no DOI or publication date yet.
+              publication: {
+                '@type': 'PublicationEvent',
+                name: paper.venue.replace(/^Proc\. /, '').split(' — ')[0],
+              },
+              creativeWorkStatus: 'In print',
+              url: page,
+            }),
+        ...(arxiv ? { sameAs: arxiv } : {}),
+      };
+    });
 
   const jsonLdData = {
     '@context': 'https://schema.org',
@@ -174,11 +139,17 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      // Font variables on <html> so the @theme tokens (resolved at :root) see them.
+      className={`${archivo.variable} ${sourceSerif.variable} ${jetbrains.variable}`}
+    >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <JsonLd data={jsonLdData} />
       </head>
-      <body className={`antialiased ${spaceGrotesk.variable} ${spaceGrotesk.className}`}>
+      <body className="antialiased font-sans">
         {children}
         <Analytics />
         <SpeedInsights />

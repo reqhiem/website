@@ -51,20 +51,20 @@ export function BlogExplorer({ posts, categories, tags }: BlogExplorerProps) {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white/60 p-4 backdrop-blur dark:border-white/10 dark:bg-white/[0.03] md:p-6">
         <div className="flex items-center gap-3">
-          <Search size={16} className="text-black/50 dark:text-white/50" />
+          <Search size={16} aria-hidden className="text-muted" />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search posts, topics, or tags…"
-            className="flex-1 bg-transparent text-sm outline-none placeholder:text-black/40 dark:placeholder:text-white/40"
+            className="min-h-11 min-w-0 flex-1 bg-transparent text-sm placeholder:text-muted"
             aria-label="Search blog posts"
           />
           {hasActiveFilters ? (
             <button
               type="button"
               onClick={clearFilters}
-              className="flex items-center gap-1 rounded-full border border-black/10 px-3 py-1 text-[10px] uppercase tracking-[0.25em] text-black/70 transition hover:border-accent hover:text-accent dark:border-white/15 dark:text-white/70"
+              className="flex min-h-11 items-center gap-1 rounded-full border border-black/10 px-3 py-1 text-xs text-muted transition hover:border-accent hover:text-accent dark:border-white/15 md:min-h-0"
             >
               <X size={12} /> Reset
             </button>
@@ -91,19 +91,22 @@ export function BlogExplorer({ posts, categories, tags }: BlogExplorerProps) {
         </div>
 
         {tags.length > 0 ? (
-          <div className="flex flex-wrap gap-2 border-t border-black/5 pt-4 dark:border-white/10">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-black/50 dark:text-white/40">
-              Tags
-            </span>
-            {tags.map((tag) => (
-              <TagChip
-                key={tag}
-                active={activeTags.includes(tag)}
-                onClick={() => toggleTag(tag)}
-                label={tag}
-              />
-            ))}
-          </div>
+          <details className="border-t border-black/5 pt-1 dark:border-white/10 md:pt-3">
+            <summary className="cursor-pointer py-3 text-sm text-muted transition hover:text-accent md:py-1">
+              Filter by tag ({tags.length})
+              {activeTags.length > 0 ? ` · ${activeTags.length} selected` : ""}
+            </summary>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <TagChip
+                  key={tag}
+                  active={activeTags.includes(tag)}
+                  onClick={() => toggleTag(tag)}
+                  label={tag}
+                />
+              ))}
+            </div>
+          </details>
         ) : null}
       </div>
 
@@ -113,8 +116,13 @@ export function BlogExplorer({ posts, categories, tags }: BlogExplorerProps) {
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2">
-          {filtered.map((post) => (
-            <BlogCard key={post.slug} post={post} />
+          {/* Posts arrive newest first; the unfiltered list leads with the newest as the featured card. */}
+          {filtered.map((post, index) => (
+            <BlogCard
+              key={post.slug}
+              post={post}
+              variant={index === 0 && !hasActiveFilters ? "featured" : "default"}
+            />
           ))}
         </div>
       )}
@@ -135,11 +143,12 @@ function FilterChip({
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={cn(
-        "rounded-full border px-3.5 py-1.5 text-[11px] uppercase tracking-[0.2em] transition",
+        "inline-flex min-h-11 items-center rounded-full border px-3.5 py-1.5 text-xs transition md:min-h-0",
         active
-          ? "border-accent bg-accent text-white"
-          : "border-black/10 text-black/70 hover:border-accent/60 hover:text-accent dark:border-white/15 dark:text-white/70"
+          ? "border-accent bg-accent text-on-accent"
+          : "border-black/10 text-muted hover:border-accent/60 hover:text-accent dark:border-white/15"
       )}
     >
       {label}
@@ -160,11 +169,12 @@ function TagChip({
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={cn(
-        "rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] transition",
+        "inline-flex min-h-11 items-center rounded-full border px-2.5 py-1 text-xs transition md:min-h-0",
         active
           ? "border-accent/70 bg-accent/10 text-accent"
-          : "border-black/10 text-black/60 hover:border-accent/50 hover:text-accent dark:border-white/15 dark:text-white/60"
+          : "border-black/10 text-muted hover:border-accent/50 hover:text-accent dark:border-white/15"
       )}
     >
       #{label}
