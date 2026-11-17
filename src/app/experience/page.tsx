@@ -55,7 +55,7 @@ export default function ExperiencePage() {
     <>
       <Navbar />
       <main className="min-h-[70vh]">
-        <Section title="Experience" subtitle="Timeline" as="h1">
+        <Section title="Experience" subtitle="Where I have worked and studied, newest first." as="h1">
           <Timeline>
             {timeline.map((item, index) => (
               <TimelineItem
@@ -63,6 +63,7 @@ export default function ExperiencePage() {
                 title={item.title}
                 subtitle={item.subtitle}
                 meta={formatDateRange(item.start, item.end)}
+                kind={item.type === "education" ? "Education" : undefined}
               >
                 {item.summary ? <p>{item.summary}</p> : null}
                 {/* The defence date is deliberately not repeated here: the

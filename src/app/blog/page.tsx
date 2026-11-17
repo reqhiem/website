@@ -3,14 +3,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
-import { BlogCard } from "@/components/blog/BlogCard";
 import { BlogExplorer } from "@/components/blog/BlogExplorer";
-import {
-  getAllCategories,
-  getAllPosts,
-  getAllTags,
-  getFeaturedPosts,
-} from "@/lib/blog";
+import { getAllCategories, getAllPosts, getAllTags } from "@/lib/blog";
 import { pageMetadata } from "@/lib/content";
 
 const PAGE_TITLE = "Blog";
@@ -23,20 +17,14 @@ export default function BlogIndexPage() {
   const posts = getAllPosts();
   const categories = getAllCategories();
   const tags = getAllTags();
-  const featured = getFeaturedPosts(1);
-  const showHeroCard = featured.length > 0 && posts.length > 1;
 
   return (
     <>
       <Navbar />
       <main className="min-h-[70vh]">
-        <section className="pt-16 pb-8 md:pt-24">
-          <div className="container-page flex flex-col gap-8">
+        <section className="pt-16 md:pt-24">
+          <div className="container-page">
             <div className="flex flex-col gap-4">
-              <p className="text-xs uppercase tracking-[0.35em] text-black/60 dark:text-white/50">
-                <span className="inline-flex h-1.5 w-1.5 translate-y-[-2px] rounded-full bg-accent align-middle" />{" "}
-                Blog · {posts.length} {posts.length === 1 ? "entry" : "entries"}
-              </p>
               <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
                 Writing from the lab
               </h1>
@@ -44,16 +32,10 @@ export default function BlogIndexPage() {
                 {PAGE_DESCRIPTION}
               </p>
             </div>
-
-            {showHeroCard ? (
-              <div className="grid gap-6">
-                <BlogCard post={featured[0]} variant="featured" />
-              </div>
-            ) : null}
           </div>
         </section>
 
-        <Section subtitle="Explore" title="All posts">
+        <Section title="All posts" subtitle="Newest first. Search or filter by category and tag.">
           {posts.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-black/10 p-12 text-center text-sm text-black/60 dark:border-white/10 dark:text-white/60">
               No entries yet — check back soon.

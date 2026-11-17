@@ -94,12 +94,6 @@ export function getPostSlugs(): string[] {
   return getAllPosts().map((post) => post.slug);
 }
 
-export function getFeaturedPosts(limit = 3): BlogPostMeta[] {
-  return getAllPosts()
-    .filter((post) => post.featured)
-    .slice(0, limit);
-}
-
 export function getRelatedPosts(slug: string, limit = 3): BlogPostMeta[] {
   const posts = getAllPosts();
   const current = posts.find((post) => post.slug === slug);

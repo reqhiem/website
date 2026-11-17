@@ -36,16 +36,16 @@ export function BlogCard({ post, variant = "default" }: BlogCardProps) {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-accent/60 to-transparent opacity-0 transition group-hover:opacity-100"
       />
-      <div className="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.2em] text-black/60 dark:text-white/50">
+      <div className="flex items-center justify-between gap-3 text-xs text-muted">
         <span className="flex items-center gap-2">
           <span className="inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
           {post.category}
         </span>
         <span className="flex items-center gap-3">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
-          <span className="flex items-center gap-1 opacity-70">
-            <Clock size={12} />
-            {post.readingMinutes}m
+          <span className="flex items-center gap-1">
+            <Clock size={12} aria-hidden />
+            {post.readingMinutes} min
           </span>
         </span>
       </div>
@@ -69,7 +69,7 @@ export function BlogCard({ post, variant = "default" }: BlogCardProps) {
           {post.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-black/10 px-2.5 py-0.5 text-[10px] uppercase tracking-[0.2em] text-black/60 dark:border-white/15 dark:text-white/60"
+              className="rounded-full border border-black/10 px-2.5 py-0.5 text-xs text-muted dark:border-white/15"
             >
               {tag}
             </span>

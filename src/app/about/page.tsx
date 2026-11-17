@@ -23,6 +23,15 @@ export const metadata = pageMetadata(
 // statically analyzable, so it cannot import a shared constant.
 export const revalidate = 21600;
 
+const SKILL_LABELS: Record<string, string> = {
+  core: "Core",
+  backend: "Backend",
+  frontend: "Frontend",
+  devops: "DevOps",
+  aiMl: "AI / ML",
+  dataViz: "Data visualization",
+};
+
 export default async function AboutPage() {
   const person = getPerson();
   const skills = getSkills();
@@ -48,13 +57,13 @@ export default async function AboutPage() {
     <>
       <Navbar />
       <main className="min-h-[70vh]">
-        <Section title="About" subtitle="Profile" as="h1">
+        <Section title="About" subtitle="Who I am and what I work on." as="h1">
           <Card>
             <p className="text-lg text-black/70 dark:text-white/70">{summary}</p>
           </Card>
         </Section>
 
-        <Section title="What I do" subtitle="Differentiators">
+        <Section title="What I do" subtitle="What sets my work apart.">
           <div className="grid gap-6 md:grid-cols-3">
             {person.positioning.differentiators.map((item, index) => (
               <Card key={index}>
@@ -64,21 +73,24 @@ export default async function AboutPage() {
           </div>
         </Section>
 
-        <Section title="GitHub insights" subtitle="General activity signal">
-          <GithubInsights
-            username={githubUsername}
-            repoUrl={githubRepoUrl}
-            insights={insights}
-          />
-        </Section>
+        {/* No token or a failed fetch yields all-zero insights; hide rather than show an empty section. */}
+        {insights.summary.totalRepos > 0 ? (
+          <Section title="GitHub insights" subtitle="Recent activity across my public repositories.">
+            <GithubInsights
+              username={githubUsername}
+              repoUrl={githubRepoUrl}
+              insights={insights}
+            />
+          </Section>
+        ) : null}
 
-        <Section title="Skills" subtitle="Capabilities">
+        <Section title="Skills" subtitle="Tools and methods I use day to day.">
           <div className="grid gap-6 md:grid-cols-2">
             {Object.entries(skills).map(([category, items]) => (
               <Card key={category}>
-                <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
-                  {category}
-                </p>
+                <h3 className="text-lg font-semibold">
+                  {SKILL_LABELS[category] ?? category}
+                </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {(items as string[]).map((item) => (
                     <Badge key={item} label={item} />
@@ -89,7 +101,7 @@ export default async function AboutPage() {
           </div>
         </Section>
 
-        <Section title="Languages & certifications" subtitle="Credentials">
+        <Section title="Languages & certifications" subtitle="Languages I speak and certifications I hold.">
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <h3 className="text-lg font-semibold">Languages</h3>

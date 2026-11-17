@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, MapPin, Linkedin, Clipboard } from "lucide-react";
+import { Mail, Globe, Linkedin, Clipboard } from "lucide-react";
 import { Card } from "./Card";
 import { useState } from "react";
 import type { SiteData } from "@/lib/content";
@@ -34,7 +34,7 @@ export function ContactContent({ person, email }: ContactContentProps) {
   return (
     <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
       <Card className="relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 [background:radial-gradient(circle_at_top,rgba(255,90,54,0.3),transparent_55%)]"></div>
+        <div aria-hidden className="absolute inset-0 opacity-20 [background:radial-gradient(circle_at_top,rgba(255,90,54,0.3),transparent_55%)]"></div>
         <div className="relative">
           <h3 className="text-xl font-semibold">Let’s connect</h3>
           <p className="mt-2 text-sm text-black/70 dark:text-white/70">
@@ -48,19 +48,19 @@ export function ContactContent({ person, email }: ContactContentProps) {
             {linkedin ? (
               <div className="flex items-center gap-3">
                 <Linkedin size={18} className="text-accent" />
-                <a className="underline" href={linkedin.url} target="_blank" rel="noreferrer">
+                <a className="inline-flex min-h-11 items-center break-all underline md:min-h-0" href={linkedin.url} target="_blank" rel="noopener noreferrer">
                   {linkedin.url}
                 </a>
               </div>
             ) : null}
             <div className="flex items-center gap-3">
-              <MapPin size={18} className="text-accent" />
+              <Globe size={18} className="text-accent" />
               <span>Available for global remote and research collaborations.</span>
             </div>
           </div>
           <div className="mt-6 flex flex-wrap gap-3">
             <button
-              className="inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-xs uppercase tracking-[0.2em] transition hover:bg-black/5 dark:hover:bg-white/5"
+              className="inline-flex items-center gap-2 rounded-md border border-black/15 px-5 py-3 text-sm font-medium transition hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/5"
               type="button"
               onClick={handleCopy}
             >
@@ -68,7 +68,7 @@ export function ContactContent({ person, email }: ContactContentProps) {
               {copyLabel}
             </button>
             <a
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-xs uppercase tracking-[0.2em] text-white"
+              className="inline-flex items-center gap-2 rounded-md bg-signal px-5 py-3 text-sm font-semibold text-ink hover:brightness-95"
               href={`mailto:${email}`}
             >
               <Mail size={14} />
@@ -89,8 +89,12 @@ export function ContactContent({ person, email }: ContactContentProps) {
   );
 }
 
+const FIELD =
+  "w-full rounded-md border border-black/20 bg-white/60 px-4 py-3 text-sm transition focus-visible:border-signal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal dark:border-white/15 dark:bg-white/5";
+
 function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const disabled = status === "loading" || status === "success";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -124,54 +128,55 @@ function ContactForm() {
 
   return (
     <form className="mt-6 space-y-3" onSubmit={handleSubmit}>
-      <input 
-        className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" 
-        type="text" 
-        name="name" 
-        placeholder="Name" 
-        aria-label="Name" 
-        required 
-        disabled={status === "loading" || status === "success"}
-      />
-      <input 
-        className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" 
-        type="email" 
-        name="email" 
-        placeholder="Email" 
-        aria-label="Email" 
-        required 
-        disabled={status === "loading" || status === "success"}
-      />
-      <textarea 
-        className="w-full rounded-lg border border-black/20 bg-white/60 px-4 py-2 text-sm shadow-sm transition focus:border-black/40 focus:outline-none dark:border-white/15 dark:bg-white/5 dark:focus:border-white/40" 
-        name="message" 
-        rows={4} 
-        placeholder="Message" 
-        aria-label="Message" 
+      <label htmlFor="contact-name" className="block pt-2 text-sm font-medium">Name</label>
+      <input
+        id="contact-name"
+        className={FIELD}
+        type="text"
+        name="name"
+        autoComplete="name"
         required
-        disabled={status === "loading" || status === "success"}
+        disabled={disabled}
+      />
+      <label htmlFor="contact-email" className="block pt-2 text-sm font-medium">Email</label>
+      <input
+        id="contact-email"
+        className={FIELD}
+        type="email"
+        name="email"
+        autoComplete="email"
+        required
+        disabled={disabled}
+      />
+      <label htmlFor="contact-message" className="block pt-2 text-sm font-medium">Message</label>
+      <textarea
+        id="contact-message"
+        className={FIELD}
+        name="message"
+        rows={4}
+        required
+        disabled={disabled}
       ></textarea>
-      
-      <div className="flex items-center gap-3">
-        <button 
-          className="rounded-full bg-accent px-6 py-2 text-sm font-semibold text-white disabled:opacity-50" 
+
+      <div className="flex flex-wrap items-center gap-3 pt-2">
+        <button
+          className="rounded-md bg-signal px-5 py-3 text-sm font-semibold text-ink hover:brightness-95 disabled:opacity-50"
           type="submit"
-          disabled={status === "loading" || status === "success"}
+          disabled={disabled}
         >
-          {status === "loading" ? "Sending..." : status === "success" ? "Message Sent" : "Send message"}
+          {status === "loading" ? "Sending..." : status === "success" ? "Message sent" : "Send message"}
         </button>
-        
-        {status === "success" && (
-          <span className="text-sm text-green-600 dark:text-green-400">
-            Thanks for reaching out! I&apos;ll get back to you soon.
-          </span>
-        )}
-        
-        {status === "error" && (
-          <span className="text-sm text-red-600 dark:text-red-400">
-            Something went wrong. Please try again or email me directly.
-          </span>
-        )}
+
+        {/* Always mounted so screen readers announce the text when it changes. */}
+        <p aria-live="polite" className="text-sm">
+          {status === "success" ? (
+            <span className="text-data">Thanks for reaching out! I&apos;ll get back to you soon.</span>
+          ) : status === "error" ? (
+            <span className="text-red-700 dark:text-red-400">
+              Something went wrong. Please try again or email me directly.
+            </span>
+          ) : null}
+        </p>
       </div>
     </form>
   );

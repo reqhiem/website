@@ -12,12 +12,12 @@ export function ContributionGraph({ svg }: ContributionGraphProps) {
     <Card className="overflow-hidden">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
+          <p className="text-xs text-muted">
             Contribution graph
           </p>
           <h3 className="mt-1 text-lg font-semibold">Year at a glance</h3>
         </div>
-        <span className="text-[10px] uppercase tracking-[0.2em] text-muted dark:text-white/50">
+        <span className="text-xs text-muted">
           updated daily
         </span>
       </div>

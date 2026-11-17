@@ -26,7 +26,7 @@ export function GithubStats({ profile, summary, repoUrl, latest }: GithubStatsPr
     <Card>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-muted dark:text-white/60">
+          <p className="text-xs text-muted">
             Profile
           </p>
           <h3 className="mt-1 text-xl font-semibold">
@@ -37,10 +37,10 @@ export function GithubStats({ profile, summary, repoUrl, latest }: GithubStatsPr
           </p>
         </div>
         <a
-          className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.2em] underline decoration-accent/60 underline-offset-4 transition hover:decoration-accent"
+          className="inline-flex items-center gap-1 text-xs underline decoration-accent/60 underline-offset-4 transition hover:decoration-accent"
           href={repoUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           Open
           <ArrowUpRight size={12} />
@@ -53,9 +53,9 @@ export function GithubStats({ profile, summary, repoUrl, latest }: GithubStatsPr
             key={label}
             className="rounded-xl border border-black/5 bg-black/[0.02] p-3 dark:border-white/5 dark:bg-white/[0.03]"
           >
-            <div className="flex items-center gap-2 text-muted dark:text-white/50">
+            <div className="flex items-center gap-2 text-muted">
               <Icon size={12} />
-              <span className="text-[10px] uppercase tracking-[0.2em]">{label}</span>
+              <span className="text-xs">{label}</span>
             </div>
             <p className="mt-1 text-2xl font-semibold tabular-nums">
               {value.toLocaleString()}
@@ -66,7 +66,7 @@ export function GithubStats({ profile, summary, repoUrl, latest }: GithubStatsPr
 
       {latest ? (
         <div className="mt-6 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-accent">
+          <p className="text-xs text-accent">
             Latest pulse
           </p>
           <p className="mt-1 text-sm">

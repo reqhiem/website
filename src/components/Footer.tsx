@@ -9,22 +9,23 @@ export function Footer() {
     <footer className="border-t border-black/5 py-10 text-sm dark:border-white/10">
       <div className="container-page flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="uppercase tracking-[0.2em] text-xs">{person.name}</p>
-          <p className="opacity-70">{person.headline} · {year}</p>
+          <p className="font-medium">{person.name}</p>
+          <p className="text-muted">{person.headline} · {year}</p>
         </div>
-        <div className="flex flex-wrap gap-4">
-          {person.links.map((link) => (
+        <div className="flex flex-wrap gap-x-4">
+          {/* The "Website" entry is this site; it gets the same-tab domain link below instead. */}
+          {person.links.filter((link) => !link.url.includes(site.domain)).map((link) => (
             <a
               key={link.label}
-              className="opacity-70 transition hover:opacity-100"
+              className="inline-flex min-h-11 items-center text-muted transition hover:text-fg md:min-h-0"
               href={link.url}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               {link.label}
             </a>
           ))}
-          <a className="opacity-70 transition hover:opacity-100" href={`https://${site.domain}`}>
+          <a className="inline-flex min-h-11 items-center text-muted transition hover:text-fg md:min-h-0" href={`https://${site.domain}`}>
             {site.domain}
           </a>
         </div>

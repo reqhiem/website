@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from "lucide-react";
+import { ArrowLeft, ArrowRight, Tag } from "lucide-react";
 
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -104,47 +104,53 @@ export default async function BlogPostPage({ params }: PageProps) {
             <div className="mb-8">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-black/60 transition hover:text-accent dark:text-white/60"
+                className="inline-flex min-h-11 items-center gap-2 text-sm text-muted transition hover:text-accent"
               >
                 <ArrowLeft size={14} /> Back to blog
               </Link>
             </div>
 
             <header className="flex flex-col gap-6 border-b border-black/10 pb-10 dark:border-white/10">
-              <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60 dark:text-white/50">
-                <span className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-accent/5 px-3 py-1 text-accent">
-                  <span className="inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-                  {post.category}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Calendar size={12} />
-                  <time dateTime={post.date}>{formatDate(post.date)}</time>
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Clock size={12} />
-                  {post.readingText}
-                </span>
-              </div>
               <h1 className="text-3xl font-semibold tracking-tight md:text-5xl">
                 {post.title}
               </h1>
+              <p className="text-sm text-muted">
+                By{" "}
+                <Link href="/about" className="font-medium text-fg underline-offset-4 hover:text-accent hover:underline">
+                  {post.author ?? person.name}
+                </Link>
+                {" · "}
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
+                {" · "}
+                {post.readingText}
+              </p>
               <p className="max-w-3xl text-base text-black/70 dark:text-white/70 md:text-lg">
                 {post.description}
               </p>
-              {post.tags.length > 0 ? (
-                <div className="flex flex-wrap items-center gap-2">
-                  <Tag size={12} className="text-black/40 dark:text-white/40" />
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-black/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-black/60 dark:border-white/15 dark:text-white/60"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              ) : null}
+              <div className="flex flex-wrap items-center gap-2 text-xs">
+                <Tag size={12} aria-hidden className="text-muted" />
+                <span className="rounded-full border border-accent/40 bg-accent/5 px-2.5 py-1 text-accent">
+                  {post.category}
+                </span>
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-black/10 px-2.5 py-1 text-muted dark:border-white/15"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             </header>
+
+            {post.headings.length > 0 ? (
+              <details className="mt-8 rounded-xl border border-black/10 px-4 dark:border-white/10 lg:hidden">
+                <summary className="cursor-pointer py-3 text-sm font-medium">On this page</summary>
+                <div className="pb-3">
+                  <TableOfContents headings={post.headings} showLabel={false} />
+                </div>
+              </details>
+            ) : null}
 
             <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_240px]">
               <div
@@ -160,7 +166,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
             {related.length > 0 ? (
               <section className="mt-16 border-t border-black/10 pt-10 dark:border-white/10">
-                <h2 className="mb-6 text-xs uppercase tracking-[0.3em] text-black/60 dark:text-white/50">
+                <h2 className="mb-6 text-2xl font-semibold">
                   Related posts
                 </h2>
                 <div className="grid gap-6 md:grid-cols-3">
@@ -177,7 +183,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   href={`/blog/${prev.slug}`}
                   className="group flex flex-col gap-1 rounded-xl border border-black/10 p-5 transition hover:border-accent dark:border-white/10"
                 >
-                  <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.3em] text-black/50 dark:text-white/50">
+                  <span className="inline-flex items-center gap-1 text-xs text-muted">
                     <ArrowLeft size={12} /> Previous
                   </span>
                   <span className="text-sm font-medium group-hover:text-accent">
@@ -192,7 +198,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   href={`/blog/${next.slug}`}
                   className="group flex flex-col items-end gap-1 rounded-xl border border-black/10 p-5 text-right transition hover:border-accent dark:border-white/10"
                 >
-                  <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.3em] text-black/50 dark:text-white/50">
+                  <span className="inline-flex items-center gap-1 text-xs text-muted">
                     Next <ArrowRight size={12} />
                   </span>
                   <span className="text-sm font-medium group-hover:text-accent">

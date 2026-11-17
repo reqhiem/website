@@ -7,9 +7,11 @@ import { cn } from "@/lib/utils";
 
 interface TableOfContentsProps {
   headings: TocHeading[];
+  /** Off when a surrounding <summary> already says "On this page". */
+  showLabel?: boolean;
 }
 
-export function TableOfContents({ headings }: TableOfContentsProps) {
+export function TableOfContents({ headings, showLabel = true }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string | null>(headings[0]?.id ?? null);
 
   useEffect(() => {
@@ -42,20 +44,19 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav aria-label="Table of contents" className="flex flex-col gap-3 text-sm">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-black/50 dark:text-white/40">
-        On this page
-      </p>
+      {showLabel ? <p className="text-sm font-medium">On this page</p> : null}
       <ol className="flex flex-col gap-1 border-l border-black/10 dark:border-white/10">
         {headings.map((heading) => (
           <li key={heading.id}>
             <a
               href={`#${heading.id}`}
+              aria-current={activeId === heading.id ? "location" : undefined}
               className={cn(
-                "-ml-px block border-l-2 py-1 pl-3 transition",
+                "-ml-px flex min-h-11 items-center border-l-2 py-1 pl-3 transition lg:block lg:min-h-0",
                 heading.level === 3 ? "pl-6 text-xs" : "",
                 activeId === heading.id
                   ? "border-accent text-accent"
-                  : "border-transparent text-black/60 hover:border-black/30 hover:text-black dark:text-white/50 dark:hover:border-white/30 dark:hover:text-white"
+                  : "border-transparent text-muted hover:border-black/30 hover:text-fg dark:hover:border-white/30"
               )}
             >
               {heading.text}

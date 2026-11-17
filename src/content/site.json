@@ -39,31 +39,22 @@
         "Automation",
         "RPA"
       ],
-      "social": {
-        "linkedin": "https://www.linkedin.com/in/joelperca/",
-        "personalSite": "reqhiem.dev"
-      }
+      "social": { "linkedin": "https://www.linkedin.com/in/joelperca/", "personalSite": "reqhiem.dev" }
     }
   },
   "person": {
     "name": "Joel Perca",
     "headline": "AI Engineer & Researcher",
     "affiliation": "Fundação Getulio Vargas (FGV), EMAp — Visual Data Science Lab",
-    "location": {
-      "city": "Rio de Janeiro",
-      "region": "RJ",
-      "country": "Brazil"
-    },
-    "emails": [
-      { "value": "hello@reqhiem.dev", "primary": true }
-    ],
+    "location": { "city": "Rio de Janeiro", "region": "RJ", "country": "Brazil" },
+    "emails": [{ "value": "hello@reqhiem.dev", "primary": true }],
     "phones": [{ "value": "+51 986 461 041", "primary": true }],
     "links": [
       { "label": "LinkedIn", "url": "https://www.linkedin.com/in/joelperca/" },
       { "label": "Website", "url": "https://reqhiem.dev/" },
       { "label": "GitHub", "url": "https://github.com/reqhiem" }
     ],
-    "summary": "AI Engineer and Researcher based in Rio de Janeiro. I am a PhD student in Applied Mathematics and Data Science at FGV EMAp, where I completed my MSc and work with the Visual Data Science Lab on urban video understanding, vision-language models, agentic retrieval and visual analytics. My first-author paper, UrbanClipAtlas, was published in Computer Graphics Forum and presented at EuroVis 2026, and I have co-authored papers at SIBGRAPI 2025 and 2026. I also build the systems that carry this research into production: Django/DRF and React/TypeScript services running on Docker and Kubernetes.",
+    "summary": "AI Engineer and Researcher based in Rio de Janeiro. I am a PhD student in Applied Mathematics and Data Science at FGV EMAp, where I completed my MSc and work with the Visual Data Science Lab on urban video understanding, vision-language models, agentic retrieval and visual analytics. My first-author paper, UrbanClipAtlas, was published in Computer Graphics Forum and presented at EuroVis 2026, I have co-authored papers at SIBGRAPI 2025 and 2026, and I first-authored HopViz for the IEEE VAST Challenge 2026. I also build the systems that carry this research into production: Django/DRF and React/TypeScript services running on Docker and Kubernetes.",
     "positioning": {
       "primaryRoles": [
         "AI Engineer (Vision-Language & Retrieval Systems)",
@@ -76,7 +67,7 @@
         "Enterprise Automation (CRM/ERP, RPA)"
       ],
       "differentiators": [
-        "Three peer-reviewed publications: first author of UrbanClipAtlas (Computer Graphics Forum, EuroVis 2026), co-author of STRive (Computers & Graphics, SIBGRAPI 2025) and of a SIBGRAPI 2026 paper comparing monocular and multi-view 3D pedestrian reconstruction at urban intersections.",
+        "Three peer-reviewed publications: first author of UrbanClipAtlas (Computer Graphics Forum, EuroVis 2026), co-author of STRive (Computers & Graphics, SIBGRAPI 2025) and of a SIBGRAPI 2026 paper comparing monocular and multi-view 3D pedestrian reconstruction at urban intersections. Plus two IEEE VAST Challenge 2026 entries: HopViz (first author) and AgentAudit.",
         "Research prototypes built to survive production — Django/DRF, React/TypeScript, Docker and Kubernetes, with CI/CD.",
         "End-to-end ownership: architecture, implementation, interface and deployment, from paper figure to running service."
       ],
@@ -103,7 +94,7 @@
       "location": "Brazil",
       "start": "2026-03",
       "end": null,
-      "status": "ongoing"
+      "status": "Visual Data Science Lab: urban video understanding, vision-language models and visual analytics."
     },
     {
       "degree": "MSc in Applied Mathematics and Data Science",
@@ -126,10 +117,7 @@
       "location": "Peru",
       "start": "2019-03",
       "end": "2023-12",
-      "highlights": [
-        "2nd in class.",
-        "Courses: AI, Advanced AI Topics, Cloud Computing."
-      ]
+      "highlights": ["2nd in class.", "Courses: AI, Advanced AI Topics, Cloud Computing."]
     }
   ],
   "research": {
@@ -159,23 +147,27 @@
         "presentedAt": "Presented at EuroVis 2026 — Nottingham, UK — June 2026",
         "doi": "10.1111/cgf.70431",
         "description": "A visual analytics system for exploring long urban videos recorded at street intersections. It segments recordings into clips, describes them with a vision-language model and indexes them for semantic retrieval, combining retrieval-augmented generation with taxonomy-aware entity extraction and video grounding. A knowledge graph aligns the language model output with detected objects and trajectories, so every answer can be visually grounded and verified. Evaluated on the StreetAware dataset through case studies on hazardous scenarios and pedestrian crossing dynamics.",
-        "stack": [
-          "Python",
-          "Vision-Language Models",
-          "Retrieval-Augmented Generation",
-          "Knowledge Graphs",
-          "LangChain",
-          "Svelte",
-          "Docker",
-          "WebSockets"
-        ],
+        "stack": ["Vision-language models", "RAG", "Knowledge graphs", "Video grounding"],
         "links": [
+          {
+            "label": "PDF",
+            "url": "https://files.visualdslab.com/files/papers/2026-UrbanClipAtlas-CGF.pdf"
+          },
+          { "label": "Video", "url": "https://youtu.be/RciUKBavspw" },
           { "label": "DOI", "url": "https://doi.org/10.1111/cgf.70431" },
           { "label": "arXiv", "url": "https://arxiv.org/abs/2604.15225" },
-          { "label": "PDF", "url": "https://files.visualdslab.com/files/papers/2026-UrbanClipAtlas-CGF.pdf" },
-          { "label": "Video", "url": "https://youtu.be/RciUKBavspw" },
           { "label": "Project page", "url": "https://visualdslab.com/papers/UrbanClipAtlas/" }
-        ]
+        ],
+        "slug": "urbanclipatlas",
+        "kind": "paper",
+        "date": "2026-04-06",
+        "summary": "Ask questions of hours of street-intersection video and get answers grounded in what the cameras tracked.",
+        "image": {
+          "src": "/images/research/urbanclipatlas.webp",
+          "width": 1600,
+          "height": 873,
+          "alt": "UrbanClipAtlas interface: chat panel with entity tooltips, video player with tracking overlays, related-clips timeline"
+        }
       },
       {
         "title": "Comparing Monocular and Multi-View 3D Pedestrian Reconstruction Strategies for Urban Intersection Sensing",
@@ -186,22 +178,32 @@
           "João Rulff",
           "Jorge Poco"
         ],
-        "venue": "SIBGRAPI 2026 — Conference on Graphics, Patterns and Images",
+        "venue": "Proc. SIBGRAPI 2026 — Conference on Graphics, Patterns and Images",
         "year": "2026",
         "role": "Co-author",
         "status": "Accepted · In print",
         "presentedAt": null,
         "doi": null,
-        "description": "A comparison of monocular and multi-view strategies for reconstructing pedestrians in 3D from cameras installed at urban intersections, framed around sensing street-level activity.",
-        "stack": [
-          "Computer Vision",
-          "3D Pedestrian Reconstruction",
-          "Monocular vs. Multi-View",
-          "Urban Sensing"
-        ],
+        "description": "Compares a monocular learned pipeline (text-prompted segmentation, tracking and learned 3D body estimation) with a calibrated multi-view geometric pipeline (2D pose, tracking, cross-camera association and triangulation) for deriving pedestrian motion descriptors at urban intersections. Without 3D ground truth, it evaluates coverage, anthropometric plausibility, walking-speed distributions, compute cost and failure modes, and gives practical guidance on when to use each.",
+        "stack": ["3D pose estimation", "Multi-view triangulation", "Urban sensing"],
         "links": [
+          {
+            "label": "PDF",
+            "url": "https://files.visualdslab.com/files/papers/2026-MonoVsMulti3D-SIBGRAPI.pdf"
+          },
+          { "label": "arXiv", "url": "https://arxiv.org/abs/2611.00066" },
           { "label": "Project page", "url": "https://visualdslab.com/papers/MonoVsMulti3D/" }
-        ]
+        ],
+        "slug": "monovsmulti3d",
+        "kind": "paper",
+        "date": "2026-10",
+        "summary": "Monocular vs. multi-view 3D pedestrian reconstruction at intersections, compared without 3D ground truth.",
+        "image": {
+          "src": "/images/research/monovsmulti3d.webp",
+          "width": 1600,
+          "height": 782,
+          "alt": "Side-by-side pipelines: monocular learned (4 steps) vs multi-view geometric (4 steps) for 3D pedestrian pose"
+        }
       },
       {
         "title": "STRive: An association rule-based system for the exploration of spatiotemporal categorical data",
@@ -220,24 +222,134 @@
         "presentedAt": null,
         "doi": "10.1016/j.cag.2025.104410",
         "description": "A system for mining and exploring association rules over spatiotemporal categorical data. It pairs rule generation and rule clustering with an interactive interface offering two analysis modes — one at the cluster level, one at the individual rule level — connected through coordinated views. Demonstrated through case studies on fatal vehicle accidents and urban crime.",
-        "stack": [
-          "TypeScript",
-          "D3.js",
-          "Python",
-          "scikit-learn",
-          "Association Rule Mining",
-          "Spatiotemporal Data"
-        ],
+        "stack": ["Association rule mining", "Spatiotemporal data", "D3.js"],
         "links": [
-          { "label": "DOI", "url": "https://doi.org/10.1016/j.cag.2025.104410" },
-          { "label": "arXiv", "url": "https://arxiv.org/abs/2509.02732" },
-          { "label": "PDF", "url": "https://files.visualdslab.com/files/papers/2025-STRive-SIBGRAPI.pdf" },
+          {
+            "label": "PDF",
+            "url": "https://files.visualdslab.com/files/papers/2025-STRive-SIBGRAPI.pdf"
+          },
           { "label": "Video", "url": "https://vimeo.com/1115958546" },
           { "label": "Code", "url": "https://github.com/visual-ds/STRive" },
+          { "label": "DOI", "url": "https://doi.org/10.1016/j.cag.2025.104410" },
+          { "label": "arXiv", "url": "https://arxiv.org/abs/2509.02732" },
           { "label": "Project page", "url": "https://visualdslab.com/papers/STRive/" }
+        ],
+        "slug": "strive",
+        "kind": "paper",
+        "date": "2025",
+        "summary": "Mines and clusters association rules in spatiotemporal data, explored through coordinated map and heatmap views.",
+        "image": {
+          "src": "/images/research/strive.webp",
+          "width": 1600,
+          "height": 673,
+          "alt": "STRive interface: control panel, cluster scatterplot, US map, attribute and heatmap views, plus an LLM explanation panel"
+        }
+      },
+      {
+        "title": "HopViz: Tracing Anomalous Behaviour Hop-By-Hop Through a Tangled Multi-Agent System",
+        "authors": [
+          "Joel Perca",
+          "Luis Sante Taipe",
+          "Leighton Estrada-Rayme",
+          "Mauro Diaz",
+          "Juanpablo Heredia",
+          "Felipe A. Moreno-Vera",
+          "João Rulff",
+          "Jorge Poco"
+        ],
+        "venue": "IEEE VAST Challenge 2026 — Mini-Challenge 2",
+        "year": "2026",
+        "date": "2026-11",
+        "role": "First author",
+        "status": "Challenge entry",
+        "presentedAt": null,
+        "doi": null,
+        "slug": "hopviz",
+        "kind": "challenge",
+        "description": "A browser-based visual analytics tool that explains an anomalous gibberish post in the Tenant Thread multi-agent system. From a 185,147-event log of human, agent and system activity, it combines a single-screen overview of nine coordinated panels with an on-demand causal tracing engine. It reveals the post as the final hop of a worm-like instruction file propagating agent-to-agent, and identifies the single authorization gateway that would prevent it.",
+        "summary": "Traces an anomalous post through 185,147 agent events to a worm-like file and the one gateway that stops it.",
+        "stack": ["Multi-agent systems", "Causal tracing", "Coordinated views"],
+        "image": {
+          "src": "/images/research/hopviz.webp",
+          "width": 1600,
+          "height": 757,
+          "alt": "HopViz single-screen dashboard: posts, timing and incident panels, causal chain timeline, schema, payload, chokepoint, actor panels"
+        },
+        "links": [
+          {
+            "label": "PDF",
+            "url": "https://files.visualdslab.com/files/papers/2026-HopViz-VAST-Challenge.pdf"
+          },
+          { "label": "Video", "url": "https://youtu.be/WkLUf3883L4" },
+          { "label": "Demo", "url": "https://visualdslab.com/vast_2026_mc2/" },
+          { "label": "Project page", "url": "https://visualdslab.com/papers/HopViz/" }
+        ]
+      },
+      {
+        "title": "AgentAudit: Visual Analytics for Tracing Behavioral Escalation in Multi-Agent Systems",
+        "authors": [
+          "Luis Sante Taipe",
+          "Mauro Diaz",
+          "Leighton Estrada-Rayme",
+          "Joel Perca",
+          "Juanpablo Heredia",
+          "Felipe A. Moreno-Vera",
+          "João Rulff",
+          "Jorge Poco"
+        ],
+        "venue": "IEEE VAST Challenge 2026",
+        "year": "2026",
+        "date": "2026-11",
+        "role": "Co-author",
+        "status": "Challenge entry",
+        "presentedAt": null,
+        "doi": null,
+        "slug": "agentaudit",
+        "kind": "challenge",
+        "description": "Reconstructs how autonomous agents escalate to a policy breach from their public posts, private deliberations and internal reasoning, coupling topic evolution, event extraction, per-agent channel usage and think-say dissonance. On the VAST Challenge 2026 data it traces an embargo breach to coordination migrating into private and anonymous channels, foreshadowed by dissonance from the earliest rounds.",
+        "summary": "Reconstructs how LLM agents drift into a policy breach, from topic shifts to the gap between thought and speech.",
+        "stack": ["LLM agents", "Topic modeling", "Event timelines"],
+        "image": {
+          "src": "/images/research/agentaudit.webp",
+          "width": 1600,
+          "height": 861,
+          "alt": "AgentAudit dashboard: TopicRiver stream graph, per-topic word clouds, channel event timeline and agent message list"
+        },
+        "links": [
+          {
+            "label": "PDF",
+            "url": "https://files.visualdslab.com/files/papers/2026-AgentAudit-VAST-Challenge.pdf"
+          },
+          { "label": "Video", "url": "https://youtu.be/INqX5p2H31I" },
+          { "label": "Code", "url": "https://github.com/visual-ds/Agent-Audit-VastChallenge-mc1" },
+          { "label": "Project page", "url": "https://visualdslab.com/papers/AgentAudit/" }
         ]
       }
-    ]
+    ],
+    "current": {
+      "title": "How do you search hours of street video, and trust the answer?",
+      "summary": "My PhD at FGV EMAp continues the MSc thesis on visual analytics for long urban video. The work runs on three threads: retrieving the right clip, grounding every answer in what the cameras actually tracked, and measuring how people move through intersections.",
+      "threads": [
+        {
+          "label": "Retrieve",
+          "text": "Vision-language descriptions of short clips, indexed for retrieval-augmented question answering.",
+          "paper": "urbanclipatlas",
+          "source": "UrbanClipAtlas · CGF 2026"
+        },
+        {
+          "label": "Ground",
+          "text": "A knowledge graph that aligns each answer with detected objects and trajectories, so it can be checked frame by frame.",
+          "paper": "urbanclipatlas",
+          "source": "UrbanClipAtlas · CGF 2026"
+        },
+        {
+          "label": "Measure",
+          "text": "3D pedestrian pose, stature and walking speed recovered from fixed intersection cameras.",
+          "paper": "monovsmulti3d",
+          "source": "MonoVsMulti3D · SIBGRAPI 2026"
+        }
+      ]
+    }
   },
   "experience": [
     {
@@ -262,7 +374,8 @@
       "summary": "Process automation and systems integration; implemented ERP/CRM with Django REST Framework and React.",
       "highlights": [
         "ERP/CRM implementation: Django REST Framework, React, Docker Compose.",
-        "Cleaning/processing historical data for prospect segmentation."
+        "Cleaning/processing historical data for prospect segmentation.",
+        "Cut certificate issuance time by 90% with automated Python batch-generation scripts."
       ],
       "tags": ["Django", "DRF", "React", "Docker"]
     },
@@ -295,28 +408,114 @@
   ],
   "projects": [
     {
-      "name": "Podchy",
-      "type": "Product/Platform",
-      "oneLiner": "Kubernetes-based Code as a Service platform to run code via web UI.",
-      "stack": ["Kubernetes", "Python", "TypeScript", "Docker", "CI/CD (GitHub Actions)", "GCP"],
+      "name": "Trayci",
+      "slug": "trayci",
+      "type": "Developer tool",
+      "featured": true,
+      "role": "Author",
+      "oneLiner": "A local-first tray app that shows Claude Code, Codex and Antigravity quota usage and reset times, one click away.",
+      "stack": ["Tauri 2", "Rust", "React", "TypeScript"],
       "highlights": [
-        "Microservices-based architecture with scaling criteria.",
-        "Deployment on Google Cloud Platform with CI/CD."
+        "Reuses each provider CLI's existing sign-in and never stores credentials.",
+        "Per-window meters, reset countdowns and opt-in alerts at 50/85/90%.",
+        "Ships .deb, AppImage and Windows installers from CI on every tag."
       ],
-      "links": [],
-      "featured": true
+      "links": [
+        { "label": "Website", "url": "https://reqhiem.github.io/trayci/" },
+        { "label": "Releases", "url": "https://github.com/reqhiem/trayci/releases/latest" },
+        { "label": "Code", "url": "https://github.com/reqhiem/trayci" }
+      ],
+      "image": {
+        "src": "/images/projects/trayci.webp",
+        "width": 1600,
+        "height": 1000,
+        "alt": "Trayci popover under the system tray showing Antigravity, Claude and Codex quota meters, with the Claude detail pane"
+      }
+    },
+    {
+      "name": "fuckpdf",
+      "slug": "fuckpdf",
+      "type": "Web app",
+      "featured": true,
+      "role": "Author",
+      "oneLiner": "Twelve PDF tools that run entirely in the browser on WebAssembly: no upload, no account, no telemetry.",
+      "stack": ["TypeScript", "React", "PDFium (Wasm)", "Cloudflare"],
+      "highlights": [
+        "Merge, split, rotate, watermark, crop, page numbers, JPG↔PDF and more.",
+        "Zero egress is enforced: a CSP with connect-src 'self' plus a Playwright test that fails the build on any third-party request.",
+        "Static assets only; engine chunks lazy-load, shell JS under 200 KB gzip."
+      ],
+      "links": [
+        { "label": "Live", "url": "https://fuckpdf.reqhiem.dev" },
+        { "label": "Code", "url": "https://github.com/reqhiem/fuckpdf" }
+      ],
+      "image": {
+        "src": "/images/projects/fuckpdf.webp",
+        "width": 1375,
+        "height": 860,
+        "alt": "fuckpdf watermark tool: file thumbnail, live preview of page 1 with a diagonal watermark, and an options panel"
+      }
+    },
+    {
+      "name": "Podchy",
+      "type": "Platform",
+      "oneLiner": "Code as a service: shared workspaces with a live editor that runs your code in isolated Kubernetes pods.",
+      "stack": ["Django REST Framework", "Django Channels", "Kubernetes", "React", "TypeScript"],
+      "highlights": [
+        "Monaco editor with live collaboration over WebSockets (Django Channels).",
+        "Run executes the workspace inside a Kubernetes pod via the Python client and streams output to a console.",
+        "Ships Kubernetes manifests (API, web, ingress) and a minikube Makefile."
+      ],
+      "links": [{ "label": "Code", "url": "https://github.com/reqhiem/podchy" }],
+      "featured": true,
+      "slug": "podchy",
+      "role": "Co-author, team of 4",
+      "image": {
+        "src": "/images/projects/podchy.webp",
+        "width": 1600,
+        "height": 900,
+        "alt": "Podchy architecture: browser editor syncs over WebSocket to Django Channels, which spawns Kubernetes executor pods that stream output back"
+      }
+    },
+    {
+      "name": "estela",
+      "type": "Open source",
+      "oneLiner": "Contributor to Bitmaker's open-source elastic web-scraping cluster, which runs Scrapy spiders as Kubernetes jobs.",
+      "stack": ["Django REST Framework", "Celery", "React", "Kubernetes", "Kafka"],
+      "highlights": [
+        "24 commits and 18 merged pull requests between 2022 and 2024, plus a fix in estela-cli.",
+        "Web UI: spider and project pages, activity feed, deploy views, job and cron-job details.",
+        "API: password change and reset, failed-job reports, project ownership transfer."
+      ],
+      "links": [
+        {
+          "label": "My pull requests",
+          "url": "https://github.com/bitmakerla/estela/pulls?q=is%3Apr+author%3Areqhiem+is%3Amerged"
+        },
+        { "label": "Docs", "url": "https://estela.bitmaker.la/docs/" },
+        { "label": "Code", "url": "https://github.com/bitmakerla/estela" }
+      ],
+      "featured": true,
+      "slug": "estela",
+      "role": "Contributor",
+      "image": {
+        "src": "/images/projects/estela.webp",
+        "width": 1600,
+        "height": 814,
+        "alt": "estela architecture: CLI uploads a project, the API builds images and creates Kubernetes jobs that stream spider data through Kafka into storage"
+      }
     },
     {
       "name": "Lamport",
       "type": "System",
       "oneLiner": "Attendance system (Django/React/TypeScript) for a conference; team lead and deployment.",
       "stack": ["Django REST Framework", "React", "TypeScript", "Docker", "GCP"],
-      "highlights": [
-        "Microservices-based architecture with scaling criteria.",
-        "Deployment on Google Cloud Platform with CI/CD."
-      ],
+      "highlights": ["Led the team and the deployment on Google Cloud Platform."],
       "links": [],
-      "featured": true
+      "featured": false,
+      "slug": "lamport",
+      "role": "Team lead",
+      "image": null
     },
     {
       "name": "Chronious",
@@ -325,16 +524,10 @@
       "stack": ["Node.js", "NestJS", "MongoDB", "React", "TypeScript"],
       "highlights": [],
       "links": [],
-      "featured": false
-    },
-    {
-      "name": "Estela / Estela-CLI",
-      "type": "Open Source",
-      "oneLiner": "Platform for managing scraping jobs; contributions across backend, frontend, and CLI.",
-      "stack": ["Django", "Django REST Framework", "React", "TypeScript", "Kubernetes", "Python"],
-      "highlights": [],
-      "links": [],
-      "featured": false
+      "featured": false,
+      "slug": "chronious",
+      "role": null,
+      "image": null
     }
   ],
   "awards": [
@@ -348,11 +541,7 @@
       "org": "Universidad Nacional de San Agustín",
       "year": "2022"
     },
-    {
-      "title": "Student representative — Computer Science School",
-      "org": "UNSA",
-      "year": "2023"
-    }
+    { "title": "Student representative — Computer Science School", "org": "UNSA", "year": "2023" }
   ],
   "certifications": [
     { "name": "Microsoft Certified: Power Platform Fundamentals" },
@@ -365,11 +554,27 @@
     { "name": "Portuguese", "level": "Intermediate" }
   ],
   "skills": {
-    "core": ["Python", "TypeScript", "Django", "Django REST Framework", "React", "Docker", "Kubernetes"],
+    "core": [
+      "Python",
+      "TypeScript",
+      "Django",
+      "Django REST Framework",
+      "React",
+      "Docker",
+      "Kubernetes"
+    ],
     "backend": ["Django ORM", "PostgreSQL", "Redis", "Celery", "WebSockets", "Auth (JWT/OAuth2)"],
     "frontend": ["React Router", "Redux", "TailwindCSS", "Ant Design", "Vite"],
     "devops": ["CI/CD (GitHub Actions)", "Linux", "GCP", "AWS"],
-    "aiMl": ["PyTorch", "HuggingFace", "LangChain", "LlamaIndex", "PydanticAI", "Computer Vision", "Reranking"],
+    "aiMl": [
+      "PyTorch",
+      "HuggingFace",
+      "LangChain",
+      "LlamaIndex",
+      "PydanticAI",
+      "Computer Vision",
+      "Reranking"
+    ],
     "dataViz": ["D3.js", "Visual Analytics"]
   },
   "insightsForCopy": {
@@ -377,21 +582,17 @@
       {
         "id": "featured-research",
         "title": "Publications",
-        "items": ["UrbanClipAtlas", "MonoVsMulti3D", "STRive"]
+        "items": ["UrbanClipAtlas", "MonoVsMulti3D", "STRive", "HopViz", "AgentAudit"]
       },
       {
         "id": "featured-projects",
         "title": "Featured projects",
-        "items": ["Podchy", "Lamport"]
+        "items": ["Trayci", "fuckpdf", "Podchy", "estela"]
       },
       {
-        "id": "impact",
-        "title": "Impact",
-        "items": [
-          "90% reduction in certificate issuance time",
-          "WhatsApp messaging automation",
-          "Microservices-based architectures"
-        ]
+        "id": "current-research",
+        "title": "Current research",
+        "items": ["Retrieve", "Ground", "Measure"]
       }
     ]
   }
